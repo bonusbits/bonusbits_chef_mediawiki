@@ -22,6 +22,9 @@ provisioner:
   roles_path: test/roles
   environments_path: test/environments
 
+verifier:
+  name: inspec
+
 platforms:
   - name: amzn-2016-latest
     driver:

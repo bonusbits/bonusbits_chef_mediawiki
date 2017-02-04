@@ -1,5 +1,5 @@
 # Determine Availability Zone
-availability_zone = node['ec2']['']
+availability_zone = node['ec2']['placement_availability_zone']
 
 # Create Chef Repo Directory (For testing without CFN)
 directory node['bonusbits_mediawiki_nginx']['local_download_path'] do
@@ -13,10 +13,9 @@ include_recipe 'bonusbits_mediawiki_nginx::packages'
 # Setup Sendmail
 include_recipe 'bonusbits_mediawiki_nginx::sendmail'
 
-# Define Apache Service for Notifications
-service 'apache' do
-  service_name 'httpd'
-  action [:enable, :nothing]
+# Define Service
+service 'nginx' do
+  action [:enable, :start]
 end
 
 # Deploy Web Configs

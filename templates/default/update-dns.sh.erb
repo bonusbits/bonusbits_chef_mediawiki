@@ -1,0 +1,24 @@
+#!/bin/bash
+
+cat <<EOF > /opt/chef-repo/route53-upsert.json
+{
+  "Comment": "string",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "<%= node['bonusbits_mediawiki_nginx']['dns']['proxy_fqdn'] %>",
+        "Type": "A",
+        "TTL": <%= node['bonusbits_mediawiki_nginx']['dns']['ttl'] %>,
+        "ResourceRecords": [
+          {
+            "Value": "$(curl http://169.254.169.254/latest/meta-data/local-ipv4/)"
+          }
+        ]
+      }
+    }
+  ]
+}
+EOF
+
+aws route53 change-resource-record-sets --hosted-zone-id "<%= node['bonusbits_mediawiki_nginx']['dns']['hosted_zone_id'] %>" --change-batch "file:///opt/chef-repo/route53-upsert.json"

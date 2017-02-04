@@ -67,3 +67,4 @@ Dockerfile-kitchen*
 /temp/
 /test/data_bags/bonusbits_mediawiki_nginx/credentials.json
 /test/data_bags/bonusbits_mediawiki_nginx/sites.json
+/test/environments/ec2_environment.json

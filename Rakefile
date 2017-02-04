@@ -48,7 +48,7 @@ namespace :integration do
   # Run Each Test Instance in All Test Suites from YAML
   desc 'kitchen - ec2 - test'
   task :ec2 do
-    load_kitchen_config('.kitchen.ec2.yml').instances.each do |instance|
+    load_kitchen_config('.kitchen.yml').instances.each do |instance|
       instance.test(:always)
     end
   end
@@ -64,7 +64,8 @@ desc 'Travis CI Tasks'
 task travisci: %w(style:chef style:ruby unit:rspec)
 
 desc 'Circle CI Tasks'
-task circleci: %w(style:chef style:ruby unit:circleci_rspec)
+# task circleci: %w(style:chef style:ruby unit:circleci_rspec)
+task circleci: %w(style:chef style:ruby)
 
 desc 'Foodcritic, Rubocop, ChefSpec and EC2 Integration Tests'
 task ec2_ci: %w(style:chef style:ruby unit:rspec integration:ec2)
