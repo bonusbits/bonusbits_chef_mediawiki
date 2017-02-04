@@ -1,0 +1,7 @@
+---
+coverage:
+  notify:
+    gitter:
+      default:
+        url: "https://webhooks.gitter.im/e/363abf4073edb1f63734"
+        threshold: 1%

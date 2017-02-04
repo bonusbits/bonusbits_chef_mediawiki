@@ -4,7 +4,7 @@ gem 'berkshelf', '~> 5.2.0'
 gem 'rake', '~> 12.0.0'
 
 group :style do
-  gem 'chef', '12.17.44'
+  # gem 'chef', '12.17.44'
   gem 'foodcritic', '~> 8.1.0'
   gem 'rainbow', '~> 2.1.0'
   gem 'rubocop', '~> 0.46.0'

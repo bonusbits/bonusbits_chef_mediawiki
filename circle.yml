@@ -14,3 +14,9 @@ test:
   - bundle exec rake circleci:
       parallel: false
       timeout: 900
+
+notify:
+  webhooks:
+    # A list of hook hashes, containing the url field
+    # gitter hook
+    - url: https://webhooks.gitter.im/e/1de88ab20a320bd6d440
