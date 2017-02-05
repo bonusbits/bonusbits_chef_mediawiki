@@ -2,10 +2,10 @@ require 'spec_helper'
 
 describe 'bonusbits_mediawiki_nginx::default' do
   linux_platform_list = {
-      Amazon: '2016.03',
-      CentOS: '7.2.1511',
-      Redhat: '7.1',
-      Ubuntu: '16.04'
+    Amazon: '2016.03',
+    CentOS: '7.2.1511',
+    Redhat: '7.1',
+    Ubuntu: '16.04'
   }
 
   linux_platform_list.each do |platform, version|
@@ -13,8 +13,8 @@ describe 'bonusbits_mediawiki_nginx::default' do
     context "#{plat} #{version}" do
       let(:chef_run) do
         runner = ChefSpec::ServerRunner.new(
-            platform: plat.downcase,
-            version: version
+          platform: plat.downcase,
+          version: version
         )
         runner.converge(described_recipe)
       end

@@ -32,7 +32,7 @@ availability_zone = node['ec2']['placement_availability_zone']
 include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure'] && availability_zone.match(/a$/)
 
 # Setup Sendmail
-#include_recipe 'bonusbits_mediawiki_nginx::sendmail'
+# include_recipe 'bonusbits_mediawiki_nginx::sendmail'
 
 # Deploy Node Info Script
 include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['nodeinfo_script']['deploy']
