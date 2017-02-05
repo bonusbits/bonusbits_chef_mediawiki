@@ -1,6 +1,6 @@
 default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   # Basics
-  mediawiki['localsettings']['configure'] = false
+  mediawiki['localsettings']['configure'] = true
 
   # LocalSettings
   mediawiki['localsettings']['wgSitename'] = 'ChefCore Wiki'

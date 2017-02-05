@@ -1,5 +1,5 @@
 # Determine Availability Zone & Region
-availability_zone = BonusBits::AWS.fetch_metadata('availability-zone')
+availability_zone = node['ec2']['placement_availability_zone']
 
 # Deploy Backup Script
 template '/etc/cron.daily/backup-mediawiki' do

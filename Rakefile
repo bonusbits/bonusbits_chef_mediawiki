@@ -8,7 +8,7 @@ namespace :style do
   FoodCritic::Rake::LintTask.new(:chef) do |task|
     task.options = {
       fail_tags: ['correctness'],
-      chef_version: '12.17.44',
+      chef_version: '12.18.31',
       tags: %w(~FC001 ~FC019 ~FC016 ~FC039)
     }
   end

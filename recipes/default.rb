@@ -1,41 +1,38 @@
-# Determine Availability Zone
-availability_zone = node['ec2']['placement_availability_zone']
-
 # Create Chef Repo Directory (For testing without CFN)
 directory node['bonusbits_mediawiki_nginx']['local_download_path'] do
   action :create
   recursive true
 end
 
-# Install Packages
-include_recipe 'bonusbits_mediawiki_nginx::packages'
+# Install and Configure Nginx
+include_recipe 'bonusbits_mediawiki_nginx::nginx'
+
+# Install and Configure Php Fpm
+include_recipe 'bonusbits_mediawiki_nginx::php_fpm'
+
+# Install and Configure Nginx
+# include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
+
+# Enable and Start Service
+# service 'nginx' do
+#   action [:enable, :start]
+# end
+
+# Deploy DNS Update Script
+# include_recipe 'bonusbits_mediawiki_nginx::dns'
+
+# Setup CloudWatch Logs
+include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs'
+
+# Setup CloudWatch Logs
+# include_recipe 'bonusbits_mediawiki_nginx::logrotate'
+
+# Deploy Backup Script
+availability_zone = node['ec2']['placement_availability_zone']
+include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure'] && availability_zone.match(/a$/)
 
 # Setup Sendmail
-include_recipe 'bonusbits_mediawiki_nginx::sendmail'
+#include_recipe 'bonusbits_mediawiki_nginx::sendmail'
 
-# Define Service
-service 'nginx' do
-  action [:enable, :start]
-end
-
-# Deploy Web Configs
-include_recipe 'bonusbits_mediawiki_nginx::apache'
-
-# Deploy Web Content
-include_recipe 'bonusbits_mediawiki_nginx::web_content'
-
-# Setup RDS (Restore From Backup)
-# include_recipe 'bonusbits_mediawiki_nginx::database' if node['bonusbits_mediawiki_nginx']['database']['configure']
-
-# Switch to Dev RDS (For Kitchen Dev)
-include_recipe 'bonusbits_mediawiki_nginx::mediawiki' if node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure']
-
-# Setup EFS (For Kitchen Dev)
-include_recipe 'bonusbits_mediawiki_nginx::efs' if node['bonusbits_mediawiki_nginx']['efs']['configure']
-
-# TODO: Start / Restart Apache
-
-# TODO: Setup Cloudwatch scripts
-
-# TODO: Deploy Backup Script
-include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure'] && availability_zone.match(/a$/)
+# Deploy Node Info Script
+include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['nodeinfo_script']['deploy']

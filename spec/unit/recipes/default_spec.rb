@@ -1,20 +1,27 @@
-#
-# Cookbook:: chef_generated
-# Spec:: default
-#
-# Copyright:: 2017, The Authors, All Rights Reserved.
-
 require 'spec_helper'
 
 describe 'bonusbits_mediawiki_nginx::default' do
-  context 'When all attributes are default, on an unspecified platform' do
-    let(:chef_run) do
-      runner = ChefSpec::ServerRunner.new
-      runner.converge(described_recipe)
-    end
+  linux_platform_list = {
+      Amazon: '2016.03',
+      CentOS: '7.2.1511',
+      Redhat: '7.1',
+      Ubuntu: '16.04'
+  }
 
-    it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
+  linux_platform_list.each do |platform, version|
+    plat = platform.to_s
+    context "#{plat} #{version}" do
+      let(:chef_run) do
+        runner = ChefSpec::ServerRunner.new(
+            platform: plat.downcase,
+            version: version
+        )
+        runner.converge(described_recipe)
+      end
+
+      it 'should include bonusbits_mediawiki_nginx::packages recipe' do
+        expect(chef_run).to include_recipe('bonusbits_mediawiki_nginx::packages')
+      end
     end
   end
 end
