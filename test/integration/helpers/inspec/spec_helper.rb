@@ -1,17 +1,5 @@
 # Encoding: utf-8
-require 'simplecov'
-require 'codeclimate-test-reporter'
 require_relative 'helpers'
-
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::HTMLFormatter,
-    CodeClimate::TestReporter::Formatter
-]
-
-if ENV['CIRCLE_ARTIFACTS']
-  dir = File.join('..', '..', '..', ENV['CIRCLE_ARTIFACTS'], 'coverage')
-  SimpleCov.coverage_dir(dir)
-end
 
 SimpleCov.start do
   add_filter '/vendor/'

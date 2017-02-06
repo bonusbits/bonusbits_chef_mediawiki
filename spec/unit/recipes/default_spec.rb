@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe 'bonusbits_mediawiki_nginx::default' do
   linux_platform_list = {
-    Amazon: '2016.03',
-    CentOS: '7.2.1511',
-    Redhat: '7.1',
-    Ubuntu: '16.04'
+    Amazon: '2016.03'
   }
 
   linux_platform_list.each do |platform, version|
@@ -19,8 +16,8 @@ describe 'bonusbits_mediawiki_nginx::default' do
         runner.converge(described_recipe)
       end
 
-      it 'should include bonusbits_mediawiki_nginx::packages recipe' do
-        expect(chef_run).to include_recipe('bonusbits_mediawiki_nginx::packages')
+      it 'should include bonusbits_mediawiki_nginx::nginx recipe' do
+        expect(chef_run).to include_recipe('bonusbits_mediawiki_nginx::nginx')
       end
     end
   end

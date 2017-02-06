@@ -4,6 +4,9 @@ directory node['bonusbits_mediawiki_nginx']['local_download_path'] do
   recursive true
 end
 
+# Install Software Packages
+include_recipe 'bonusbits_mediawiki_nginx::packages'
+
 # Install and Configure Nginx
 include_recipe 'bonusbits_mediawiki_nginx::nginx'
 
