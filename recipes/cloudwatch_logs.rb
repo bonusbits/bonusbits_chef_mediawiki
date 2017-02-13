@@ -6,7 +6,7 @@ template '/etc/awslogs/awscli.conf' do
   source 'awscli.conf.erb'
   owner 'root'
   group 'root'
-  mode '0755'
+  mode '0644'
 end
 
 # Deploy AWS CloudWatch Logs Config
@@ -14,7 +14,7 @@ template '/etc/awslogs/awslogs.conf' do
   source 'awslogs.conf.erb'
   owner 'root'
   group 'root'
-  mode '0755'
+  mode '0644'
   notifies :restart, 'service[awslogs]', :delayed
 end
 

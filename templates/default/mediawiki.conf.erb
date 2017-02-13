@@ -1,0 +1,101 @@
+server {
+    listen 80 backlog=1024;
+    set_real_ip_from <%= node['bonusbits_mediawiki_nginx']['nginx']['proxy_lan_ip'] %>;
+    real_ip_header X-Forwarded-For;
+    real_ip_recursive on;
+    server_name <%= node['bonusbits_mediawiki_nginx']['nginx']['server_names'] %>;
+    root <%= node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path'] %>;
+    index index.php;
+    client_max_body_size 24000M;
+    #access_log /var/log/nginx/mediawiki_access.log;
+    #error_log /var/log/nginx/debug.log debug;
+
+    location / {
+        #   Recognize if HTTPS Terminate Prior to Nginx Getting Hands on it
+        if ($http_x_forwarded_proto != 'https') {
+            rewrite ^ https://$host$request_uri? permanent;
+        }
+        try_files $uri $uri/ @handler;
+        #error_page 404 = @mediawiki;
+    }
+
+    # location @mediawiki {
+    #     rewrite ^/wiki([^?]*)(?:\?(.*))? /index.php?title=$1&$2 last;
+    # }
+
+    location @handler {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_param SCRIPT_FILENAME /var/www/html/mediawiki/index.php;
+        include /etc/nginx/fastcgi_params;
+        fastcgi_param SCRIPT_NAME /index.php;
+    }
+
+    location ~ .php$ {
+        try_files $uri @handler;
+        fastcgi_pass    127.0.0.1:9000;
+        fastcgi_index   index.php;
+        fastcgi_param SCRIPT_FILENAME /var/www/html/mediawiki$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    #    Exclude all access from the cache directory
+    location ^~ /cache/ { deny all; }
+
+    #    Prevent access to any files starting with a dot, like .htaccess
+    #    or text editor temp files
+    location ~ /\. { access_log off; log_not_found off; deny all; }
+
+    #    Prevent access to any files starting with a dot, like .htaccess
+    #    or text editor temp files
+    location ~ /\. { access_log off; log_not_found off; deny all; }
+
+    #    Prevent access to any files starting with a $ (usually temp files)
+    location ~ ~$ { access_log off; log_not_found off; deny all; }
+
+    #    Do not log access to robots.txt, to keep the logs cleaner
+    location = /robots.txt { access_log off; log_not_found off; }
+
+    #    Do not log access to the favicon, to keep the logs cleaner
+    location = /favicon.ico { access_log off; log_not_found off; }
+
+    #    Keep images and CSS around in browser cache for as long as possible,
+    #    to cut down on server load
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+        try_files $uri /index.php;
+        expires 7d;
+        log_not_found off;
+    }
+
+    # Exception for AutoSitemap sitemap.xml template
+    location = /extensions/AutoSitemap/sitemap.xsl { allow all; }
+
+    #    Mark all of these directories as "deny all", which means that they cannot
+    #    be explicitly accessed by clients. However, the web server can still use
+    #    and serve the files inside of them. This keeps people from poking around
+    #    in the wiki's deny alls.
+    location ^~ /bin/ { deny all; }
+    location ^~ /docs/ { deny all; }
+    location ^~ /includes/ { deny all; }
+    location ^~ /maintenance/ { deny all; }
+    location ^~ /mw-config/ { deny all; } #Uncomment after installation
+    location ^~ /resources/lib/ { deny all; }
+    location ^~ /resources/src/ { deny all; }
+    location ^~ /resources/Resources.php { deny all; } # ResourcesOOUI.php  Resources.php
+    location ^~ /resources/ResourcesOOUI.php { deny all; } # ResourcesOOUI.php  Resources.php
+    location ^~ /serialized/ { deny all; }
+    location ^~ /tests/ { deny all; }
+    location ^~ /skins/ { deny all; }
+    location ^~ /vendor/ { deny all; }
+
+    #    Force potentially-malicious files in the /images directory to be served
+    #    with a text/plain mime type, to prevent them from being executed by
+    #    the PHP handler
+    location ~* ^/images/.*.(html|htm|shtml|php)$ { types { } default_type text/plain; }
+
+    #    Redirect all requests for unknown URLs out of images and back to the
+    #    root index.php file
+    location ^~ /images/ { try_files $uri /index.php; }
+
+    #    Deny direct access to uploads directory
+    location ~* /(?:uploads|files)/.*\.php$ { deny all; }
+}

@@ -14,28 +14,22 @@ include_recipe 'bonusbits_mediawiki_nginx::nginx'
 include_recipe 'bonusbits_mediawiki_nginx::php_fpm'
 
 # Install and Configure Nginx
-# include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
-
-# Enable and Start Service
-# service 'nginx' do
-#   action [:enable, :start]
-# end
-
-# Deploy DNS Update Script
-# include_recipe 'bonusbits_mediawiki_nginx::dns'
+include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
 
 # Setup CloudWatch Logs
-include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs'
+include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs' if node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']
 
 # Setup CloudWatch Logs
 # include_recipe 'bonusbits_mediawiki_nginx::logrotate'
 
 # Deploy Backup Script
-availability_zone = node['ec2']['placement_availability_zone']
-include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure'] && availability_zone.match(/a$/)
+include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure']
 
 # Setup Sendmail
-# include_recipe 'bonusbits_mediawiki_nginx::sendmail'
+# include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']
 
 # Deploy Node Info Script
 include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['nodeinfo_script']['deploy']
+
+# Deploy DNS Update Script
+include_recipe 'bonusbits_mediawiki_nginx::dns' if node['bonusbits_mediawiki_nginx']['dns']['configure']

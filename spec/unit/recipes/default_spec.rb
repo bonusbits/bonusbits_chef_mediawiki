@@ -16,8 +16,8 @@ describe 'bonusbits_mediawiki_nginx::default' do
         runner.converge(described_recipe)
       end
 
-      it 'should include bonusbits_mediawiki_nginx::nginx recipe' do
-        expect(chef_run).to include_recipe('bonusbits_mediawiki_nginx::nginx')
+      it 'should include bonusbits_mediawiki_nginx::packages recipe' do
+        expect(chef_run).to include_recipe('bonusbits_mediawiki_nginx::packages')
       end
     end
   end
