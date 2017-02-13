@@ -13,12 +13,12 @@ template '/etc/nginx/conf.d/mediawiki.conf' do
 end
 
 # TODO: Set Network Backlog
-set_backlog_commands = %w(
-  sysctl -w net.core.somaxconn=1024
-  echo 'net.core.somaxconn = 1024' >> /etc/sysctl.conf
-  sysctl -w net.ipv4.tcp_syncookies=4096
-  echo 'net.ipv4.tcp_syncookies = 4096' >> /etc/sysctl.conf
-)
+# set_backlog_commands = %w(
+#   sysctl -w net.core.somaxconn=1024
+#   echo 'net.core.somaxconn = 1024' >> /etc/sysctl.conf
+#   sysctl -w net.ipv4.tcp_syncookies=4096
+#   echo 'net.ipv4.tcp_syncookies = 4096' >> /etc/sysctl.conf
+# )
 
 # Enable and Start Service
 service 'nginx' do
