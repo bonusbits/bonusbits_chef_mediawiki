@@ -30,7 +30,7 @@ done
 echo -e "\n---------------------------------------------------------------"
 echo "Node Information"
 echo "---------------------------------------------------------------"
-<% node['bonusbits_mediawiki_nginx']['nodeinfo_script']['content'].each do |content| %>
+<% node['bonusbits_mediawiki_nginx']['node_info']['content'].each do |content| %>
 echo "<%= content %>"
 <% end %>
 echo "---------------------------------------------------------------"

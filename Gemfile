@@ -2,7 +2,7 @@ gem 'berkshelf', '~> 5.6.0'
 gem 'rake', '~> 12.0.0'
 
 group :style do
-  gem 'chef', '12.18.31'
+  # gem 'chef', '12.18.31'
   gem 'foodcritic', '~> 9.0.0'
   gem 'rainbow', '~> 2.2.1'
   gem 'rubocop', '~> 0.46.0'

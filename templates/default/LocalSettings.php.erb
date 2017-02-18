@@ -12,7 +12,7 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 #$wgShowSQLErrors = true;
 #$wgDebugDumpSql = true;
 #$wgShowDBErrorBacktrace = true;
-#$wgDebugLogFile = "/var/log/mediawiki.log";
+#$wgDebugLogFile = "/var/log/mediawiki/debug.log";
 
 
 ##  Web Settings
@@ -54,7 +54,7 @@ $wgDBmysql5 = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings'
 ##  Cache and Uploads
 ##########################################
 $wgMainCacheType = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMainCacheType'] %>;
-$wgMemCachedServers = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMemCachedServers'] %>;
+$wgMemCachedServers = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMemCachedServers'] %>";
 $wgCacheDirectory = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgCacheDirectory'] %>";
 $wgEnableUploads = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnableUploads'] %>;
 $wgUseImageMagick = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUseImageMagick'] %>;
@@ -62,8 +62,8 @@ $wgImageMagickConvertCommand = "<%= node['bonusbits_mediawiki_nginx']['mediawiki
 $wgUseInstantCommons = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUseInstantCommons'] %>;
 $wgShellLocale = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgShellLocale'] %>";
 $wgHashedUploadDirectory = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgHashedUploadDirectory'] %>;
-$wgUploadPath = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUploadPath'] %>;
-$wgUploadDirectory = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUploadDirectory'] %>;
+$wgUploadPath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUploadPath'] %>";
+$wgUploadDirectory = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUploadDirectory'] %>";
 
 
 ##  Site Settings
@@ -90,21 +90,21 @@ $wgGroupPermissions['*']['writeapi'] = <%= node['bonusbits_mediawiki_nginx']['me
 
 ##  Skin
 ##########################################
-require_once "$IP/skins/Vector/Vector.php";
+require_once "{$IP}/skins/Vector/Vector.php";
 $wgDefaultSkin = "vector";
 
 
 ##  Load Extensions
 ##########################################
 <% node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['list'].each do |extension| %>
-require_once "$IP/extensions/<%= extension %>/<%= extension %>.php";
+require_once "{$IP}/extensions/<%= extension %>/<%= extension %>.php";
 <% end %>
 
 
 ##  ConfirmEdit - ReCaptcha
 ##########################################
 #wfLoadExtensions( array( 'ConfirmEdit', 'ConfirmEdit/ReCaptchaNoCaptcha' ) );
-require_once "$IP/extensions/ConfirmEdit/ReCaptchaNoCaptcha.php";
+require_once "{$IP}/extensions/ConfirmEdit/ReCaptchaNoCaptcha.php";
 $wgCaptchaClass = 'ReCaptchaNoCaptcha';
 $wgReCaptchaSiteKey = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgReCaptchaSiteKey'] %>";
 $wgReCaptchaSecretKey = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgReCaptchaSecretKey'] %>";
@@ -136,7 +136,7 @@ $wgMaxShellFileSize = 102400*64;
 ##  MobileFrontend
 ##########################################
 $wgMFAutodetectMobileView = true;
-$wgMobileFrontendLogo = "$wgScriptPath/images/mobile_logo.png";
+$wgMobileFrontendLogo = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMobileFrontendLogo'] %>";
 
 
 ##  WikiEditor
@@ -217,7 +217,7 @@ $wgNamespacesToBeSearchedDefault = array(
 
 ##  HideNamespace
 ##########################################
-require_once( "$IP/extensions/HideNamespace/HideNamespace.php" );
+require_once( "{$IP}/extensions/HideNamespace/HideNamespace.php" );
 $wgHidensNamespaces = array(
         NS_CATEGORY,
         NS_HOWTO,
@@ -246,7 +246,7 @@ $wgFileExtensions = array(
         'ods',
         'odt',
         'ogg',
-        'ogv'
+        'ogv',
         'pdf',
         'png',
         'ppt',
@@ -258,7 +258,7 @@ $wgFileExtensions = array(
         'wmv',
         'xls',
         'xlsx',
-        'zip',
+        'zip'
 );
 
 
@@ -314,7 +314,7 @@ $wgGroupPermissions['user']['noanalytics'] = true;
 ##########################################
 wfLoadExtension( 'AutoSitemap' );
 $wgAutoSitemap["filename"] = "sitemap.xml";
-$wgAutoSitemap["server"] = "https://www.bonusbits.com";
+$wgAutoSitemap["server"] = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgServer'] %>";
 
 $wgAutoSitemap["exclude_namespaces"] = [
     NS_CATEGORY,
@@ -326,7 +326,7 @@ $wgAutoSitemap["exclude_namespaces"] = [
     NS_IMAGE,
     NS_IMAGE_TALK,
     NS_LIST,
-    NS_LIST_TALK
+    NS_LIST_TALK,
     NS_MEDIAWIKI,
     NS_MEDIAWIKI_TALK,
     NS_PROJECT,
@@ -335,7 +335,7 @@ $wgAutoSitemap["exclude_namespaces"] = [
     NS_TEMPLATE,
     NS_TEMPLATE_TALK,
     NS_USER,
-    NS_USER_TALK,
+    NS_USER_TALK
 ];
 
 $wgAutoSitemap["exclude_pages"] = ['page title to exclude', 'other one'];

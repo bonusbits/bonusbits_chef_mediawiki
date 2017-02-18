@@ -29,4 +29,4 @@ file = /var/log/php-fpm/7.0/www-error.log
 [mediawiki-debug]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
 log_stream_name = <%= node['ec2']['instance_id'] %>-mediawiki-debug
-file = /var/log/mediawiki.log
+file = /var/log/mediawiki/debug.log

@@ -1,7 +1,9 @@
 server {
     listen 80 backlog=1024;
+    <% if node['bonusbits_mediawiki_nginx']['nginx']['x_forwarded_traffic'] %>
     set_real_ip_from <%= node['bonusbits_mediawiki_nginx']['nginx']['proxy_lan_ip'] %>;
     real_ip_header X-Forwarded-For;
+    <% end %>
     real_ip_recursive on;
     server_name <%= node['bonusbits_mediawiki_nginx']['nginx']['server_names'] %>;
     root <%= node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path'] %>;
@@ -11,17 +13,22 @@ server {
     #error_log /var/log/nginx/debug.log debug;
 
     location / {
+        <% if node['bonusbits_mediawiki_nginx']['nginx']['x_forwarded_traffic'] %>
         #   Recognize if HTTPS Terminate Prior to Nginx Getting Hands on it
         if ($http_x_forwarded_proto != 'https') {
             rewrite ^ https://$host$request_uri? permanent;
         }
+        <% end %>
         try_files $uri $uri/ @handler;
-        #error_page 404 = @mediawiki;
+        <% if node['bonusbits_mediawiki_nginx']['nginx']['rewrite_wiki_alias'] %>
+        error_page 404 = @mediawiki;
+        <% end %>
     }
-
-    # location @mediawiki {
-    #     rewrite ^/wiki([^?]*)(?:\?(.*))? /index.php?title=$1&$2 last;
-    # }
+    <% if node['bonusbits_mediawiki_nginx']['nginx']['rewrite_wiki_alias'] %>
+    location @mediawiki {
+        rewrite ^/wiki([^?]*)(?:\?(.*))? /index.php?title=$1&$2 last;
+    }
+    <% end %>
 
     location @handler {
         fastcgi_pass 127.0.0.1:9000;
@@ -97,5 +104,5 @@ server {
     location ^~ /images/ { try_files $uri /index.php; }
 
     #    Deny direct access to uploads directory
-    location ~* /(?:uploads|files)/.*\.php$ { deny all; }
+    location ~* /<%= node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name'] %>/.*\.php$ { deny all; }
 }

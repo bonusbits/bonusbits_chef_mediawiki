@@ -1,5 +1,5 @@
 # Switch User and Group
-ruby_block 'Rename Folder' do
+ruby_block 'Switch Php Fpm Ownership' do
   block do
     require 'open3'
     bash_command = 'sed -i "s/apache/nginx/g" /etc/php-fpm-7.0.d/www.conf'
@@ -13,6 +13,7 @@ ruby_block 'Rename Folder' do
     raise 'Failed!' unless status.success?
   end
   action :run
+  not_if { ::File.readlines('/etc/php-fpm-7.0.d/www.conf').grep(/^user = nginx/).any? }
 end
 
 # Switch User and Group
@@ -30,10 +31,11 @@ ruby_block 'Change Ownership of Nginx Logs Folder' do
     raise 'Failed!' unless status.success?
   end
   action :run
+  # TODO: not_if { ::File.readlines('/etc/php-fpm-7.0.d/www.conf').grep(/^user = nginx/).any? }
 end
 
 # Switch User and Group
-ruby_block 'Change Ownership' do
+ruby_block 'Change Ownership /var/lib/php/7.0' do
   block do
     require 'open3'
     bash_command = 'chown -R root:nginx /var/lib/php/7.0/'
@@ -47,6 +49,7 @@ ruby_block 'Change Ownership' do
     raise 'Failed!' unless status.success?
   end
   action :run
+  # TODO: not_if { ::File.readlines('/etc/php-fpm-7.0.d/www.conf').grep(/^user = nginx/).any? }
 end
 
 # Enable and Start Service

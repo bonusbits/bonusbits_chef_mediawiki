@@ -6,7 +6,6 @@ default['bonusbits_mediawik_nginx']['packages'] = %w(
   ImageMagick
   json-c
   mysql56
-  nfs-utils
   nginx
   openssl
   openssl-devel

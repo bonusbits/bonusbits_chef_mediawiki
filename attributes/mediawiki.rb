@@ -1,8 +1,16 @@
 default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
-  # Version
+  # Basics
   mediawiki['version_major'] = '1'
   mediawiki['version_minor'] = '28'
   mediawiki['mediawiki_path'] = '/var/www/html/mediawiki'
+  mediawiki_path = node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']
+  mediawiki['uploads_folder_name'] = 'images'
+  uploads_folder_name = node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name']
+  mediawiki['uploads_path'] = "#{mediawiki_path}/#{uploads_folder_name}"
+  mediawiki['desktop_logo_filename'] = 'desktop_logo.png'
+  desktop_logo_filename = node['bonusbits_mediawiki_nginx']['mediawiki']['desktop_logo_filename']
+  mediawiki['mobile_logo_filename'] = 'mobile_logo.png'
+  mobile_logo_filename = node['bonusbits_mediawiki_nginx']['mediawiki']['mobile_logo_filename']
 
   mediawiki['localsettings']['configure'] = true
 
@@ -13,10 +21,10 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   mediawiki['localsettings']['wgArticlePath'] = '/wiki/$1'
   mediawiki['localsettings']['wgUsePathInfo'] = 'true'
   mediawiki['localsettings']['wgScriptExtension'] = '.php'
-  mediawiki['localsettings']['wgFavicon'] = '$wgScriptPath/favicon.ico'
+  mediawiki['localsettings']['wgFavicon'] = '{$wgScriptPath}/favicon.ico'
   mediawiki['localsettings']['wgServer'] = 'http://mediawiki'
-  mediawiki['localsettings']['wgStylePath'] = '$wgScriptPath/skins'
-  mediawiki['localsettings']['wgLogo'] = '$wgScriptPath/images/desktop_logo.png'
+  mediawiki['localsettings']['wgStylePath'] = '{$wgScriptPath}/skins'
+  mediawiki['localsettings']['wgLogo'] = "{$wgScriptPath}/#{uploads_folder_name}/#{desktop_logo_filename}"
   mediawiki['localsettings']['wgEnableEmail'] = 'true'
   mediawiki['localsettings']['wgEnableUserEmail'] = 'true'
   mediawiki['localsettings']['wgEmailAuthentication'] = 'true'
@@ -40,15 +48,15 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   # LocalSettings - Cache and Uploads
   mediawiki['localsettings']['wgMainCacheType'] = 'CACHE_ACCEL'
   mediawiki['localsettings']['wgMemCachedServers'] = 'array()'
-  mediawiki['localsettings']['wgCacheDirectory'] = '$IP/cache'
+  mediawiki['localsettings']['wgCacheDirectory'] = '{$IP}/cache'
   mediawiki['localsettings']['wgEnableUploads'] = 'true'
   mediawiki['localsettings']['wgUseImageMagick'] = 'true'
   mediawiki['localsettings']['wgImageMagickConvertCommand'] = '/usr/bin/convert'
   mediawiki['localsettings']['wgUseInstantCommons'] = 'true'
   mediawiki['localsettings']['wgShellLocale'] = 'en_US.utf8'
   mediawiki['localsettings']['wgHashedUploadDirectory'] = 'false'
-  mediawiki['localsettings']['wgUploadPath'] = '$wgScriptPath/uploads'
-  mediawiki['localsettings']['wgUploadDirectory'] = '$IP/uploads'
+  mediawiki['localsettings']['wgUploadPath'] = "{$wgScriptPath}/#{uploads_folder_name}"
+  mediawiki['localsettings']['wgUploadDirectory'] = "{$IP}/#{uploads_folder_name}"
 
   # LocalSettings - Site Settings
   mediawiki['localsettings']['wgLanguageCode'] = 'en'
@@ -57,7 +65,7 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   mediawiki['localsettings']['wgRightsPage'] = ''
   mediawiki['localsettings']['wgRightsUrl'] = 'http://www.gnu.org/copyleft/fdl.html'
   mediawiki['localsettings']['wgRightsText'] = 'GNU Free Documentation License 1.3 or later'
-  mediawiki['localsettings']['wgRightsIcon'] = '$wgResourceBasePath/resources/assets/licenses/gnu-fdl.png'
+  mediawiki['localsettings']['wgRightsIcon'] = '{$wgResourceBasePath}/resources/assets/licenses/gnu-fdl.png'
   mediawiki['localsettings']['wgDiff3'] = '/usr/bin/diff3'
 
   # LocalSettings - Permissions
@@ -110,4 +118,5 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   mediawiki['localsettings']['wgGoogleAnalyticsAccount'] = 'UA-12345678-1'
   mediawiki['localsettings']['wgReCaptchaSiteKey'] = 'VkAbTAsAxbRnLUMQa9H5d5m7nzVYeSrVbFaYXPCy'
   mediawiki['localsettings']['wgReCaptchaSecretKey'] = 'svXnAMft7dUa9VE4VAu3tuTMXNAkCNvjN7yGWqz8'
+  mediawiki['localsettings']['wgMobileFrontendLogo'] = "{$wgScriptPath}/#{uploads_folder_name}/#{mobile_logo_filename}"
 end

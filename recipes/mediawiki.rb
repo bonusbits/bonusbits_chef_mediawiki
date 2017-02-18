@@ -1,4 +1,14 @@
 mediawiki_path = node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']
+uploads_path = node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']
+mediawiki_user = node['bonusbits_mediawiki_nginx']['nginx']['user']
+mediawiki_group = node['bonusbits_mediawiki_nginx']['nginx']['group']
+
+# Create Logs Directory
+directory '/var/log/mediawiki' do
+  owner mediawiki_user
+  group mediawiki_group
+  mode '0755'
+end
 
 # Download Mediawiki
 version_major = node['bonusbits_mediawiki_nginx']['mediawiki']['version_major']
@@ -26,53 +36,18 @@ git "#{mediawiki_path}/vendor" do
   not_if { ::File.exist?("#{mediawiki_path}/vendor") }
 end
 
-# Download Logos
-s3_content_path = node['bonusbits_mediawiki_nginx']['aws']['s3_content_path']
-logo_list = %w(
-  desktop_logo.png
-  mobile_logo.png
-)
-
-ruby_block 'Download Logos' do
-  block do
-    logo_list.each do |content|
-      require 'open3'
-      bash_command = "aws s3 cp s3://#{s3_content_path}/#{content} #{mediawiki_path}/images/#{content} --sse"
-      Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
-
-      # Run Bash Script and Capture StrOut, StrErr, and Status
-      out, err, status = Open3.capture3(bash_command)
-      Chef::Log.warn("REPORT: Open3 Status (#{status})")
-      Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-      Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-      raise 'Failed!' unless status.success?
-    end
-  end
-  action :run
-end
-
-# Deploy favicon
-ruby_block 'Download Logos' do
-  block do
-    require 'open3'
-    bash_command = "aws s3 cp s3://#{s3_content_path}/favicon.ico #{mediawiki_path}/favicon.ico --sse"
-    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
-
-    # Run Bash Script and Capture StrOut, StrErr, and Status
-    out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("REPORT: Open3 Status (#{status})")
-    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-    raise 'Failed!' unless status.success?
-  end
-  action :run
+# Symlink Favicon
+link "#{mediawiki_path}/favicon.ico" do
+  to "#{uploads_path}/favicon.ico"
+  owner mediawiki_user
+  group mediawiki_group
 end
 
 # Deploy Robots.txt
 template "#{mediawiki_path}/robots.txt" do
   source 'robots.txt.erb'
-  owner node['bonusbits_mediawiki_nginx']['user']
-  group node['bonusbits_mediawiki_nginx']['group']
+  owner mediawiki_user
+  group mediawiki_group
   mode '0644'
   notifies :restart, 'service[nginx]', :delayed
 end
@@ -101,18 +76,36 @@ if node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']
   end
 end
 
+# Download Widgets Extension Submodules TODO: Better Logic?
+ruby_block 'Download Widgets Extension Submodules' do
+  block do
+    require 'open3'
+    bash_command = "cd #{mediawiki_path}/extensions/Widgets/ && git submodule init && git submodule update"
+    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
+
+    # Run Bash Script and Capture StrOut, StrErr, and Status
+    out, err, status = Open3.capture3(bash_command)
+    Chef::Log.warn("REPORT: Open3 Status (#{status})")
+    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
+    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
+    raise 'Failed!' unless status.success?
+  end
+  action :run
+  not_if { ::File.exist?("#{mediawiki_path}/extensions/Widgets/smarty/libs") }
+end
+
 # Deploy LocalSettings.php
 template "#{mediawiki_path}/LocalSettings.php" do
   source 'LocalSettings.php.erb'
-  owner node['bonusbits_mediawiki_nginx']['user']
-  group node['bonusbits_mediawiki_nginx']['group']
+  owner mediawiki_user
+  group mediawiki_group
   mode '0644'
   notifies :restart, 'service[nginx]', :delayed
   only_if { node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure'] }
 end
 
-# Set Ownership
-ruby_block 'Set Ownership' do
+# Set Ownership on Mediawiki Home
+ruby_block 'Set Ownership on Mediawiki Home' do
   block do
     require 'open3'
     bash_command = "chown -R nginx:nginx #{mediawiki_path}"
@@ -126,4 +119,5 @@ ruby_block 'Set Ownership' do
     raise 'Failed!' unless status.success?
   end
   action :run
+  not_if { ::File.exist?(uploads_path) } # So doesn't reset uploads ownership every time
 end

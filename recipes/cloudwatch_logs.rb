@@ -23,3 +23,5 @@ service 'awslogs' do
   service_name 'awslogs'
   action [:enable, :start]
 end
+
+# TODO: Create the Logs Group with Expiration Settings

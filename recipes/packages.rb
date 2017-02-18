@@ -27,5 +27,5 @@ end
 
 # Enable and Start Service
 service 'yum-cron' do
-  action [:enable, :nothing]
+  action [:enable, :start]
 end
