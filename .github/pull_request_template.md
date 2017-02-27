@@ -1,10 +1,3 @@
-# Changes
-[ ] Fix Issue
-[ ] Feature Add
-[ ] Refactor
-[ ] Documentation
-[ ] Other
-
 # Change Details
 * ...
 

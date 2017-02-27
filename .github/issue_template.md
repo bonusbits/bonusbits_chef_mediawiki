@@ -1,8 +1,3 @@
-## Priority
-- [ ] P1 (Highest)
-- [ ] P2
-- [ ] P3
-
 ## Request
 - [ ] New Feature
 - [ ] Refactor
