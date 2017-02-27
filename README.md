@@ -1,5 +1,5 @@
 # Bonusbits Mediawiki on Nginx in AWS Chef Cookbook and CloudFormation Template
-[![CircleCI](https://circleci.com/gh/bonusbits/bonusbits_mediawiki_nginx.svg?style=svg)](https://circleci.com/gh/bonusbits/bonusbits_mediawiki_nginx)
+[![CircleCI](https://circleci.com/gh/bonusbits/bonusbits_mediawiki_nginx.svg?style=shield)](https://circleci.com/gh/bonusbits/bonusbits_mediawiki_nginx)
 [![Code Climate](https://codeclimate.com/github/bonusbits/bonusbits_mediawiki_nginx/badges/gpa.svg)](https://codeclimate.com/github/bonusbits/bonusbits_mediawiki_nginx)
 [![Join the chat at https://gitter.im/stelligent/mu](https://badges.gitter.im/bonusbits/bonusbits_mediawiki_nginx.svg)](https://gitter.im/bonusbits/bonusbits_mediawiki_nginx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
