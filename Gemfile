@@ -1,3 +1,5 @@
+source 'https://rubygems.org'
+
 gem 'berkshelf', '~> 5.6.0'
 gem 'rake', '~> 12.0.0'
 
