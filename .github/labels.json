@@ -1,0 +1,54 @@
+[
+  {
+    "name": "bug",
+    "color": "ee0701"
+  },
+  {
+    "name": "cloudformation",
+    "color": "759c3e"
+  },
+  {
+    "name": "cookbook",
+    "color": "f28407"
+  },
+  {
+    "name": "duplicate",
+    "color": "cccccc"
+  },
+  {
+    "name": "help wanted",
+    "color": "128A0C"
+  },
+  {
+    "name": "mediawiki",
+    "color": "eedd13"
+  },
+  {
+    "name": "new feature",
+    "color": "84b6eb"
+  },
+  {
+    "name": "p1",
+    "color": "d93f0b"
+  },
+  {
+    "name": "p2",
+    "color": "fbca04"
+  },
+  {
+    "name": "p3",
+    "color": "0e8a16"
+  },
+  {
+    "name": "refactor",
+    "color": "bfd4f2"
+  },
+  {
+    "name": "tests",
+    "color": "0c98bc"
+  },
+  {
+    "name": "wontfix",
+    "color": "ffffff"
+  }
+]
