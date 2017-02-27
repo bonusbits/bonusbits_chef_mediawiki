@@ -16,10 +16,6 @@
     "color": "01963a"
   },
   {
-    "name": "Item: Tests",
-    "color": "0c98bc"
-  },
-  {
     "name": "Priority: Critical",
     "color": "e11d21"
   },
@@ -45,19 +41,15 @@
   },
   {
     "name": "Status: In Progress",
-    "color": "eb6420"
-  },
-  {
-    "name": "Status: Needs Review",
-    "color": "fef2c0"
-  },
-  {
-    "name": "Status: Reviewed",
-    "color": "cccccc"
+    "color": "c2e0c6"
   },
   {
     "name": "Type: Bug",
     "color": "e11d21"
+  },
+  {
+    "name": "Type: Documentation",
+    "color": "006b75"
   },
   {
     "name": "Type: New Feature",
@@ -65,10 +57,14 @@
   },
   {
     "name": "Type: Question",
-    "color": "d4c5f9"
+    "color": "c2e0c6"
   },
   {
     "name": "Type: Refactor",
-    "color": "bfdadc"
+    "color": "bfd4f2"
+  },
+  {
+    "name": "Type: Tests",
+    "color": "0c98bc"
   }
 ]
