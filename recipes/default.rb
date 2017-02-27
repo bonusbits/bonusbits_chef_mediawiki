@@ -1,3 +1,8 @@
+# Fetch Data Bag
+data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
+data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']
+node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
+
 # Create Chef Repo Directory (For testing without CFN)
 directory node['bonusbits_mediawiki_nginx']['local_download_path'] do
   action :create
@@ -19,7 +24,7 @@ ruby_block 'Add /usr/local/bin to sudoers Secure Path' do
     raise 'Failed!' unless status.success?
   end
   action :run
-  not_if { ::File.readlines('/etc/sudoers').grep(/^Defaults    secure_path = \/sbin:\/bin:\/usr\/sbin:\/usr\/bin:\/usr\/local\/bin/).any? }
+  not_if { ::File.readlines('/etc/sudoers').grep(%r{^Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/}).any? }
 end
 
 # Install Software Packages

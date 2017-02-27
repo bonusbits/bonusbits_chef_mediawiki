@@ -1,14 +1,14 @@
 {
-	"name": "ec2_role",
-	"description": "Role",
-	"json_class": "Chef::Role",
-	"default_attributes": {},
-	"override_attributes": {
-	},
-	"chef_type": "role",
-	"run_list": [
-		"recipe[bonusbits_mediawiki_nginx]"
-	],
-	"env_run_lists": {
-	}
+    "name": "ec2_role",
+    "description": "Role",
+    "json_class": "Chef::Role",
+    "default_attributes": {},
+    "override_attributes": {
+    },
+    "chef_type": "role",
+    "run_list": [
+        "recipe[bonusbits_mediawiki_nginx]"
+    ],
+    "env_run_lists": {
+    }
 }

@@ -60,6 +60,10 @@ default['bonusbits_mediawiki_nginx'].tap do |root|
   root['dns']['configure'] = true
   root['dns']['ttl'] = '60'
 
+  # Data Bag
+  root['data_bag'] = 'ec2_databags'
+  root['data_bag_item'] = 'ec2_databag'
+
   # Nginx
   root['nginx']['user'] = 'nginx'
   root['nginx']['group'] = 'nginx'
@@ -71,4 +75,7 @@ default['bonusbits_mediawiki_nginx'].tap do |root|
 
   # Log Rotate
   root['logrotate']['configure'] = true
+
+  # Google AdSense
+  root['adsense']['configure'] = false
 end

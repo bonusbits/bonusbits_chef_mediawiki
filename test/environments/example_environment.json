@@ -1,0 +1,66 @@
+{
+    "name": "example_environment",
+    "description": "Environment",
+    "cookbook_versions": {},
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "default_attributes": {
+    },
+    "override_attributes": {
+        "bonusbits_mediawiki_nginx": {
+            "aws": {
+                "stack_name": "mediawiki-nginx-kitchen-01",
+                "vpc_id": "vpc-00000000",
+                "create_logs_group": true,
+                "logs_group_name": "mediawiki-nginx-kitchen-01",
+                "efs_filesystem_id": "fs-00000000",
+                "s3_deploy_path": "example-deploy/mediawiki"
+            },
+            "mediawiki": {
+                "version_major": "1",
+                "version_minor": "28",
+                "uploads_folder_name": "uploads",
+                "desktop_logo_filename": "desktop_logo.png",
+                "mobile_logo_filename": "mobile_logo.png",
+                "deploy_extensions": true,
+                "localsettings": {
+                    "wgSitename": "My Wiki",
+                    "wgMetaNamespace": "My Wiki",
+                    "wgServer": "https://www.example.com",
+                    "wgEmergencyContact": "webmaster@example.com",
+                    "wgPasswordSender": "webmaster@example.com",
+                    "wgDBserver": "rds.amazon.com",
+                    "wgDBname": "wiki",
+                    "wgDBuser": "wiki",
+                    "wgDBpassword": "Password!",
+                    "wgSecretKey": "k84WGH9zGRqxcGPa7EfAkzL7eyaSxmvBHfByXsM4Te9RMtz4nkwezm5LnWPnAtfp",
+                    "wgUpgradeKey": "DEebevct88jCx5QQ",
+                    "wgGoogleAnalyticsAccount": "UA-00000000-1",
+                    "wgReCaptchaSiteKey": "VFsS7UCqQY8r2kyCyrMTknZ8PrG2Gcg5jBdHvddt",
+                    "wgReCaptchaSecretKey": "MDc39JFEnVe8CLpCcvJS7RQZ47ZHPh9Bc7Tc8gm6"
+                }
+            },
+            "nginx": {
+                "server_names": "example.com www.example.com",
+                "x_forwarded_traffic": false,
+                "rewrite_wiki_alias": false,
+                "proxy_lan_ip": "10.0.0.254"
+            },
+            "dns": {
+                "configure": true,
+                "proxy_fqdn": "www.example.com",
+                "hosted_zone_id": "T6YQS5B2YAGT4L",
+                "ttl": "60"
+            },
+            "adsense": {
+                "configure": true,
+                "databag_name": "example_databag"
+            },
+            "backups": {
+                "configure": true,
+                "s3_backup_bucket": "example-backups",
+                "backup_interval": "daily"
+            }
+        }
+    }
+}

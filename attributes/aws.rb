@@ -6,5 +6,5 @@ default['bonusbits_mediawiki_nginx']['aws'].tap do |aws|
   aws['logs_group_name'] = nil
   aws['Logs_retention_days'] = '14'
   aws['s3_backup_bucket'] = nil
-  aws['s3_content_path'] = nil
+  aws['s3_deploy_path'] = nil
 end

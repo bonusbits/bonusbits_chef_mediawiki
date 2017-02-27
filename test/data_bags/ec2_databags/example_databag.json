@@ -1,0 +1,9 @@
+{
+    "id": "example_databag",
+    "adsense": {
+        "header": "            <?php\n                    $googleadheader = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadheader;\n            ?>",
+        "footer": "            <?php\n                    $googleadfooter = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadfooter;\n            ?>",
+        "sidebar": "            <?php\n                    $googleadsidebar = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadsidebar;\n            ?>",
+        "mobile": "    <PASTE GOOGLE ADSENSE CODE HERE>"
+    }
+}

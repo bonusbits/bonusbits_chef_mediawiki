@@ -300,10 +300,10 @@ $wgSpamBlacklistFiles = array(
 ##  Google Analytics Integration
 ##########################################
 $wgGoogleAnalyticsAccount = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGoogleAnalyticsAccount'] %>";
-$wgGoogleAnalyticsOtherCode = '<script type="text/javascript" src="https://analytics.example.com/tracking.js"></script>';
-$wgGoogleAnalyticsAnonymizeIP = false;
-$wgGoogleAnalyticsIgnoreNsIDs = array(500);
-$wgGoogleAnalyticsIgnorePages = array('ArticleX', 'Foo:Bar');
+# $wgGoogleAnalyticsOtherCode = '<script type="text/javascript" src="https://analytics.example.com/tracking.js"></script>';
+# $wgGoogleAnalyticsAnonymizeIP = false;
+# $wgGoogleAnalyticsIgnoreNsIDs = array(500);
+# $wgGoogleAnalyticsIgnorePages = array('ArticleX', 'Foo:Bar');
 $wgGoogleAnalyticsIgnoreSpecials = array( 'Userlogin', 'Userlogout', 'Preferences', 'ChangePassword', 'OATH');
 $wgGroupPermissions['sysop']['noanalytics'] = true;
 $wgGroupPermissions['bot']['noanalytics'] = true;

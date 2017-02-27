@@ -99,7 +99,7 @@ ruby_block 'Upgrade Pip' do
     raise 'Failed!' unless status.success?
   end
   action :run
-  not_if { `pip --version`.match(/^pip 9\.*\..*/) } #~FC048
+  not_if { `pip --version`.match(/^pip 9\.*\..*/) } # ~FC048
 end
 
 # Install Ngxtop

@@ -1,6 +1,11 @@
 ##CHANGE LOG
 ---
 
+##0.6.0 - 02/26/2016 - Levon Becker - [Issue 1](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/1)
+* Added VectorTemplate cookbook template
+* Added minerva.mustache cookbook template. Turned out to be a better and easier location to simply drop the Google AdSense HTML under the header section for Mobile Frontend.
+* AdSense Code converted to a single line with ruby command ```ruby -e 'p ARGF.read' mobile_responsive.html``` and then added to a data bag item JSON. 
+
 ##0.5.0 - 02/18/2016 - Levon Becker
 * Updated NodeInfo script naming
 * Updated Node Info Script to include Mediawiki outputs
