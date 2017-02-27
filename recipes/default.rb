@@ -1,3 +1,8 @@
+# Fetch Data Bag
+data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
+data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']
+node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
+
 # Create Chef Repo Directory (For testing without CFN)
 directory node['bonusbits_mediawiki_nginx']['local_download_path'] do
   action :create
