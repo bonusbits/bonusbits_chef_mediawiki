@@ -5,7 +5,7 @@ end
 
 # Deploy Web Config
 template '/etc/nginx/conf.d/mediawiki.conf' do
-  source 'mediawiki.conf.erb'
+  source 'nginx/mediawiki.conf.erb'
   owner node['bonusbits_mediawiki_nginx']['nginx']['user']
   group node['bonusbits_mediawiki_nginx']['nginx']['group']
   mode '0644'

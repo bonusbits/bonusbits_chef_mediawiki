@@ -1,12 +1,16 @@
 ##CHANGE LOG
 ---
 
-##0.6.0 - 02/26/2016 - Levon Becker - [Issue 1](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/1)
+##0.7.0 - 03/04/2017 - Levon Becker - [Issue 8](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/8)
+* Added Fixed for News Extension to display Hyperlinks with whitespaces instead of underscores.
+* Organized the templates directory. It was getting out of control and harder to find what I was looking for.
+
+##0.6.0 - 02/26/2017 - Levon Becker - [Issue 1](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/1)
 * Added VectorTemplate cookbook template
 * Added minerva.mustache cookbook template. Turned out to be a better and easier location to simply drop the Google AdSense HTML under the header section for Mobile Frontend.
 * AdSense Code converted to a single line with ruby command ```ruby -e 'p ARGF.read' mobile_responsive.html``` and then added to a data bag item JSON. 
 
-##0.5.0 - 02/18/2016 - Levon Becker
+##0.5.0 - 02/18/2017 - Levon Becker
 * Updated NodeInfo script naming
 * Updated Node Info Script to include Mediawiki outputs
 * Parametrized uploads/images folder so easy to change around. Including updating Nginx config

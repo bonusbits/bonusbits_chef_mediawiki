@@ -9,7 +9,7 @@ package 'yum-cron'
 
 # Deploy Yum Cron Config
 template '/etc/yum/yum-cron.conf' do
-  source 'yum-cron.conf.erb'
+  source 'base/yum-cron.conf.erb'
   owner 'root'
   group 'root'
   mode '0644'
@@ -18,7 +18,7 @@ end
 
 # Deploy Yum Cron Config
 template '/etc/yum/yum-cron-hourly.conf' do
-  source 'yum-cron.conf.erb'
+  source 'base/yum-cron.conf.erb'
   owner 'root'
   group 'root'
   mode '0644'

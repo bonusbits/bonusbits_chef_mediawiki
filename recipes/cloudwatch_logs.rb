@@ -3,7 +3,7 @@ package 'awslogs'
 
 # Deploy AWS CLI Config
 template '/etc/awslogs/awscli.conf' do
-  source 'awscli.conf.erb'
+  source 'cloudwatch_logs/awscli.conf.erb'
   owner 'root'
   group 'root'
   mode '0644'
@@ -11,7 +11,7 @@ end
 
 # Deploy AWS CloudWatch Logs Config
 template '/etc/awslogs/awslogs.conf' do
-  source 'awslogs.conf.erb'
+  source 'cloudwatch_logs/awslogs.conf.erb'
   owner 'root'
   group 'root'
   mode '0644'

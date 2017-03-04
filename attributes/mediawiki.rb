@@ -119,4 +119,7 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   mediawiki['localsettings']['wgReCaptchaSiteKey'] = 'VkAbTAsAxbRnLUMQa9H5d5m7nzVYeSrVbFaYXPCy'
   mediawiki['localsettings']['wgReCaptchaSecretKey'] = 'svXnAMft7dUa9VE4VAu3tuTMXNAkCNvjN7yGWqz8'
   mediawiki['localsettings']['wgMobileFrontendLogo'] = "{$wgScriptPath}/#{uploads_folder_name}/#{mobile_logo_filename}"
+
+  # News Extension
+  mediawiki['extensions']['news']['replace_underscores_php_insert'] = '$params[\'title\'] = str_replace ( "_", " ", $params[\'title\'] );'
 end
