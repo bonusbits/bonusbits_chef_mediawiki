@@ -39,17 +39,8 @@ include_recipe 'bonusbits_mediawiki_nginx::php_fpm'
 # Install and Configure Nginx
 include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
 
-# Mount and Configure EFS Uploads Share
-include_recipe 'bonusbits_mediawiki_nginx::efs' if node['bonusbits_mediawiki_nginx']['efs']['configure']
-
-# Add AdSense PHP Snippets
-include_recipe 'bonusbits_mediawiki_nginx::adsense' if node['bonusbits_mediawiki_nginx']['adsense']['configure']
-
 # Setup CloudWatch Logs
 include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs' if node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']
-
-# Setup Log Rotate for Mediawiki Logs
-include_recipe 'bonusbits_mediawiki_nginx::logrotate' if node['bonusbits_mediawiki_nginx']['logrotate']['configure']
 
 # Deploy Backup Script
 include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure']

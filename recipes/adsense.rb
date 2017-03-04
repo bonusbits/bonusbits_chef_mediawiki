@@ -14,7 +14,7 @@ node.default['bonusbits_mediawiki_nginx']['adsense']['mobile'] = node.run_state[
 # Deploy VectorTemplate with Ads
 vector_template = "#{mediawiki_path}/skins/Vector/VectorTemplate.php"
 template vector_template do
-  source "adsense/VectorTemplate-#{version_major}.#{version_minor}.php.erb"
+  source "mediawiki/adsense/VectorTemplate-#{version_major}.#{version_minor}.php.erb"
   owner mediawiki_user
   group mediawiki_group
   mode '0644'
@@ -24,7 +24,7 @@ end
 # Deploy MobileFrontend Template with Ads
 mobile_template = "#{mediawiki_path}/extensions/MobileFrontend/includes/skins/minerva.mustache"
 template mobile_template do
-  source "adsense/minerva-#{version_major}.#{version_minor}.mustache.erb"
+  source "mediawiki/adsense/minerva-#{version_major}.#{version_minor}.mustache.erb"
   owner mediawiki_user
   group mediawiki_group
   mode '0644'

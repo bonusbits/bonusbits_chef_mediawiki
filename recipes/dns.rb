@@ -1,6 +1,6 @@
 # Deploy DNS Update Script
 template '/usr/sbin/update-dns' do
-  source 'update-dns.sh.erb'
+  source 'dns/update-dns.sh.erb'
   owner 'root'
   group 'root'
   mode '0755'

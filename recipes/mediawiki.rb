@@ -45,7 +45,7 @@ end
 
 # Deploy Robots.txt
 template "#{mediawiki_path}/robots.txt" do
-  source 'robots.txt.erb'
+  source 'mediawiki/robots.txt.erb'
   owner mediawiki_user
   group mediawiki_group
   mode '0644'
@@ -94,9 +94,19 @@ ruby_block 'Download Widgets Extension Submodules' do
   not_if { ::File.exist?("#{mediawiki_path}/extensions/Widgets/smarty/libs") }
 end
 
+# Deploy Corrected NewsRenderer (Replace Underscores with Whitespace)
+vector_template = "#{mediawiki_path}/extensions/News/NewsRenderer.php"
+template vector_template do
+  source "mediawiki/NewsRenderer-#{version_major}.#{version_minor}.php.erb"
+  owner mediawiki_user
+  group mediawiki_group
+  mode '0644'
+  notifies :restart, 'service[nginx]', :delayed
+end
+
 # Deploy LocalSettings.php
 template "#{mediawiki_path}/LocalSettings.php" do
-  source 'LocalSettings.php.erb'
+  source 'mediawiki/LocalSettings.php.erb'
   owner mediawiki_user
   group mediawiki_group
   mode '0644'
@@ -121,3 +131,12 @@ ruby_block 'Set Ownership on Mediawiki Home' do
   action :run
   not_if { ::File.exist?(uploads_path) } # So doesn't reset uploads ownership every time
 end
+
+# Mount and Configure EFS Uploads Share
+include_recipe 'bonusbits_mediawiki_nginx::efs' if node['bonusbits_mediawiki_nginx']['efs']['configure']
+
+# Add AdSense PHP Snippets
+include_recipe 'bonusbits_mediawiki_nginx::adsense' if node['bonusbits_mediawiki_nginx']['adsense']['configure']
+
+# Setup Log Rotate for Mediawiki Logs
+include_recipe 'bonusbits_mediawiki_nginx::logrotate' if node['bonusbits_mediawiki_nginx']['logrotate']['configure']
