@@ -28,7 +28,7 @@ Click this button to open AWS CloudFormation web console to enter parameters and
 
 
 # CloudFormation Template Details
-The [CloudFormation Template](https://github.com/bonusbits/bonusbits_mediawiki_nginx/blob/master/aws/bonusbits-mediawiki-nginx.yml)  the following:
+The [CloudFormation Template](https://github.com/bonusbits/bonusbits_mediawiki_nginx/blob/master/cloudformation/bonusbits-mediawiki-nginx.yml)  the following:
 
 1. Create Elastic Load Balancer v2 in public network (Optional)
     1. HTTP Listener
