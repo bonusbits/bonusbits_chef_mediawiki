@@ -497,7 +497,7 @@ Resources:
           !Sub |
             #!/bin/bash -xe
             yum update -y
-            yum install -y aws-cfn-bootstrap aws-cli cloud-init
+            yum install -y aws-cfn-bootstrap aws-cli cloud-init git
             /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource LaunchConfiguration --region ${AWS::Region} --configsets ec2_setup
             /opt/aws/bin/cfn-signal -e $? --stack ${AWS::StackName} --resource AutoScalingGroup --region ${AWS::Region}
     Metadata:
@@ -570,7 +570,7 @@ Resources:
                 role_path '/opt/chef-repo/roles'
                 chef_server_url 'http://127.0.0.1:8889'
                 encrypted_data_bag_secret '/opt/chef-repo/encrypted_data_bag_secret'
-            "/opt/chef-repo/environments/jenkins_launcher_master.json":
+            "/opt/chef-repo/environments/ec2_environment.json":
               content: !Sub |
                {
                    "name": "ec2_environment",
@@ -602,8 +602,8 @@ Resources:
                            },
                            "dns": {
                                "configure": ${UpdateDNS},
-                               "hosted_zone_id": ${HostedZoneId},
-                               "record_name": ${RecordName}
+                               "hosted_zone_id": "${HostedZoneId}",
+                               "record_name": "${RecordName}"
                            },
                            "adsense": {
                                "configure": true
