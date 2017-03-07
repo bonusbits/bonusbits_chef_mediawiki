@@ -105,6 +105,12 @@ template vector_template do
 end
 
 # Deploy LocalSettings.php
+## In case We want to completely override the Logo Paths in the Environment File and Skip the Data Bag Value
+desktop_logo = "{$wgScriptPath}/#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name']}/#{node.run_state['data_bag']['mediawiki']['desktop_logo_filename']}"
+node.default['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgLogo'] = desktop_logo
+mobile_logo = "{$wgScriptPath}/#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name']}/#{node.run_state['data_bag']['mediawiki']['mobile_logo_filename']}"
+node.default['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMobileFrontendLogo'] = mobile_logo
+
 template "#{mediawiki_path}/LocalSettings.php" do
   source 'mediawiki/LocalSettings.php.erb'
   owner mediawiki_user

@@ -5,5 +5,32 @@
         "footer": "            <?php\n                    $googleadfooter = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadfooter;\n            ?>",
         "sidebar": "            <?php\n                    $googleadsidebar = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadsidebar;\n            ?>",
         "mobile": "    <PASTE GOOGLE ADSENSE CODE HERE>"
+    },
+    "mediawiki": {
+        "desktop_logo_filename": "desktop.png",
+        "mobile_logo_filename": "mobile.png",
+        "localsettings": {
+            "wgSitename": "My Wiki",
+            "wgMetaNamespace": "My Wiki",
+            "wgServer": "http://www.example.com",
+            "wgEmergencyContact": "nginx@localhost",
+            "wgPasswordSender": "nginx@localhost",
+            "wgDBserver": "127.0.0.1",
+            "wgDBname": "mediawiki",
+            "wgDBuser": "mediawiki",
+            "wgDBpassword": "Password!",
+            "wgSecretKey": "7mYcQNM2LUZLwkZypaFBg6a96nbrF7nAFFR6xfS6Z74kgRLgbR848fkcSA2KafZr",
+            "wgUpgradeKey": "XFW46pkSNUxh44F2",
+            "wgGoogleAnalyticsAccount": "UA-12345678-1",
+            "wgReCaptchaSiteKey": "VkAbTAsAxbRnLUMQa9H5d5m7nzVYeSrVbFaYXPCy",
+            "wgReCaptchaSecretKey": "svXnAMft7dUa9VE4VAu3tuTMXNAkCNvjN7yGWqz8"
+        }
+    },
+    "nginx": {
+        "server_names": "example.com www.example.com",
+        "proxy_lan_ip": "10.0.0.1"
+    }
+    "backups": {
+        "s3_backup_bucket": "example-backups"
     }
 }

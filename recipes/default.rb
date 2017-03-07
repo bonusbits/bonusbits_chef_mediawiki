@@ -3,6 +3,33 @@ data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
 data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']
 node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
 
+# # Apply Secret Settings From Data Bag to Node Hash
+# node.run_state['data_bag'].each do |key|
+#   key.each do |subkey, subvalue|
+#     if key == 'localsettings'
+#       node.override['bonusbits_mediawiki_nginx']['mediawiki'][key][subkey] = subvalue
+#     else
+#       node.override['bonusbits_mediawiki_nginx'][key][subkey] = subvalue
+#     end
+#   end
+# end
+
+# node.run_state['data_bag']['mediawiki'].each do |key, value|
+#   node.override['bonusbits_mediawiki_nginx']['mediawiki'][key] = value
+# end
+# node.run_state['data_bag']['localsettings'].each do |key, value|
+#   node.override['bonusbits_mediawiki_nginx']['mediawiki']['localsettings'][key] = value
+# end
+# node.run_state['data_bag']['nginx'].each do |key, value|
+#   node.override['bonusbits_mediawiki_nginx']['nginx'][key] = value
+# end
+# node.run_state['data_bag']['dns'].each do |key, value|
+#   node.override['bonusbits_mediawiki_nginx']['dns'][key] = value
+# end
+# node.run_state['data_bag']['backups'].each do |key, value|
+#   node.override['bonusbits_mediawiki_nginx']['backups'][key] = value
+# end
+
 # Create Chef Repo Directory (For testing without CFN)
 directory node['bonusbits_mediawiki_nginx']['local_download_path'] do
   action :create

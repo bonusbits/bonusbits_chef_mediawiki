@@ -18,21 +18,21 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 ##  Web Settings
 ##########################################
 # $wgDisableOutputCompression = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDisableOutputCompression'] %>;
-$wgSitename = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgSitename'] %>";
-$wgMetaNamespace = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMetaNamespace'] %>";
+$wgSitename = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgSitename'] %>";
+$wgMetaNamespace = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgMetaNamespace'] %>";
 $wgScriptPath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgScriptPath'] %>";
 $wgArticlePath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgArticlePath'] %>";
 $wgUsePathInfo = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUsePathInfo'] %>;
 $wgScriptExtension = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgScriptExtension'] %>";
 $wgFavicon = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgFavicon'] %>";
-$wgServer = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgServer'] %>";
+$wgServer = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgServer'] %>";
 $wgStylePath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgStylePath'] %>";
 $wgLogo = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgLogo'] %>";
 $wgEnableEmail = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnableEmail'] %>;
 $wgEnableUserEmail = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnableUserEmail'] %>;
 $wgEmailAuthentication = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEmailAuthentication'] %>;
-$wgEmergencyContact = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEmergencyContact'] %>";
-$wgPasswordSender = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgPasswordSender'] %>";
+$wgEmergencyContact = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgEmergencyContact'] %>";
+$wgPasswordSender = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgPasswordSender'] %>";
 $wgEnotifUserTalk = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnotifUserTalk'] %>;
 $wgEnotifWatchlist = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnotifWatchlist'] %>;
 $wgExternalLinkTarget = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgExternalLinkTarget'] %>";
@@ -42,10 +42,10 @@ $wgUniversalEditButton = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['loc
 ##  Database Settings
 ##########################################
 $wgDBtype = "mysql";
-$wgDBserver = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBserver'] %>";
-$wgDBname = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBname'] %>";
-$wgDBuser = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBuser'] %>";
-$wgDBpassword = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBpassword'] %>";
+$wgDBserver = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBserver'] %>";
+$wgDBname = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBname'] %>";
+$wgDBuser = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBuser'] %>";
+$wgDBpassword = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBpassword'] %>";
 $wgDBprefix = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBprefix'] %>";
 $wgDBTableOptions = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBTableOptions'] %>";
 $wgDBmysql5 = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBmysql5'] %>;
@@ -69,8 +69,8 @@ $wgUploadDirectory = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['locals
 ##  Site Settings
 ##########################################
 $wgLanguageCode = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgLanguageCode'] %>";
-$wgSecretKey = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgSecretKey'] %>";
-$wgUpgradeKey = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUpgradeKey'] %>";
+$wgSecretKey = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgSecretKey'] %>";
+$wgUpgradeKey = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgUpgradeKey'] %>";
 $wgRightsPage = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsPage'] %>"; # Set to the title of a wiki page that describes your license/copyright
 $wgRightsUrl = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsUrl'] %>";
 $wgRightsText = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsText'] %>";
@@ -106,8 +106,8 @@ require_once "{$IP}/extensions/<%= extension %>/<%= extension %>.php";
 #wfLoadExtensions( array( 'ConfirmEdit', 'ConfirmEdit/ReCaptchaNoCaptcha' ) );
 require_once "{$IP}/extensions/ConfirmEdit/ReCaptchaNoCaptcha.php";
 $wgCaptchaClass = 'ReCaptchaNoCaptcha';
-$wgReCaptchaSiteKey = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgReCaptchaSiteKey'] %>";
-$wgReCaptchaSecretKey = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgReCaptchaSecretKey'] %>";
+$wgReCaptchaSiteKey = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgReCaptchaSiteKey'] %>";
+$wgReCaptchaSecretKey = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgReCaptchaSecretKey'] %>";
 $wgGroupPermissions['*'            ]['skipcaptcha'] = false;
 $wgGroupPermissions['user'         ]['skipcaptcha'] = false;
 $wgGroupPermissions['autoconfirmed']['skipcaptcha'] = true;
@@ -299,7 +299,7 @@ $wgSpamBlacklistFiles = array(
 
 ##  Google Analytics Integration
 ##########################################
-$wgGoogleAnalyticsAccount = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGoogleAnalyticsAccount'] %>";
+$wgGoogleAnalyticsAccount = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgGoogleAnalyticsAccount'] %>";
 # $wgGoogleAnalyticsOtherCode = '<script type="text/javascript" src="https://analytics.example.com/tracking.js"></script>';
 # $wgGoogleAnalyticsAnonymizeIP = false;
 # $wgGoogleAnalyticsIgnoreNsIDs = array(500);

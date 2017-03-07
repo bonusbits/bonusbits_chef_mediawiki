@@ -1,5 +1,5 @@
 # Create Web Directory
-directory '/var/www/html' do
+directory node['bonusbits_mediawiki_nginx']['nginx']['root_site_path'] do
   recursive true
 end
 
