@@ -539,7 +539,7 @@ Resources:
           commands:
             01_install_chef_client:
               command: !Sub "curl -L https://omnitruck.chef.io/install.sh | bash -s -- -v ${ChefClientVersion}"
-        setup_chef:
+        setup_chef_client:
           commands:
             01_mkdir_chef_repo:
               command: "mkdir -p /opt/chef-repo"

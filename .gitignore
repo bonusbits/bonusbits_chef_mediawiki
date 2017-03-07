@@ -71,3 +71,4 @@ Dockerfile-kitchen*
 /tmp/
 /test/data_bags/ec2_databags/ec2_databag.json
 /test/data_bags/ec2_databags/ec2_databag_encrypted.json
+/test/data_bags/ec2_databags/ec2_databag_prd.json
