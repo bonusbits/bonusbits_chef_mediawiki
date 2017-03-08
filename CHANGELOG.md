@@ -1,6 +1,9 @@
 ##CHANGE LOG
 ---
 
+##1.0.0 - 03/07/2017 - Levon Becker
+* Initial Stable Release
+
 ##0.8.0 - 03/06/2017 - Levon Becker - [Issue 4](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/4)
 * First Draft done of CloudFormation
 * Moved a lot of values out of environment file to data bag. That way less parameters for CloudFormation.
