@@ -296,40 +296,29 @@ Mappings:
   RegionMap:
     # Amazon Linux AMI 2016.09.0 was released on 2016-09-27
     us-east-1:
-      InstanceStore: ami-de3860c9
       EBS: ami-b73b63a0
     us-west-2:
-      InstanceStore: ami-44c36524
       EBS: ami-5ec1673e
+#      EBS: ami-7a139f1a # Baked AMI
     us-west-1:
-      InstanceStore: ami-34e9a254
       EBS: ami-23e8a343
     eu-west-1:
-      InstanceStore: ami-d998d3aa
       EBS: ami-9398d3e0
     eu-central-1:
-      InstanceStore: ami-0f639b60
       EBS: ami-f9619996
     ap-southeast-1:
-      InstanceStore: ami-7a54f519
       EBS: ami-b953f2da
     ap-northeast-1:
-      InstanceStore: ami-0a12b16b
       EBS: ami-0c11b26d
     ap-northeast-2:
-      InstanceStore: ami-ba35e1d4
       EBS: ami-983ce8f6
     ap-southeast-2:
-      InstanceStore: ami-41754922
       EBS: ami-db704cb8
     sa-east-1:
-      InstanceStore: ami-59bd2135
       EBS: ami-97831ffb
     us-gov-west-1:
-      InstanceStore: ami-e0b10981
       EBS: ami-7cb1091d
     cn-north-1:
-      InstanceStore: ami-81eb3fec
       EBS: ami-7c15c111
 
 Conditions:
