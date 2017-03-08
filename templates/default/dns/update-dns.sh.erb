@@ -7,7 +7,7 @@ cat <<EOF > /opt/chef-repo/route53-upsert.json
     {
       "Action": "UPSERT",
       "ResourceRecordSet": {
-        "Name": "<%= node['bonusbits_mediawiki_nginx']['dns']['proxy_fqdn'] %>",
+        "Name": "<%= node['bonusbits_mediawiki_nginx']['dns']['record_name'] %>",
         "Type": "A",
         "TTL": <%= node['bonusbits_mediawiki_nginx']['dns']['ttl'] %>,
         "ResourceRecords": [

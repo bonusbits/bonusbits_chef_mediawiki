@@ -1,6 +1,12 @@
 ##CHANGE LOG
 ---
 
+##0.8.0 - 03/06/2017 - Levon Becker - [Issue 4](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/4)
+* First Draft done of CloudFormation
+* Moved a lot of values out of environment file to data bag. That way less parameters for CloudFormation.
+* Split up Attributes a little more.
+* Updated example environment and data bag jsons to match new logic.
+
 ##0.7.0 - 03/04/2017 - Levon Becker - [Issue 8](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/8)
 * Added Fixed for News Extension to display Hyperlinks with whitespaces instead of underscores.
 * Organized the templates directory. It was getting out of control and harder to find what I was looking for.
