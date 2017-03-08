@@ -462,7 +462,7 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: !Ref MinAutoScaleCount
-        Timeout: PT20M
+        Timeout: PT30M
     UpdatePolicy:
       AutoScalingRollingUpdate:
         MinInstancesInService: !Ref MinAutoScaleCount
