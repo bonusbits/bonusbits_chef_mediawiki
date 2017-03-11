@@ -546,7 +546,7 @@ Resources:
               command: !Sub "git clone --branch ${CookbookVersion} https://github.com/bonusbits/${CookbookName}.git"
             04_deploy_databags:
               cwd: /opt/chef-repo
-              command: "cp -R cookbooks/${CookbookName}/test/data_bags/${CookbookName} data_bags/"
+              command: !Sub "cp -R cookbooks/${CookbookName}/test/data_bags/${CookbookName} data_bags/"
           files:
             "/opt/chef-repo/encrypted_data_bag_secret":
               content: !Sub ${DataBagSecret}
