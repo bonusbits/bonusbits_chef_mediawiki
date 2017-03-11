@@ -27,7 +27,9 @@
                 "rewrite_wiki_alias": false
             },
             "dns": {
-                "configure": true
+                "configure": true,
+                "hosted_zone_id": "V2UYT8USYGG8F8",
+                "record_name": "www.example.com"
             },
             "adsense": {
                 "configure": true
