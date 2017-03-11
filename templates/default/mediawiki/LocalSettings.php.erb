@@ -315,8 +315,9 @@ $wgGroupPermissions['user']['noanalytics'] = true;
 ##########################################
 wfLoadExtension( 'AutoSitemap' );
 $wgAutoSitemap["filename"] = "sitemap.xml";
-$wgAutoSitemap["server"] = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgServer'] %>";
-
+# Set this to prd URL So dev testing does not re-write sitemap with dev hostname
+$wgAutoSitemap["server"] = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgAutoSitemap']['server'] %>";
+$wgAutoSitemap["freq"] = "daily";
 $wgAutoSitemap["exclude_namespaces"] = [
     NS_CATEGORY,
     NS_CATEGORY_TALK,
@@ -339,8 +340,6 @@ $wgAutoSitemap["exclude_namespaces"] = [
     NS_USER_TALK
 ];
 
-$wgAutoSitemap["exclude_pages"] = ['page title to exclude', 'other one'];
-$wgAutoSitemap["freq"] = "daily";
 
 ## Scribunto
 ##########################################

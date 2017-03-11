@@ -36,9 +36,17 @@ git "#{mediawiki_path}/vendor" do
   not_if { ::File.exist?("#{mediawiki_path}/vendor") }
 end
 
+# TODO: Symlinks are using full path. Do I want only relative?
 # Symlink Favicon
 link "#{mediawiki_path}/favicon.ico" do
   to "#{uploads_path}/favicon.ico"
+  owner mediawiki_user
+  group mediawiki_group
+end
+
+# Symlink sitemap.xml
+link "#{mediawiki_path}/sitemap.xml" do
+  to "#{uploads_path}/sitemap.xml"
   owner mediawiki_user
   group mediawiki_group
 end

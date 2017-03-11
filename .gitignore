@@ -69,6 +69,5 @@ Dockerfile-kitchen*
 /test/data_bags/bonusbits_mediawiki_nginx/sites.json
 /test/environments/ec2_environment.json
 /tmp/
-/test/data_bags/ec2_databags/ec2_databag.json
-/test/data_bags/ec2_databags/ec2_databag_encrypted.json
-/test/data_bags/ec2_databags/ec2_databag_prd.json
+/test/data_bags/ec2_databags/bonusbits_dev.json
+/test/data_bags/ec2_databags/bonusbits_prd_decrypted.json

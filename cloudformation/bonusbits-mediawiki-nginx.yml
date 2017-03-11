@@ -64,7 +64,7 @@ Parameters:
   ChefClientVersion:
     Type: String
     Default: 12.18.31
-  S3DeployBucket:
+  DataBagItem:
     Type: String
   DataBagSecret:
     Type: String
@@ -178,7 +178,7 @@ Metadata:
         Parameters:
           - CookbookVersion
           - ChefClientVersion
-          - S3DeployBucket
+          - DataBagItem
           - DataBagSecret
 
       # Mediawiki
@@ -255,8 +255,8 @@ Metadata:
         default: Chef Client Version
       CookbookVersion:
         default: Cookbook Version
-      S3DeployBucket:
-        default: S3 Deploy Bucket
+      DataBagItem:
+        default: Data Bag Item
       DataBagSecret:
         default: Data Bag Secret
 
@@ -538,12 +538,9 @@ Resources:
             03_download_cookbook:
               cwd: /opt/chef-repo/cookbooks
               command: !Sub "git clone --branch ${CookbookVersion} https://github.com/bonusbits/bonusbits_mediawiki_nginx.git"
-            04_create_databags_dir:
-              cwd: /opt/chef-repo/data_bags
-              command: "mkdir ec2_databags"
-            05_fetch_databag:
-              cwd: /opt/chef-repo/data_bags
-              command: !Sub "aws s3 cp s3://${S3DeployBucket}/ec2_databag.json /opt/chef-repo/data_bags/ec2_databags/ --sse"
+            04_deploy_databags:
+              cwd: /opt/chef-repo
+              command: "cp -R cookbooks/bonusbits_mediawiki_nginx/test/data_bags/ec2_databags data_bags/"
           files:
             "/opt/chef-repo/encrypted_data_bag_secret":
               content: !Sub ${DataBagSecret}
@@ -571,12 +568,12 @@ Resources:
                    },
                    "override_attributes": {
                        "bonusbits_mediawiki_nginx": {
+                           "data_bag_item": "${DataBagItem}",
                            "aws": {
                                "stack_name": "${AWS::StackName}",
                                "vpc_id": "${VPC}",
                                "logs_group_name": "${CloudWatchLogsGroup}",
-                               "efs_filesystem_id": "${EfsFileSystemId}",
-                               "s3_deploy_path": "${S3DeployBucket}"
+                               "efs_filesystem_id": "${EfsFileSystemId}"
                            },
                            "mediawiki": {
                                "version_major": "${MediawikiMajorRelease}",
