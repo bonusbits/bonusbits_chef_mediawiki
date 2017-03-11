@@ -654,8 +654,6 @@ Outputs:
     Value: !Ref VPC
   SubnetIdList:
     Value: !Join [',', !Ref SubnetIdList]
-  SecurityGroup:
-    Value: !Ref SecurityGroup
   InternalAccessSecurityGroup:
     Value: !Ref InternalAccessSecurityGroup
   RemoteSecurityGroup:
@@ -664,31 +662,79 @@ Outputs:
     Value: !Ref RdsSecurityGroup
   EfsSecurityGroup:
     Value: !Ref EfsSecurityGroup
+  EfsFileSystemId:
+    Value: !Ref EfsFileSystemId
 
-  # Instance Settings
-  AMI:
-    Description: AMI Used.
-    Value: !FindInMap [ RegionMap, !Ref "AWS::Region", EBS ]
-  InstanceType:
-    Description: Instance Type Used.
-    Value: !Ref InstanceType
+  # Instance
   KeyPairName:
     Description: Key Pair Name Used.
     Value: !Ref KeyPairName
-  IAMRole:
-    Description: IAM Instance Profile Role Created.
-    Value: !Ref IamRole
+  InstanceType:
+    Description: Instance Type Used.
+    Value: !Ref InstanceType
+
+  # Autoscaling
+  MinAutoScaleCount:
+    Value: !Ref MinAutoScaleCount
+  MaxAutoScaleCount:
+    Value: !Ref MaxAutoScaleCount
+  AsgSnsTopicArn:
+    Value: !Ref AsgSnsTopicArn
+
+  # Deployment
+  CookbookName:
+    Value: !Ref CookbookName
+  CookbookVersion:
+    Value: !Ref CookbookVersion
+  ChefClientVersion:
+    Value: !Ref ChefClientVersion
+  DataBagItem:
+    Value: !Ref DataBagItem
+
+  # MediaWiki
+  MediawikiMajorRelease:
+    Value: !Ref MediawikiMajorRelease
+  MediawikiMinorRelease:
+    Value: !Ref MediawikiMinorRelease
+  SiteFolderName:
+    Value: !Ref SiteFolderName
+  UploadFolderName:
+    Value: !Ref UploadFolderName
+
+  # Nginx
+  RootSitePath:
+    Value: !Ref RootSitePath
+  NginxXforwardedTraffic:
+    Value: !Ref NginxXforwardedTraffic
+  NginxRewriteWikiAlias:
+    Value: !Ref NginxRewriteWikiAlias
 
   # DNS
-  RecordName:
-    Description: Record Name.
-    Value: !Ref RecordName
+  UpdateDNS:
+    Value: !Ref UpdateDNS
   HostedZoneId:
     Description: Hosted Zone ID.
     Value: !Ref HostedZoneId
+  RecordName:
+    Description: Record Name.
+    Value: !Ref RecordName
 
-  # Generated
+  # Backups
+  SetupBackups:
+    Value: !Ref SetupBackups
+  BackupInterval:
+    Value: !Ref BackupInterval
+
+  # Template Generated
 #  InstanceURL:
 #    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
   DnsURL:
     Value: !Join [ "", [ "http://", !Ref RecordName ] ]
+  SecurityGroup:
+    Value: !Ref SecurityGroup
+  AMI:
+    Description: AMI Used.
+    Value: !FindInMap [ RegionMap, !Ref "AWS::Region", EBS ]
+  IAMRole:
+    Description: IAM Instance Profile Role Created.
+    Value: !Ref IamRole
