@@ -5,4 +5,4 @@
 * ...
 
 # Links
-* [Related Issue](https://github.com/bonusbits/cloudformation_templates/issues/00)
+* [Related Issue](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/00)

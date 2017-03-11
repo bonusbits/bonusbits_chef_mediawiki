@@ -63,12 +63,9 @@ Dockerfile-kitchen*
 /templates/default/confd/*.erb
 *.tgz
 *.tar.gz
-/test/data_bags/bonusbits_mediawiki_nginx/connections.json
-/temp/
-/test/data_bags/bonusbits_mediawiki_nginx/credentials.json
-/test/data_bags/bonusbits_mediawiki_nginx/sites.json
+
+# bonusbits_mediawiki_nginx
 /test/environments/ec2_environment.json
 /tmp/
-/test/data_bags/ec2_databags/ec2_databag.json
-/test/data_bags/ec2_databags/ec2_databag_encrypted.json
-/test/data_bags/ec2_databags/ec2_databag_prd.json
+/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json
+/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_prd_decrypted.json

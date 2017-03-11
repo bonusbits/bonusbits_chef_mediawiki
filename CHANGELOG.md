@@ -1,6 +1,20 @@
 ##CHANGE LOG
 ---
 
+##1.0.1 - 03/11/2017 - Levon Becker - [Issue 14](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/14) & [Issue 16](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/16)
+* Added Symlink for sitemap.xml to EFS (uploads). So that it's shared among the frontend servers.
+* Fixed Issue 16 updating search engines of changes
+    ```
+    PHP Warning:  fopen(https://www.google.com/webmasters/sitemaps/ping?sitemap=/sitemap.xml): failed to open stream: HTTP request failed! HTTP/1.0 400 Bad Request
+        in /var/www/html/mediawiki/extensions/AutoSitemap/AutoSitemap_body.php on line 231
+    ```
+* Added Data Bag Item Parameter to CloudFormation
+* Moved encrypted data bag item to git so there is inherent versioning
+* Removed S3 Deploy Bucket parameter as it's no longer needed since Data Bag Items included with cookbook
+* Added logic in CloudFormation to copy the data bags + data bag items to /opt/chef-repo/data_bags/
+* Renamed Data Bag since it's no longer generic and static strings use in CloudFormation cfn-init
+* Added CookbookName parameter to CloudFormation. Mostly to make code more easily reusable
+
 ##1.0.0 - 03/07/2017 - Levon Becker
 * Initial Stable Release
 
