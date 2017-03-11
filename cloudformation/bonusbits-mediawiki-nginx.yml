@@ -58,6 +58,9 @@ Parameters:
   # Cloudwatch Alerts
 
   # Deployment
+  CookbookName:
+    Type: String
+    Default: bonusbits_mediawiki_nginx
   CookbookVersion:
     Type: String
     Default: latest
@@ -176,6 +179,7 @@ Metadata:
       - Label:
           default: Deployment
         Parameters:
+          - CookbookName
           - CookbookVersion
           - ChefClientVersion
           - DataBagItem
@@ -251,10 +255,12 @@ Metadata:
         default: Asg Sns Topic Arn
 
       # Deployment
-      ChefClientVersion:
-        default: Chef Client Version
+      CookbookName:
+        default: Cookbook Name
       CookbookVersion:
         default: Cookbook Version
+      ChefClientVersion:
+        default: Chef Client Version
       DataBagItem:
         default: Data Bag Item
       DataBagSecret:
@@ -537,10 +543,10 @@ Resources:
               command: "mkdir -p cookbooks checksums environments cache backup data_bags roles downloads"
             03_download_cookbook:
               cwd: /opt/chef-repo/cookbooks
-              command: !Sub "git clone --branch ${CookbookVersion} https://github.com/bonusbits/bonusbits_mediawiki_nginx.git"
+              command: !Sub "git clone --branch ${CookbookVersion} https://github.com/bonusbits/${CookbookName}.git"
             04_deploy_databags:
               cwd: /opt/chef-repo
-              command: "cp -R cookbooks/bonusbits_mediawiki_nginx/test/data_bags/ec2_databags data_bags/"
+              command: "cp -R cookbooks/${CookbookName}/test/data_bags/${CookbookName} data_bags/"
           files:
             "/opt/chef-repo/encrypted_data_bag_secret":
               content: !Sub ${DataBagSecret}
@@ -567,7 +573,7 @@ Resources:
                    "default_attributes": {
                    },
                    "override_attributes": {
-                       "bonusbits_mediawiki_nginx": {
+                       "${CookbookName}": {
                            "data_bag_item": "${DataBagItem}",
                            "aws": {
                                "stack_name": "${AWS::StackName}",
@@ -612,7 +618,7 @@ Resources:
                   },
                   "chef_type": "role",
                   "run_list": [
-                    "recipe[bonusbits_mediawiki_nginx]"
+                    "recipe[${CookbookName}]"
                   ],
                   "env_run_lists": {
                   }
