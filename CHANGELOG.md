@@ -12,6 +12,7 @@
 * Moved encrypted data bag item to git so there is inherent versioning
 * Removed S3 Deploy Bucket parameter as it's no longer needed since Data Bag Items included with cookbook
 * Added logic in CloudFormation to copy the data bags + data bag items to /opt/chef-repo/data_bags/
+* Renamed Data Bag since it's no longer generic and static strings use in CloudFormation cfn-init
 
 ##1.0.0 - 03/07/2017 - Levon Becker
 * Initial Stable Release

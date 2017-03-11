@@ -8,15 +8,12 @@ run_state['detected_environment'] =
   end
 
 default['bonusbits_mediawiki_nginx'].tap do |root|
-  # Paths
-  root['local_download_path'] = '/opt/chef-repo/downloads'
-
   # CloudWatch Logs
   root['cloudwatch_logs']['configure'] = true
 
   # Data Bag
-  root['data_bag'] = 'ec2_databags'
-  root['data_bag_item'] = 'ec2_databag'
+  root['data_bag'] = 'bonusbits_mediawiki_nginx'
+  root['data_bag_item'] = 'example_databag_item'
 
   # EFS
   root['efs']['configure'] = true
