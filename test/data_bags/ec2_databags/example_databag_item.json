@@ -1,5 +1,5 @@
 {
-    "id": "example_databag",
+    "id": "example_databag_item",
     "adsense": {
         "header": "            <?php\n                    $googleadheader = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadheader;\n            ?>",
         "footer": "            <?php\n                    $googleadfooter = '<PASTE GOOGLE ADSENSE CODE HERE>';\n                    echo $googleadfooter;\n            ?>",
@@ -23,13 +23,16 @@
             "wgUpgradeKey": "XFW46pkSNUxh44F2",
             "wgGoogleAnalyticsAccount": "UA-12345678-1",
             "wgReCaptchaSiteKey": "VkAbTAsAxbRnLUMQa9H5d5m7nzVYeSrVbFaYXPCy",
-            "wgReCaptchaSecretKey": "svXnAMft7dUa9VE4VAu3tuTMXNAkCNvjN7yGWqz8"
+            "wgReCaptchaSecretKey": "svXnAMft7dUa9VE4VAu3tuTMXNAkCNvjN7yGWqz8",
+            "wgAutoSitemap": {
+                "server": "http://www.example.com"
+            }
         }
     },
     "nginx": {
         "server_names": "example.com www.example.com",
         "proxy_lan_ip": "10.0.0.1"
-    }
+    },
     "backups": {
         "s3_backup_bucket": "example-backups"
     }
