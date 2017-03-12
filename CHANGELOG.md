@@ -7,6 +7,10 @@
 * Changed update-dns script to generate the upsert json in /tmp directory instead of /opt/chef-repo
 * Re-arranged Ruby Blocks to only output error and strout if errors
 * Added two not_if blocks to the php-fpm folder chowns
+* Enabled AutoScaling Group Metric Collection in CloudFormation Template
+* Added CPU Alert to Autoscaling group
+* Added Notifications to Autoscaling Group
+* Added Metrics Collection to Autoscaling Group
 
 ##1.0.1 - 03/11/2017 - Levon Becker - [Issue 14](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/14) & [Issue 16](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/16)
 * Added Symlink for sitemap.xml to EFS (uploads). So that it's shared among the frontend servers.

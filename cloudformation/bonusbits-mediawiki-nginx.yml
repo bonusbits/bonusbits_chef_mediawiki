@@ -51,9 +51,9 @@ Parameters:
   MaxAutoScaleCount:
     Type: Number
     Default: 1
-  AsgSnsTopicArn:
+  AlarmSnsTopicArn:
     Type: String
-    Default: arn:aws:sns:us-west-2:000000000000:asg-alerts
+    Default: arn:aws:sns:us-west-2:000000000000:alerts
 
   # Cloudwatch Alerts
 
@@ -173,7 +173,7 @@ Metadata:
         Parameters:
           - MinAutoScaleCount
           - MaxAutoScaleCount
-          - AsgSnsTopicArn
+          - AlarmSnsTopicArn
 
       # Deployment
       - Label:
@@ -251,8 +251,8 @@ Metadata:
         default: Min AutoScale Count
       MaxAutoScaleCount:
         default: Max AutoScale Count
-      AsgSnsTopicArn:
-        default: Asg Sns Topic Arn
+      AlarmSnsTopicArn:
+        default: Alarm SNS Topic ARN
 
       # Deployment
       CookbookName:
@@ -444,6 +444,24 @@ Resources:
       MinSize: !Ref MinAutoScaleCount
       MaxSize: !Ref MaxAutoScaleCount
       DesiredCapacity: !Ref MinAutoScaleCount
+      MetricsCollection:
+        - Granularity: 1Minute
+          Metrics:
+            - GroupMinSize
+            - GroupMaxSize
+            - GroupDesiredCapacity
+            - GroupInServiceInstances
+            - GroupPendingInstances
+            - GroupStandbyInstances
+            - GroupTerminatingInstances
+            - GroupTotalInstances
+      NotificationConfigurations:
+        - TopicARN: !Ref AlarmSnsTopicArn
+          NotificationTypes:
+            - autoscaling:EC2_INSTANCE_LAUNCH
+            - autoscaling:EC2_INSTANCE_LAUNCH_ERROR
+            - autoscaling:EC2_INSTANCE_TERMINATE
+            - autoscaling:EC2_INSTANCE_TERMINATE_ERROR
       Tags:
         - Key: Name
           Value: !Ref "AWS::StackName"
@@ -457,11 +475,35 @@ Resources:
     CreationPolicy:
       ResourceSignal:
         Count: !Ref MinAutoScaleCount
-        Timeout: PT30M
+        Timeout: PT20M
     UpdatePolicy:
       AutoScalingRollingUpdate:
         MinInstancesInService: !Ref MinAutoScaleCount
         MaxBatchSize: 1
+
+  CPUAlarmHigh:
+    Type: AWS::CloudWatch::Alarm
+    DependsOn:
+      - AutoScalingGroup
+    Properties:
+      AlarmName: !Join [ '', [ !Ref "AWS::StackName", '-cpu' ]]
+      AlarmDescription: Alert if CPU > 50% for 10 minutes
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: '300'
+      EvaluationPeriods: '2'
+      Threshold: '50'
+      AlarmActions:
+        - !Ref AlarmSnsTopicArn
+      OKActions:
+        - !Ref AlarmSnsTopicArn
+      InsufficientDataActions:
+        - !Ref AlarmSnsTopicArn
+      Dimensions:
+        - Name: AutoScalingGroupName
+          Value: !Ref AutoScalingGroup
+      ComparisonOperator: GreaterThanThreshold
 
   LaunchConfiguration:
     Type: AWS::AutoScaling::LaunchConfiguration
@@ -637,9 +679,6 @@ Resources:
             01_warm_ebs:
               command: "echo 'ACTION: Performing EBS Warming' && dd if=/dev/xvda of=/dev/xvda conv=notrunc bs=1M status=progress"
 
-  # TODO: Cloudwatch Scaling Policies
-  # TODO: Cloudwatch Alerts for Instance CPU and Service Checks
-
 Outputs:
   # Ownership
   Owner:
@@ -678,8 +717,8 @@ Outputs:
     Value: !Ref MinAutoScaleCount
   MaxAutoScaleCount:
     Value: !Ref MaxAutoScaleCount
-  AsgSnsTopicArn:
-    Value: !Ref AsgSnsTopicArn
+  AlarmSnsTopicArn:
+    Value: !Ref AlarmSnsTopicArn
 
   # Deployment
   CookbookName:
@@ -728,8 +767,8 @@ Outputs:
   # Template Generated
 #  InstanceURL:
 #    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
-  DnsURL:
-    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
+#  DnsURL:
+#    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
   SecurityGroup:
     Value: !Ref SecurityGroup
   AMI:
