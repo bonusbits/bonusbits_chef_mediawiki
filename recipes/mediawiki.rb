@@ -87,16 +87,18 @@ end
 # Download Widgets Extension Submodules TODO: Better Logic?
 ruby_block 'Download Widgets Extension Submodules' do
   block do
-    require 'open3'
     bash_command = "cd #{mediawiki_path}/extensions/Widgets/ && git submodule init && git submodule update"
-    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
 
     # Run Bash Script and Capture StrOut, StrErr, and Status
+    require 'open3'
+    Chef::Log.warn("Open3: BASH Command (#{bash_command})")
     out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("REPORT: Open3 Status (#{status})")
-    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-    raise 'Failed!' unless status.success?
+    Chef::Log.warn("Open3: Status (#{status})")
+    unless status.success?
+      Chef::Log.warn("Open3: Standard Out (#{out})")
+      Chef::Log.warn("Open3: Error Out (#{err})")
+      raise 'Failed!'
+    end
   end
   action :run
   not_if { ::File.exist?("#{mediawiki_path}/extensions/Widgets/smarty/libs") }
@@ -131,16 +133,18 @@ end
 # Set Ownership on Mediawiki Home
 ruby_block 'Set Ownership on Mediawiki Home' do
   block do
-    require 'open3'
     bash_command = "chown -R nginx:nginx #{mediawiki_path}"
-    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
 
     # Run Bash Script and Capture StrOut, StrErr, and Status
+    require 'open3'
+    Chef::Log.warn("Open3: BASH Command (#{bash_command})")
     out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("REPORT: Open3 Status (#{status})")
-    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-    raise 'Failed!' unless status.success?
+    Chef::Log.warn("Open3: Status (#{status})")
+    unless status.success?
+      Chef::Log.warn("Open3: Standard Out (#{out})")
+      Chef::Log.warn("Open3: Error Out (#{err})")
+      raise 'Failed!'
+    end
   end
   action :run
   not_if { ::File.exist?(uploads_path) } # So doesn't reset uploads ownership every time

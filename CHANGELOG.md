@@ -5,7 +5,8 @@
 * Dropped Sidebar Ads from 5 to 3 matching ad units plus small, medium then large progression. updated data bag sidebar php
 * Fixed dns attribute overrides needed in environment file for test kitchen
 * Changed update-dns script to generate the upsert json in /tmp directory instead of /opt/chef-repo
-* 
+* Re-arranged Ruby Blocks to only output error and strout if errors
+* Added two not_if blocks to the php-fpm folder chowns
 
 ##1.0.1 - 03/11/2017 - Levon Becker - [Issue 14](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/14) & [Issue 16](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/16)
 * Added Symlink for sitemap.xml to EFS (uploads). So that it's shared among the frontend servers.
