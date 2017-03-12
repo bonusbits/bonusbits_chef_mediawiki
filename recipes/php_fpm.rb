@@ -39,11 +39,11 @@ ruby_block "Change Ownership of PHP FPM Logs Folder (#{php_fpm_log_path})" do
     end
   end
   action :run
-  not_if {
+  not_if do
     require 'etc'
     file_uid = ::File.stat(php_fpm_log_path).uid
     Etc.getpwuid(file_uid).name == mediawiki_user
-  }
+  end
 end
 
 # Switch User and Group
@@ -64,11 +64,11 @@ ruby_block "Change Ownership of PHP FPM Lib Directory (#{php_fpm_lib_path})" do
     end
   end
   action :run
-  not_if {
+  not_if do
     require 'etc'
     file_gid = ::File.stat(php_fpm_lib_path).gid
     Etc.getgrgid(file_gid).name == mediawiki_group
-  }
+  end
 end
 
 # Enable and Start Service
