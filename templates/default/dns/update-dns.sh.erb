@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-cat <<EOF > /opt/chef-repo/route53-upsert.json
+cat <<EOF > /tmp/route53-upsert.json
 {
   "Comment": "string",
   "Changes": [
@@ -21,4 +21,4 @@ cat <<EOF > /opt/chef-repo/route53-upsert.json
 }
 EOF
 
-aws route53 change-resource-record-sets --hosted-zone-id "<%= node['bonusbits_mediawiki_nginx']['dns']['hosted_zone_id'] %>" --change-batch "file:///opt/chef-repo/route53-upsert.json"
+aws route53 change-resource-record-sets --hosted-zone-id "<%= node['bonusbits_mediawiki_nginx']['dns']['hosted_zone_id'] %>" --change-batch "file:///tmp/route53-upsert.json"

@@ -1,55 +1,74 @@
+mediawiki_user = node['bonusbits_mediawiki_nginx']['nginx']['user']
+mediawiki_group = node['bonusbits_mediawiki_nginx']['nginx']['group']
+
 # Switch User and Group
 ruby_block 'Switch Php Fpm Ownership' do
   block do
-    require 'open3'
-    bash_command = 'sed -i "s/apache/nginx/g" /etc/php-fpm-7.0.d/www.conf'
-    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
+    bash_command = "sed -i 's/apache/#{mediawiki_user}/g' /etc/php-fpm-7.0.d/www.conf"
 
     # Run Bash Script and Capture StrOut, StrErr, and Status
+    require 'open3'
+    Chef::Log.warn("Open3: BASH Command (#{bash_command})")
     out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("REPORT: Open3 Status (#{status})")
-    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-    raise 'Failed!' unless status.success?
+    Chef::Log.warn("Open3: Status (#{status})")
+    unless status.success?
+      Chef::Log.warn("Open3: Standard Out (#{out})")
+      Chef::Log.warn("Open3: Error Out (#{err})")
+      raise 'Failed!'
+    end
   end
   action :run
   not_if { ::File.readlines('/etc/php-fpm-7.0.d/www.conf').grep(/^user = nginx/).any? }
 end
 
 # Switch User and Group
-ruby_block 'Change Ownership of Nginx Logs Folder' do
+php_fpm_log_path = '/var/log/php-fpm'
+ruby_block "Change Ownership of PHP FPM Logs Folder (#{php_fpm_log_path})" do
   block do
-    require 'open3'
-    bash_command = 'chown -R nginx:nginx /var/log/php-fpm'
-    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
+    bash_command = "chown -R #{mediawiki_user}:#{mediawiki_group} #{php_fpm_log_path}"
 
     # Run Bash Script and Capture StrOut, StrErr, and Status
+    require 'open3'
+    Chef::Log.warn("Open3: BASH Command (#{bash_command})")
     out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("REPORT: Open3 Status (#{status})")
-    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-    raise 'Failed!' unless status.success?
+    Chef::Log.warn("Open3: Status (#{status})")
+    unless status.success?
+      Chef::Log.warn("Open3: Standard Out (#{out})")
+      Chef::Log.warn("Open3: Error Out (#{err})")
+      raise 'Failed!'
+    end
   end
   action :run
-  # TODO: not_if { ::File.readlines('/etc/php-fpm-7.0.d/www.conf').grep(/^user = nginx/).any? }
+  not_if do
+    require 'etc'
+    file_uid = ::File.stat(php_fpm_log_path).uid
+    Etc.getpwuid(file_uid).name == mediawiki_user
+  end
 end
 
 # Switch User and Group
-ruby_block 'Change Ownership /var/lib/php/7.0' do
+php_fpm_lib_path = '/var/lib/php/7.0'
+ruby_block "Change Ownership of PHP FPM Lib Directory (#{php_fpm_lib_path})" do
   block do
-    require 'open3'
-    bash_command = 'chown -R root:nginx /var/lib/php/7.0/'
-    Chef::Log.warn("REPORT: Open3 BASH Command (#{bash_command})")
+    bash_command = "chown -R root:#{mediawiki_group} #{php_fpm_lib_path}"
 
     # Run Bash Script and Capture StrOut, StrErr, and Status
+    require 'open3'
+    Chef::Log.warn("Open3: BASH Command (#{bash_command})")
     out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("REPORT: Open3 Status (#{status})")
-    Chef::Log.warn("REPORT: Open3 Standard Out (#{out})")
-    Chef::Log.warn("REPORT: Open3 Error Out (#{err})")
-    raise 'Failed!' unless status.success?
+    Chef::Log.warn("Open3: Status (#{status})")
+    unless status.success?
+      Chef::Log.warn("Open3: Standard Out (#{out})")
+      Chef::Log.warn("Open3: Error Out (#{err})")
+      raise 'Failed!'
+    end
   end
   action :run
-  # TODO: not_if { ::File.readlines('/etc/php-fpm-7.0.d/www.conf').grep(/^user = nginx/).any? }
+  not_if do
+    require 'etc'
+    file_gid = ::File.stat(php_fpm_lib_path).gid
+    Etc.getgrgid(file_gid).name == mediawiki_group
+  end
 end
 
 # Enable and Start Service
