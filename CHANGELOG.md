@@ -1,6 +1,9 @@
 ##CHANGE LOG
 ---
 
+##1.0.3 - 03/16/2017 - Levon Becker -  [Issue 6](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/6)
+* Dropped backup script drafts. Going to Data Pipeline backup solution.
+
 ##1.0.2 - 03/12/2017 - Levon Becker - [Issue 5](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/5) & [Issue 11](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/11) & [Issue 17](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/17)
 * Dropped Sidebar Ads from 5 to 3 matching ad units plus small, medium then large progression. updated data bag sidebar php
 * Fixed dns attribute overrides needed in environment file for test kitchen
