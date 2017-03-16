@@ -16,7 +16,7 @@ No ELB/ALB configured, because we deploy behind an existing Sophos load balancer
 * Create Empty Mediawiki Database and User
     * [Wiki Article](https://www.bonusbits.com/wiki/Reference:Secure_Mediawiki_Nginx_Configuration)
 * EFS Mount Storage Created
-    * [Example Template](https://github.com/bonusbits/cloudformation_templates/blob/master/infrastructure/nat-gateway.yml)
+    * [Example Template](https://github.com/bonusbits/cloudformation_templates/blob/master/storage/efs.yml)
 * Internet Access from EC2 Instance
     * [Example NAT Gateway Template](https://github.com/bonusbits/cloudformation_templates/blob/master/infrastructure/nat-gateway.yml)
     * [Example VPN BGP Template](https://github.com/bonusbits/cloudformation_templates/blob/master/infrastructure/vpn-bgp.yml)
