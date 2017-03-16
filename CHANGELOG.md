@@ -1,7 +1,11 @@
 ##CHANGE LOG
 ---
 
-##1.0.3 - 03/16/2017 - Levon Becker -  [Issue 6](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/6)
+##1.0.4 - 03/16/2017 - Levon Becker -  [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/2)
+* Cleaned up default recipe, data bag and environment files that still had backup settings
+* Removed backup parameters from cloudformation template.
+
+##1.0.3 - 03/16/2017 - Levon Becker -  [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/2)
 * Dropped backup script drafts. Going to Data Pipeline backup solution.
 
 ##1.0.2 - 03/12/2017 - Levon Becker - [Issue 5](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/5) & [Issue 11](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/11) & [Issue 17](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/17)

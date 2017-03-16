@@ -33,10 +33,6 @@
             },
             "adsense": {
                 "configure": true
-            },
-            "backups": {
-                "configure": true,
-                "backup_interval": "hourly"
             }
         }
     }

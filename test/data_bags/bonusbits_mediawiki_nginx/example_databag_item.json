@@ -32,8 +32,5 @@
     "nginx": {
         "server_names": "example.com www.example.com",
         "proxy_lan_ip": "10.0.0.1"
-    },
-    "backups": {
-        "s3_backup_bucket": "example-backups"
     }
 }

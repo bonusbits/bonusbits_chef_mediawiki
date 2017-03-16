@@ -114,13 +114,5 @@
     {
         "ParameterKey": "RecordName",
         "ParameterValue": "www.example.com"
-    },
-    {
-        "ParameterKey": "SetupBackups",
-        "ParameterValue": "true"
-    },
-    {
-        "ParameterKey": "BackupInterval",
-        "ParameterValue": "daily"
     }
 ]

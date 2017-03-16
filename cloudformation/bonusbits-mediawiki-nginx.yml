@@ -122,21 +122,6 @@ Parameters:
     Description: DNS Alias Record Name (web01.example.com)
     Default: web01.example.com
 
-  # Backups
-  SetupBackups:
-    Type: String
-    Default: true
-    AllowedValues:
-    - true
-    - false
-  BackupInterval:
-    Type: String
-    Default: daily
-    AllowedValues:
-    - daily
-    - hourly
-    - weekly
-
 Metadata:
   TemplateAuthor: Levon Becker
   AWS::CloudFormation::Interface:
@@ -209,13 +194,6 @@ Metadata:
           - UpdateDNS
           - HostedZoneId
           - RecordName
-
-      # Backups
-      - Label:
-          default: Backups
-        Parameters:
-          - SetupBackups
-          - BackupInterval
 
     ParameterLabels:
       # Ownership
@@ -291,12 +269,6 @@ Metadata:
         default: Record Name
       HostedZoneId:
         default: Hosted Zone ID
-
-      # Backups
-      SetupBackups:
-        default: Setup Backups
-      BackupInterval:
-        default: Backup Interval
 
 Mappings:
   RegionMap:
@@ -641,10 +613,6 @@ Resources:
                            },
                            "adsense": {
                                "configure": true
-                           },
-                           "backups": {
-                               "configure": ${SetupBackups},
-                               "backup_interval": "${BackupInterval}"
                            }
                        }
                    }
@@ -757,12 +725,6 @@ Outputs:
   RecordName:
     Description: Record Name.
     Value: !Ref RecordName
-
-  # Backups
-  SetupBackups:
-    Value: !Ref SetupBackups
-  BackupInterval:
-    Value: !Ref BackupInterval
 
   # Template Generated
 #  InstanceURL:

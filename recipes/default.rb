@@ -38,9 +38,6 @@ include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
 # Setup CloudWatch Logs
 include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs' if node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']
 
-# Deploy Backup Script
-include_recipe 'bonusbits_mediawiki_nginx::backups' if node['bonusbits_mediawiki_nginx']['backups']['configure']
-
 # Setup Sendmail
 # include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']
 
