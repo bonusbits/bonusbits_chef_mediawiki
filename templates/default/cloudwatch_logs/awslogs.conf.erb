@@ -2,6 +2,23 @@
 state_file = /var/lib/awslogs/agent-state
 use_gzip_http_content_encoding = true
 
+[cloud-init]
+log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
+log_stream_name = <%= node['ec2']['instance_id'] %>-cloud-init
+datetime_format = %b %d %H:%M:%S
+file = /var/log/cloud-init.log
+
+[cloud-init-output]
+log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
+log_stream_name = <%= node['ec2']['instance_id'] %>-cloud-init-output
+file = /var/log/cloud-init-output.log
+
+[yum]
+log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
+log_stream_name = <%= node['ec2']['instance_id'] %>-yum
+datetime_format = %b %d %H:%M:%S
+file = /var/log/yum.log
+
 [nginx-access]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
 log_stream_name = <%= node['ec2']['instance_id'] %>-nginx-access
