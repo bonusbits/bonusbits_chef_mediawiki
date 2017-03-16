@@ -1,3 +1,6 @@
+# Setup CloudWatch Logs
+include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs' if node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']
+
 # Fetch Data Bag
 data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
 data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']
@@ -34,9 +37,6 @@ include_recipe 'bonusbits_mediawiki_nginx::php_fpm'
 
 # Install and Configure Nginx
 include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
-
-# Setup CloudWatch Logs
-include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs' if node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']
 
 # Setup Sendmail
 # include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']

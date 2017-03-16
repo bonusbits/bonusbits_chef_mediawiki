@@ -1,6 +1,9 @@
 ##CHANGE LOG
 ---
 
+##1.0.5 - 03/16/2017 - Levon Becker
+* Added cfn-init.log and cfn-init-cmd.log to Cloudwatch Logs Stream
+
 ##1.0.4 - 03/16/2017 - Levon Becker -  [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/2)
 * Cleaned up default recipe, data bag and environment files that still had backup settings
 * Removed backup parameters from cloudformation template.
