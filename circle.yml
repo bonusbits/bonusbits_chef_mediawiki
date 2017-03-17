@@ -3,8 +3,6 @@ machine:
     version: '2.3.1'
   timezone:
     America/Los_Angeles
-  environment:
-    CODECLIMATE_REPO_TOKEN: bc471ba6d3548276f87ec72cafbd264a119b84bb161371569296dec7a330f8b0
 
 dependencies:
   override:

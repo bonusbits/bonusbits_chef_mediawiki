@@ -39,7 +39,7 @@ include_recipe 'bonusbits_mediawiki_nginx::php_fpm'
 include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
 
 # Setup Sendmail
-# include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']
+include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']
 
 # Deploy Node Info Script
 include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['node_info']['deploy']

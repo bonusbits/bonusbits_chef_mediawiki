@@ -7,20 +7,6 @@ run_state['detected_environment'] =
     'dev'
   end
 
-default['bonusbits_mediawiki_nginx'].tap do |root|
-  # CloudWatch Logs
-  root['cloudwatch_logs']['configure'] = true
-
-  # Data Bag
-  root['data_bag'] = 'bonusbits_mediawiki_nginx'
-  root['data_bag_item'] = 'example_databag_item'
-
-  # EFS
-  root['efs']['configure'] = true
-
-  # Log Rotate
-  root['logrotate']['configure'] = true
-
-  # Google AdSense
-  root['adsense']['configure'] = false
-end
+# Data Bags
+default['bonusbits_mediawiki_nginx']['data_bag'] = 'bonusbits_mediawiki_nginx'
+default['bonusbits_mediawiki_nginx']['data_bag_item'] = 'example_databag_item'

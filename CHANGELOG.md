@@ -1,6 +1,11 @@
 ##CHANGE LOG
 ---
 
+##1.0.6 - 03/17/2017 - Levon Becker
+* Moved attributes out of default to own matching attributes file. Easier to add/remove functions and find attributes I'm looking for.
+* Added Sendmail recipe call, but nothing in it yet.
+* Removed Code Climate. Really that's good for like a Ruby Gem. Not so much for a cookbook. Especially because I'm not going to write rspec tests.
+
 ##1.0.5 - 03/16/2017 - Levon Becker
 * Added cfn-init.log and cfn-init-cmd.log to Cloudwatch Logs Stream
 
