@@ -1,14 +1,13 @@
-require 'spec_helper'
-
-web_package_list = %w(
+package_list = %w(
   apr
   apr-util
   enchant
   git
+  htop
   ImageMagick
   json-c
+  mlocate
   mysql56
-  nginx
   openssl
   openssl-devel
   pcre
@@ -20,7 +19,6 @@ web_package_list = %w(
   php70-cli
   php70-common
   php70-enchant
-  php70-fpm
   php70-intl
   php70-mbstring
   php70-mcrypt
@@ -31,22 +29,12 @@ web_package_list = %w(
   php70-process
   php70-xml
   texlive
+  vim-enhanced
 )
 
-other_package_list = %w(
-  htop
-  mlocate
-  vim
-)
-
-describe 'bonusbits_mediawiki_nginx::packages' do
-  it 'Web Packages Installed' do
-    web_package_list.each do |package|
-      expect(package(package)).to be_installed
-    end
-  end
-  it 'Other Packages Installed' do
-    other_package_list.each do |package|
+describe 'Packages Install' do
+  it 'package list' do
+    package_list.each do |package|
       expect(package(package)).to be_installed
     end
   end
