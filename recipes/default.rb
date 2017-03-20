@@ -6,25 +6,8 @@ data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
 data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']
 node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
 
-# Add /usr/local/bin to sudoers Secure Path
-ruby_block 'Add /usr/local/bin to sudoers Secure Path' do
-  block do
-    bash_command = 'sed -i "s/secure_path = \/sbin:\/bin:\/usr\/sbin:\/usr\/bin/secure_path = \/sbin:\/bin:\/usr\/sbin:\/usr\/bin:\/usr\/local\/bin/g" /etc/sudoers'
-
-    # Run Bash Script and Capture StrOut, StrErr, and Status
-    require 'open3'
-    Chef::Log.warn("Open3: BASH Command (#{bash_command})")
-    out, err, status = Open3.capture3(bash_command)
-    Chef::Log.warn("Open3: Status (#{status})")
-    unless status.success?
-      Chef::Log.warn("Open3: Standard Out (#{out})")
-      Chef::Log.warn("Open3: Error Out (#{err})")
-      raise 'Failed!'
-    end
-  end
-  action :run
-  not_if { ::File.readlines('/etc/sudoers').grep(%r{^Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin/}).any? }
-end
+# Configure Sudoers
+include_recipe 'bonusbits_mediawiki_nginx::sudoers' if node['bonusbits_mediawiki_nginx']['sudoers']['configure']
 
 # Install Software Packages
 include_recipe 'bonusbits_mediawiki_nginx::packages'

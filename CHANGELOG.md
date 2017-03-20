@@ -1,6 +1,12 @@
 ##CHANGE LOG
 ---
 
+##1.0.7 - 03/17/2017 - Levon Becker
+* Added Inspec Tests for All recipes
+* Made adsense comments for sidebars all the same style
+* Set vim to vim-enhanced
+* Fixed Sudoers sed command
+
 ##1.0.6 - 03/17/2017 - Levon Becker
 * Moved attributes out of default to own matching attributes file. Easier to add/remove functions and find attributes I'm looking for.
 * Added Sendmail recipe call, but nothing in it yet.

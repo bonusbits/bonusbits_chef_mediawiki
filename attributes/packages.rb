@@ -31,12 +31,8 @@ default['bonusbits_mediawik_nginx']['packages'] = %w(
   texlive
 )
 
-# php70-jsonc
-# php70-pecl-http
-# php70-pecl-raphf
-
 default['bonusbits_mediawik_nginx']['optional_packages'] = %w(
   htop
   mlocate
-  vim
+  vim-enhanced
 )

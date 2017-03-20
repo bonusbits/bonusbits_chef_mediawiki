@@ -49,7 +49,7 @@ ruby_block 'Set somaxconn /etc/sysctl.conf' do
     end
   end
   action :run
-  not_if { ::File.readlines('/etc/sysctl.conf').grep(/^net\.core\.somaxconn = 1024/).any? }
+  not_if { ::File.readlines('/etc/sysctl.conf').grep(/^net.core.somaxconn = 1024/).any? }
 end
 
 # Set tcp_syncookies
@@ -89,7 +89,7 @@ ruby_block 'Set tcp_syncookies /etc/sysctl.conf' do
     end
   end
   action :run
-  not_if { ::File.readlines('/etc/sysctl.conf').grep(/^net\.ipv4\.tcp_syncookies = 4096/).any? }
+  not_if { ::File.readlines('/etc/sysctl.conf').grep(/^net.ipv4.tcp_syncookies = 4096/).any? }
 end
 
 # Upgrade Pip (Brokes pathing to pip)
@@ -109,7 +109,7 @@ ruby_block 'Upgrade Pip' do
     end
   end
   action :run
-  not_if { `pip --version`.match(/^pip 9\.*\..*/) } # ~FC048
+  not_if { `pip --version`.match(/^pip 9.*..*/) } # ~FC048
 end
 
 # Install Ngxtop
