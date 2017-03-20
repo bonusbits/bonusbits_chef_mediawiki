@@ -1,7 +1,7 @@
 ##CHANGE LOG
 ---
 
-##1.0.7 - 03/17/2017 - Levon Becker
+##1.0.7 - 03/19/2017 - Levon Becker
 * Added Inspec Tests for All recipes
 * Made adsense comments for sidebars all the same style
 * Set vim to vim-enhanced
