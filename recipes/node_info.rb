@@ -1,4 +1,4 @@
-template '/usr/bin/nodeinfo' do
+template '/usr/local/bin/nodeinfo' do
   source 'base/nodeinfo.sh.erb'
   owner 'root'
   group 'root'

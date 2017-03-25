@@ -12,7 +12,7 @@ end
 
 # Mount Upload Share
 efs_filesystem_id = node['bonusbits_mediawiki_nginx']['aws']['efs_filesystem_id']
-region = node['bonusbits_mediawiki_nginx']['aws']['region']
+region = node['ec2']['placement_availability_zone'].slice(0..-2)
 
 mount efs_mount_point do
   device "#{efs_filesystem_id}.efs.#{region}.amazonaws.com:/"

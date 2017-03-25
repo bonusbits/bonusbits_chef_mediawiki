@@ -1,6 +1,11 @@
 ##CHANGE LOG
 ---
 
+##1.1.0 - 03/25/2017 - Levon Becker
+* Moved nodeinfo to /usr/local/bin/
+* Added kitchen docker configure that works with amazonlinux image
+* 
+
 ##1.0.7 - 03/19/2017 - Levon Becker
 * Added Inspec Tests for All recipes
 * Made adsense comments for sidebars all the same style

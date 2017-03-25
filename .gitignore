@@ -69,3 +69,9 @@ Dockerfile-kitchen*
 /tmp/
 /test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json
 /test/data_bags/bonusbits_mediawiki_nginx/bonusbits_prd_decrypted.json
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+out
+gen
