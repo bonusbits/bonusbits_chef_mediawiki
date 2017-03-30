@@ -2,6 +2,7 @@ default['bonusbits_mediawiki_nginx']['docker']['deploy_sysconfig_network'] = tru
 
 # Debug
 message_list = [
+  '',
   '** Docker **',
   "INFO: Deploy Sysconfig Network (#{node['bonusbits_mediawiki_nginx']['docker']['deploy_sysconfig_network']})"
 ]

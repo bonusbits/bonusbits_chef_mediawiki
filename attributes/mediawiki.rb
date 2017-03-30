@@ -113,6 +113,7 @@ end
 
 # Debug
 message_list = [
+  '',
   '** Mediawiki **',
   "INFO: Version               (#{node['bonusbits_mediawiki_nginx']['mediawiki']['version']})",
   "INFO: Release               (#{node['bonusbits_mediawiki_nginx']['mediawiki']['release']})",

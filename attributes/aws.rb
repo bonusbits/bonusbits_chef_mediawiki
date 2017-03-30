@@ -8,6 +8,7 @@ default['bonusbits_mediawiki_nginx']['aws']['region'] =
 
 # Debug
 message_list = [
+  '',
   '** AWS **',
   "INFO: Inside                (#{node['bonusbits_mediawiki_nginx']['aws']['inside']})",
   "INFO: Region                (#{node['bonusbits_mediawiki_nginx']['aws']['region']})"

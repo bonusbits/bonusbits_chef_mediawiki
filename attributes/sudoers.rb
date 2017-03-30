@@ -2,6 +2,7 @@ default['bonusbits_mediawiki_nginx']['sudoers']['configure'] = true
 
 # Debug
 message_list = [
+  '',
   '** Sudoers **',
   "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['sudoers']['configure']})"
 ]

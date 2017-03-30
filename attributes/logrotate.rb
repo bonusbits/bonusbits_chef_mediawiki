@@ -2,6 +2,7 @@ default['bonusbits_mediawiki_nginx']['logrotate']['configure'] = true
 
 # Debug
 message_list = [
+  '',
   '** Log Rotate **',
   "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['logrotate']['configure']})"
 ]

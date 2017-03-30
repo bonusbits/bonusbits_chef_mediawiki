@@ -2,6 +2,7 @@ default['bonusbits_mediawiki_nginx']['adsense']['configure'] = true
 
 # Debug
 message_list = [
+  '',
   '** AdSense **',
   "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['adsense']['configure']})"
 ]

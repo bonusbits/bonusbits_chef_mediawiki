@@ -64,6 +64,7 @@ end
 
 # Debug
 message_list = [
+  '',
   '** Node Info **',
   "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['node_info']['configure']})"
 ]

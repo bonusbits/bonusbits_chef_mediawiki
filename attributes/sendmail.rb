@@ -2,6 +2,7 @@ default['bonusbits_mediawiki_nginx']['sendmail']['configure'] = true
 
 # Debug
 message_list = [
+  '',
   '** Sendmail **',
   "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['sendmail']['configure']})"
 ]

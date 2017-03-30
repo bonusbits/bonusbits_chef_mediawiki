@@ -8,6 +8,7 @@ end
 
 # Debug
 message_list = [
+  '',
   '** Nginx **',
   "INFO: User                  (#{node['bonusbits_mediawiki_nginx']['nginx']['user']})",
   "INFO: Group                 (#{node['bonusbits_mediawiki_nginx']['nginx']['group']})",

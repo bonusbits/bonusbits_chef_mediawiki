@@ -16,6 +16,7 @@ default['bonusbits_mediawiki_nginx']['deployment_type'] = 'ec2'
 
 # Debug
 message_list = [
+  '',
   '** Default **',
   "INFO: Data Bag              (#{node['bonusbits_mediawiki_nginx']['data_bag']})",
   "INFO: Data Bag Item         (#{node['bonusbits_mediawiki_nginx']['data_bag_item']})",
