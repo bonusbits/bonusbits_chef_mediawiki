@@ -35,9 +35,6 @@
             },
             "efs": {
                 "configure": false
-            },
-            "cloudwatch_logs": {
-                "configure": true
             }
         }
     }
