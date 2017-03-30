@@ -116,10 +116,10 @@ message_list = [
   '** Mediawiki **',
   "INFO: Version               (#{node['bonusbits_mediawiki_nginx']['mediawiki']['version']})",
   "INFO: Release               (#{node['bonusbits_mediawiki_nginx']['mediawiki']['release']})",
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']})",
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']})",
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure']})",
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']})"
+  "INFO: Site Path             (#{node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']})",
+  "INFO: Uploads Path          (#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']})",
+  "INFO: Configure Localsettings (#{node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure']})",
+  "INFO: Configure Extensions  (#{node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

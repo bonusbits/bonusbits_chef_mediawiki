@@ -30,4 +30,4 @@ suites:
       - role[bonusbits_mediawiki_nginx]
     provisioner:
       client_rb:
-        environment: docker_environment
+        environment: example_docker_environment
