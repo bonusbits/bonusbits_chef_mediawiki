@@ -75,3 +75,4 @@ Dockerfile-kitchen*
 # IntelliJ project files
 out
 gen
+/test/environments/docker_environment.json

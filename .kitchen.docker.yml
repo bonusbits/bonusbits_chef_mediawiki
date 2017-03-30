@@ -2,9 +2,10 @@
 
 driver:
   name: docker
-  use_sudo: false # For Native Docker on Mac. Comment if using Toolbox (docker-machine)
+  use_sudo: false # For Native Docker on Mac. Remove/Comment if using Toolbox (docker-machine)
   driver_config:
     ssl_verify_mode: ":verify_none"
+    forward: 80
 
 provisioner:
   name: chef_zero
@@ -18,12 +19,15 @@ platforms:
   - name: amazonlinux
     driver_config:
       image: amazonlinux:latest
-      platform: amazon
+      platform: rhel
+
+verifier:
+  name: inspec
 
 suites:
-  - name: default
+  - name: docker
     run_list:
-      - role[ec2_role]
+      - role[bonusbits_mediawiki_nginx]
     provisioner:
       client_rb:
-        environment: ec2_environment
+        environment: docker_environment

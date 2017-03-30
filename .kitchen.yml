@@ -26,7 +26,7 @@ verifier:
   name: inspec
 
 platforms:
-  - name: amzn-2016-latest
+  - name: amazonlinux-ec2
     driver:
       image_search:
         owner-id: 137112412989
@@ -41,9 +41,9 @@ transport:
   ssh_key: <%= ENV['AWS_SSH_KEY_PATH'] %>
 
 suites:
-  - name: default
+  - name: ec2
     run_list:
-      - role[ec2_role]
+      - role[bonusbits_mediawiki_nginx]
     provisioner:
       client_rb:
         environment: ec2_environment

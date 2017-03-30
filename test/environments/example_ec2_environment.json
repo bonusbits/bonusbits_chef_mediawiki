@@ -1,5 +1,5 @@
 {
-    "name": "example_environment",
+    "name": "example_ec2_environment",
     "description": "Environment",
     "cookbook_versions": {},
     "json_class": "Chef::Environment",
@@ -8,8 +8,10 @@
     },
     "override_attributes": {
         "bonusbits_mediawiki_nginx": {
+            "deployment_type": "ec2",
             "data_bag_item": "example_databag_item",
             "aws": {
+                "inside": true,
                 "stack_name": "mediawiki-nginx-kitchen-01",
                 "vpc_id": "vpc-00000000",
                 "logs_group_name": "mediawiki-nginx-kitchen",

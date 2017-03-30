@@ -1,6 +1,6 @@
 ---
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Autoscaling EC2 Running Mediawiki on Nginx, RDS Backed, Behind Existing Load Balancer
+Description: Autoscaling ECS Cluster Running Mediawiki on Nginx, RDS Backed, Behind Existing Load Balancer
 Parameters:
   # Ownership
   Owner:
@@ -270,6 +270,99 @@ Metadata:
       HostedZoneId:
         default: Hosted Zone ID
 
+Outputs:
+  # Ownership
+  Owner:
+    Description: Team or Individual that Owns this Formation.
+    Value: !Ref Owner
+  DeleteAfter:
+    Description: It is ok to delete the Formation after this date.
+    Value: !Ref DeleteAfter
+
+  # Network
+  VPC:
+    Value: !Ref VPC
+  SubnetIdList:
+    Value: !Join [',', !Ref SubnetIdList]
+  InternalAccessSecurityGroup:
+    Value: !Ref InternalAccessSecurityGroup
+  RemoteSecurityGroup:
+    Value: !Ref RemoteSecurityGroup
+  RdsSecurityGroup:
+    Value: !Ref RdsSecurityGroup
+  EfsSecurityGroup:
+    Value: !Ref EfsSecurityGroup
+  EfsFileSystemId:
+    Value: !Ref EfsFileSystemId
+
+  # Instance
+  KeyPairName:
+    Description: Key Pair Name Used.
+    Value: !Ref KeyPairName
+  InstanceType:
+    Description: Instance Type Used.
+    Value: !Ref InstanceType
+
+  # Autoscaling
+  MinAutoScaleCount:
+    Value: !Ref MinAutoScaleCount
+  MaxAutoScaleCount:
+    Value: !Ref MaxAutoScaleCount
+  AlarmSnsTopicArn:
+    Value: !Ref AlarmSnsTopicArn
+
+  # Deployment
+  CookbookName:
+    Value: !Ref CookbookName
+  CookbookVersion:
+    Value: !Ref CookbookVersion
+  ChefClientVersion:
+    Value: !Ref ChefClientVersion
+  DataBagItem:
+    Value: !Ref DataBagItem
+
+  # MediaWiki
+  MediawikiMajorRelease:
+    Value: !Ref MediawikiMajorRelease
+  MediawikiMinorRelease:
+    Value: !Ref MediawikiMinorRelease
+  SiteFolderName:
+    Value: !Ref SiteFolderName
+  UploadFolderName:
+    Value: !Ref UploadFolderName
+
+  # Nginx
+  RootSitePath:
+    Value: !Ref RootSitePath
+  NginxXforwardedTraffic:
+    Value: !Ref NginxXforwardedTraffic
+  NginxRewriteWikiAlias:
+    Value: !Ref NginxRewriteWikiAlias
+
+  # DNS
+  UpdateDNS:
+    Value: !Ref UpdateDNS
+  HostedZoneId:
+    Description: Hosted Zone ID.
+    Value: !Ref HostedZoneId
+  RecordName:
+    Description: Record Name.
+    Value: !Ref RecordName
+
+  # Template Generated
+#  InstanceURL:
+#    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
+#  DnsURL:
+#    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
+  SecurityGroup:
+    Value: !Ref SecurityGroup
+  AMI:
+    Description: AMI Used.
+    Value: !FindInMap [ RegionMap, !Ref "AWS::Region", EBS ]
+  IAMRole:
+    Description: IAM Instance Profile Role Created.
+    Value: !Ref IamRole
+
 Mappings:
   RegionMap:
     # Amazon Linux AMI 2016.09.0 was released on 2016-09-27
@@ -277,7 +370,6 @@ Mappings:
       EBS: ami-b73b63a0
     us-west-2:
       EBS: ami-5ec1673e
-#      EBS: ami-7a139f1a # Baked AMI
     us-west-1:
       EBS: ami-23e8a343
     eu-west-1:
@@ -617,7 +709,7 @@ Resources:
             "/opt/chef-repo/roles/ec2_role.json":
               content: !Sub |
                 {
-                  "name": "ec2_role",
+                  "name": "${CookbookName}",
                   "description": "Role",
                   "json_class": "Chef::Role",
                   "default_attributes": {},
@@ -643,96 +735,3 @@ Resources:
           commands:
             01_warm_ebs:
               command: "echo 'ACTION: Performing EBS Warming' && dd if=/dev/xvda of=/dev/xvda conv=notrunc bs=1M status=progress"
-
-Outputs:
-  # Ownership
-  Owner:
-    Description: Team or Individual that Owns this Formation.
-    Value: !Ref Owner
-  DeleteAfter:
-    Description: It is ok to delete the Formation after this date.
-    Value: !Ref DeleteAfter
-
-  # Network
-  VPC:
-    Value: !Ref VPC
-  SubnetIdList:
-    Value: !Join [',', !Ref SubnetIdList]
-  InternalAccessSecurityGroup:
-    Value: !Ref InternalAccessSecurityGroup
-  RemoteSecurityGroup:
-    Value: !Ref RemoteSecurityGroup
-  RdsSecurityGroup:
-    Value: !Ref RdsSecurityGroup
-  EfsSecurityGroup:
-    Value: !Ref EfsSecurityGroup
-  EfsFileSystemId:
-    Value: !Ref EfsFileSystemId
-
-  # Instance
-  KeyPairName:
-    Description: Key Pair Name Used.
-    Value: !Ref KeyPairName
-  InstanceType:
-    Description: Instance Type Used.
-    Value: !Ref InstanceType
-
-  # Autoscaling
-  MinAutoScaleCount:
-    Value: !Ref MinAutoScaleCount
-  MaxAutoScaleCount:
-    Value: !Ref MaxAutoScaleCount
-  AlarmSnsTopicArn:
-    Value: !Ref AlarmSnsTopicArn
-
-  # Deployment
-  CookbookName:
-    Value: !Ref CookbookName
-  CookbookVersion:
-    Value: !Ref CookbookVersion
-  ChefClientVersion:
-    Value: !Ref ChefClientVersion
-  DataBagItem:
-    Value: !Ref DataBagItem
-
-  # MediaWiki
-  MediawikiMajorRelease:
-    Value: !Ref MediawikiMajorRelease
-  MediawikiMinorRelease:
-    Value: !Ref MediawikiMinorRelease
-  SiteFolderName:
-    Value: !Ref SiteFolderName
-  UploadFolderName:
-    Value: !Ref UploadFolderName
-
-  # Nginx
-  RootSitePath:
-    Value: !Ref RootSitePath
-  NginxXforwardedTraffic:
-    Value: !Ref NginxXforwardedTraffic
-  NginxRewriteWikiAlias:
-    Value: !Ref NginxRewriteWikiAlias
-
-  # DNS
-  UpdateDNS:
-    Value: !Ref UpdateDNS
-  HostedZoneId:
-    Description: Hosted Zone ID.
-    Value: !Ref HostedZoneId
-  RecordName:
-    Description: Record Name.
-    Value: !Ref RecordName
-
-  # Template Generated
-#  InstanceURL:
-#    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
-#  DnsURL:
-#    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
-  SecurityGroup:
-    Value: !Ref SecurityGroup
-  AMI:
-    Description: AMI Used.
-    Value: !FindInMap [ RegionMap, !Ref "AWS::Region", EBS ]
-  IAMRole:
-    Description: IAM Instance Profile Role Created.
-    Value: !Ref IamRole

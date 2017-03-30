@@ -9,6 +9,9 @@ node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
 # Configure Sudoers
 include_recipe 'bonusbits_mediawiki_nginx::sudoers' if node['bonusbits_mediawiki_nginx']['sudoers']['configure']
 
+# Docker Specific
+include_recipe 'bonusbits_mediawiki_nginx::docker' if node['bonusbits_mediawiki_nginx']['deployment_type'] == 'docker'
+
 # Install Software Packages
 include_recipe 'bonusbits_mediawiki_nginx::packages'
 
@@ -25,7 +28,7 @@ include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
 include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']
 
 # Deploy Node Info Script
-include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['node_info']['deploy']
+include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['node_info']['configure']
 
 # Deploy DNS Update Script
 include_recipe 'bonusbits_mediawiki_nginx::dns' if node['bonusbits_mediawiki_nginx']['dns']['configure']
