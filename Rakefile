@@ -1,9 +1,5 @@
 # For CircleCI
 require 'bundler/setup'
-require 'bundler/gem_tasks'
-require 'rspec/core/rake_task'
-require 'chefstyle'
-require 'rubocop/rake_task'
 
 # Style tests. Rubocop and Foodcritic
 namespace :style do
@@ -45,28 +41,22 @@ namespace :integration do
 
   # Load Specific Kitchen Configuration YAML
   def load_kitchen_config(yaml)
+    Kitchen::RakeTasks.new
 
-    begin
-      Kitchen::RakeTasks.new
-
-      Kitchen.logger = Kitchen.default_file_logger
-      kitchen_loader = Kitchen::Loader::YAML.new(local_config: yaml)
-      Kitchen::Config.new(loader: kitchen_loader, log_level: :info)
-    rescue StandardError => e
-      # puts ">>> Kitchen error: #{e}, omitting #{task.name}" unless ENV['CI']
-      puts ">>> ERROR: Load Kitchen Config - #{e}"
-    end
+    Kitchen.logger = Kitchen.default_file_logger
+    kitchen_loader = Kitchen::Loader::YAML.new(local_config: yaml)
+    Kitchen::Config.new(loader: kitchen_loader, log_level: :info)
   end
 
   # Run Each Test Instance in All Test Suites from YAML
   desc 'kitchen - dokken'
   task :docker do
-    load_kitchen_config('.kitchen.dokken.yml').instances.each do |instance|
-      begin
+    begin
+      load_kitchen_config('.kitchen.dokken.yml').instances.each do |instance|
         instance.test(:always)
-      rescue StandardError => e
-        puts ">>> Kitchen error: #{e}"
       end
+    rescue StandardError => e
+      puts ">>> ERROR: Load Kitchen Config: #{e}"
     end
   end
 
