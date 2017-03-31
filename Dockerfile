@@ -3,7 +3,7 @@ MAINTAINER Levon Becker "levon.docker@bonusbits.com"
 
 # Arguments
 ARG chef_client_version=12.18.31
-ARG cookbook_version=latest
+ARG cookbook_version=issue_24_docker
 ARG cookbook_name=bonusbits_mediawiki_nginx
 ARG chef_role=bonusbits_mediawiki_nginx
 ARG chef_environment=docker_environment
@@ -39,12 +39,13 @@ WORKDIR /opt/chef-repo
 RUN mkdir -p cookbooks checksums environments cache backup data_bags roles downloads
 RUN git clone --branch ${cookbook_version} https://github.com/bonusbits/${cookbook_name}.git cookbooks/${cookbook_name}
 RUN cp -R cookbooks/${cookbook_name}/test/data_bags/${cookbook_name} data_bags/
-#RUN cp cookbooks/${cookbook_name}/test/roles/${chef_role}.json roles/${chef_role}.json
-#COPY ./test/environments/${chef_environment} /opt/chef-repo/environments/${chef_environment}.json
+RUN cp cookbooks/${cookbook_name}/test/roles/${chef_role}.json roles/${chef_role}.json
+COPY test/node/client.rb /opt/chef-repo/client.rb
+COPY test/environments/${chef_environment}.json /opt/chef-repo/environments/${chef_environment}.json
 # TODO: Create Environment File
 
 # Run Chef
-#RUN /opt/chef/bin/chef-client -z -o role[${chef_role}] --environment ${chef_environment} --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889
+RUN /opt/chef/bin/chef-client -z -o role[${chef_role}] --environment ${chef_environment} --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889
 
 # Update DNS
 #RUN /usr/sbin/update-dns

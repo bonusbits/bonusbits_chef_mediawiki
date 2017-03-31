@@ -1,22 +1,19 @@
-
-### Example user template template
-### Example user template
-
-# IntelliJ project files
 .idea
 *.iml
 out
 gen
-/tmp/
-/.kitchen/
-### ChefCookbook template
+tmp
 .vagrant
-/cookbooks
-
-# Bundler
+cookbooks
 bin/*
 .bundle/*
-
-.kitchen/
+.kitchen
 .kitchen.local.yml
-/Berksfile.lock
+Berksfile.lock
+#test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json
+test/data_bags/bonusbits_mediawiki_nginx/bonusbits_prd_decrypted.json
+Gemfile.lock
+vendor/*
+# Mac OS
+.DS_Store
+.localized
