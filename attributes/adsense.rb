@@ -1,7 +1,7 @@
-default['bonusbits_mediawiki_nginx']['adsense']['configure'] = true
-
-# Debug
 if node['bonusbits_mediawiki_nginx']['role'] == 'web'
+  default['bonusbits_mediawiki_nginx']['adsense']['configure'] = true
+
+  # Debug
   message_list = [
     '',
     '** AdSense **',

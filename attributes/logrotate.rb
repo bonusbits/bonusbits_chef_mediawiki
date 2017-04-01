@@ -1,7 +1,7 @@
-default['bonusbits_mediawiki_nginx']['logrotate']['configure'] = true
-
-# Debug
 if node['bonusbits_mediawiki_nginx']['role'] == 'web'
+  default['bonusbits_mediawiki_nginx']['logrotate']['configure'] = true
+
+  # Debug
   message_list = [
     '',
     '** Log Rotate **',

@@ -4,7 +4,7 @@ default['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure'] = true
 message_list = [
   '',
   '** CloudWatch Logs **',
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['adsense']['configure']})"
+  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

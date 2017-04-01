@@ -1,8 +1,8 @@
-default['bonusbits_mediawiki_nginx']['dns']['configure'] = true
-default['bonusbits_mediawiki_nginx']['dns']['ttl'] = '60'
-
-# Debug
 if node['bonusbits_mediawiki_nginx']['role'] == 'web'
+  default['bonusbits_mediawiki_nginx']['dns']['configure'] = true
+  default['bonusbits_mediawiki_nginx']['dns']['ttl'] = '60'
+
+  # Debug
   message_list = [
     '',
     '** DNS **',

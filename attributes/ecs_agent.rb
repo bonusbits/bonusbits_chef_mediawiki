@@ -1,6 +1,6 @@
-default['bonusbits_mediawiki_nginx']['aws']['ecs_cluster_name'] = 'mediawiki-nginx-kitchen'
-
 if node['bonusbits_mediawiki_nginx']['role'] == 'ecs_agent'
+  default['bonusbits_mediawiki_nginx']['aws']['ecs_cluster_name'] = 'mediawiki-nginx-kitchen'
+
   # Debug
   message_list = [
     '',

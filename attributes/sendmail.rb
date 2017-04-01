@@ -1,7 +1,7 @@
-default['bonusbits_mediawiki_nginx']['sendmail']['configure'] = true
-
-# Debug
 if node['bonusbits_mediawiki_nginx']['role'] == 'web'
+  default['bonusbits_mediawiki_nginx']['sendmail']['configure'] = true
+
+  # Debug
   message_list = [
     '',
     '** Sendmail **',

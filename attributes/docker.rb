@@ -1,8 +1,7 @@
-default['bonusbits_mediawiki_nginx']['docker']['deploy_sysconfig_network'] = true
-
-# Debug
-
 if node['bonusbits_mediawiki_nginx']['role'] == 'web' && node['bonusbits_mediawiki_nginx']['deployment_type'] == 'docker'
+  default['bonusbits_mediawiki_nginx']['docker']['deploy_sysconfig_network'] = true
+
+  # Debug
   message_list = [
     '',
     '** Docker **',

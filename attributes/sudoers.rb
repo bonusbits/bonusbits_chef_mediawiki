@@ -1,7 +1,7 @@
-default['bonusbits_mediawiki_nginx']['sudoers']['configure'] = true
-
-# Debug
 if node['bonusbits_mediawiki_nginx']['deployment_type'] == 'ec2'
+  default['bonusbits_mediawiki_nginx']['sudoers']['configure'] = true
+
+  # Debug
   message_list = [
     '',
     '** Sudoers **',
