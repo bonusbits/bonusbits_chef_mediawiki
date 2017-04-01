@@ -4,58 +4,58 @@ use_gzip_http_content_encoding = true
 
 [cloud-init]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-cloud-init
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-cloud-init" %>
 datetime_format = %b %d %H:%M:%S
 file = /var/log/cloud-init.log
 
 [cloud-init-output]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-cloud-init-output
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-cloud-init-output" %>
 file = /var/log/cloud-init-output.log
 
 [cfn-init]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-cfn-init
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-cfn-init" %>
 datetime_format = %Y-%m-%d %H:%M:%S,%f
 file = /var/log/cfn-init.log
 
 [cfn-init-cmd]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-cfn-init-cmd
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-cfn-init-cmd" %>
 datetime_format = %Y-%m-%d %H:%M:%S,%f
 file = /var/log/cfn-init-cmd.log
 
 [yum]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-yum
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-yum" %>
 datetime_format = %b %d %H:%M:%S
 file = /var/log/yum.log
 
 [nginx-access]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-nginx-access
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-nginx-access" %>
 datetime = %d/%b/%Y:%H:%M:%S
 file = /var/log/nginx/access.log
 
 [nginx-errors]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-nginx-errors
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-nginx-errors" %>
 datetime = %Y/%m/%d %H:%M:%S
 file = /var/log/nginx/error.log
 
 [php-fpm-errors]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-php-fpm-errors
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-php-fpm-errors" %>
 datetime = %d-%b-%Y %H:%M:%S
 file = /var/log/php-fpm/7.0/error.log
 
 [php-fpm-www-errors]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-php-fpm-www-errors
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-php-fpm-www-errors" %>
 datetime = %d-%b-%Y %H:%M:%S
 file = /var/log/php-fpm/7.0/www-error.log
 
 [mediawiki-debug]
 log_group_name = <%= node['bonusbits_mediawiki_nginx']['aws']['logs_group_name'] %>
-log_stream_name = <%= node['ec2']['instance_id'] %>-mediawiki-debug
+log_stream_name = <%= "#{node['ec2']['instance_id']}-#{node['bonusbits_mediawiki_nginx']['role']}-mediawiki-debug" %>
 file = /var/log/mediawiki/debug.log
