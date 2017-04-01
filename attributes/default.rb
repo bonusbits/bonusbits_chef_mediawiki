@@ -10,12 +10,12 @@ run_state['detected_environment'] =
 # Server Role
 default['bonusbits_mediawiki_nginx']['role'] = 'web'
 
+# Deployment Type
+default['bonusbits_mediawiki_nginx']['deployment_type'] = 'ec2'
+
 # Data Bags
 default['bonusbits_mediawiki_nginx']['data_bag'] = 'bonusbits_mediawiki_nginx'
 default['bonusbits_mediawiki_nginx']['data_bag_item'] = 'example_databag_item'
-
-# Deployment Type
-default['bonusbits_mediawiki_nginx']['deployment_type'] = 'ec2'
 
 # Debug
 message_list = [

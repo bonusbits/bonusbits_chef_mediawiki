@@ -94,7 +94,7 @@ suites:
       <% end %>
       subnet_id: <%= ENV['AWS_SUBNET'] %>
       vpc_id: <%= ENV['AWS_VPC_ID'] %>
-      iam_profile_name: <%= ENV['AWS_IAM_INSTANCE_PROFILE_1'] %>
+      iam_profile_name: <%= ENV['AWS_IAM_INSTANCE_PROFILE_2'] %>
       region: <%= ENV['AWS_REGION'] %>
       instance_type: t2.small
       tags:

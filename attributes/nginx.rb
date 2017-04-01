@@ -7,7 +7,7 @@ if node['bonusbits_mediawiki_nginx']['role'] == 'web'
     nginx['rewrite_wiki_alias'] = false
   end
 
-# Debug
+  # Debug
   message_list = [
     '',
     '** Nginx **',

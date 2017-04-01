@@ -8,12 +8,9 @@
     },
     "override_attributes": {
         "bonusbits_mediawiki_nginx": {
-            "deployment_type": "ec2",
             "data_bag_item": "example_databag_item",
             "aws": {
-                "inside": true,
                 "stack_name": "mediawiki-nginx-kitchen-01",
-                "vpc_id": "vpc-00000000",
                 "logs_group_name": "mediawiki-nginx-kitchen",
                 "efs_filesystem_id": "fs-00000000"
             },
@@ -32,9 +29,6 @@
                 "configure": true,
                 "hosted_zone_id": "V2UYT8USYGG8F8",
                 "record_name": "www.example.com"
-            },
-            "efs": {
-                "configure": true
             }
         }
     }

@@ -669,10 +669,10 @@ Resources:
                 role_path '/opt/chef-repo/roles'
                 chef_server_url 'http://127.0.0.1:8889'
                 encrypted_data_bag_secret '/opt/chef-repo/encrypted_data_bag_secret'
-            "/opt/chef-repo/environments/ec2_environment.json":
+            "/opt/chef-repo/environments/aws.json":
               content: !Sub |
                {
-                   "name": "ec2_environment",
+                   "name": "aws",
                    "description": "Environment",
                    "cookbook_versions": {},
                    "json_class": "Chef::Environment",
@@ -707,14 +707,17 @@ Resources:
                        }
                    }
                }
-            "/opt/chef-repo/roles/ec2_role.json":
+            "/opt/chef-repo/roles/web.json":
               content: !Sub |
                 {
-                  "name": "${CookbookName}",
+                  "name": "web",
                   "description": "Role",
                   "json_class": "Chef::Role",
                   "default_attributes": {},
                   "override_attributes": {
+                      "bonusbits_mediawiki_nginx": {
+                          "role": "web"
+                      }
                   },
                   "chef_type": "role",
                   "run_list": [
@@ -726,7 +729,7 @@ Resources:
         run_chef_client:
           commands:
             01_run_chef:
-              command: "/opt/chef/bin/chef-client -z -o role[ec2_role] --environment ec2_environment --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
+              command: "/opt/chef/bin/chef-client -z -o role[web] --environment aws --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
         update_dns:
           Condition: RunDnsScript
           commands:
