@@ -365,31 +365,55 @@ Outputs:
 
 Mappings:
   RegionMap:
-    # Amazon Linux AMI 2016.09.0 was released on 2016-09-27
+    # Amazon Linux AMI 2016.09.0 was released on 2017-01-23
+    # N. Virginia
     us-east-1:
-      EBS: ami-b73b63a0
+      EBS: ami-0b33d91d
+    # Ohio
+    us-east-2:
+      EBS: ami-0b33d91d
+    # Oregon
     us-west-2:
-      EBS: ami-5ec1673e
+      EBS: ami-f173cc91
+    # N. California
     us-west-1:
-      EBS: ami-23e8a343
+      EBS: ami-165a0876
+    # Canada
+    ca-central-1:
+      EBS: ami-ebed508f
+    # Ireland
     eu-west-1:
-      EBS: ami-9398d3e0
+      EBS: ami-70edb016
+    # London
+    eu-west-2:
+      EBS: ami-f1949e95
+    # Frankfurt
     eu-central-1:
-      EBS: ami-f9619996
+      EBS: ami-af0fc0c0
+    # Singapore
     ap-southeast-1:
-      EBS: ami-b953f2da
+      EBS: ami-dc9339bf
+    # Seoul
     ap-northeast-1:
-      EBS: ami-0c11b26d
+      EBS: ami-dac312b4
+    # Tokyo
     ap-northeast-2:
-      EBS: ami-983ce8f6
+      EBS: ami-56d4ad31
+    # Sydney
     ap-southeast-2:
-      EBS: ami-db704cb8
+      EBS: ami-1c47407f
+    # Mumbai
+    ap-south-1:
+      EBS: ami-f9daac96
+    # Sao Paulo
     sa-east-1:
-      EBS: ami-97831ffb
-    us-gov-west-1:
-      EBS: ami-7cb1091d
+      EBS: ami-80086dec
+    # Beijing
     cn-north-1:
-      EBS: ami-7c15c111
+      EBS: ami-e6c7108b
+    # GovCloud
+    us-gov-west-1:
+      EBS: ami-b21fa4d3
 
 Conditions:
   HasKeyPair: !Not [!Equals [ !Ref KeyPairName, '' ]]
