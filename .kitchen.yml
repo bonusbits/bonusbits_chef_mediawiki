@@ -83,7 +83,7 @@ suites:
       roles_path: test/roles
       environments_path: test/environments
       client_rb:
-        environment: ec2_agent_dev
+        environment: ecs_agent_dev
     driver:
       name: ec2
       associate_public_ip: <%= ENV['AWS_PUBLIC_IP'] %>
