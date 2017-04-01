@@ -1,11 +1,14 @@
 # Determine Environment
 run_state['detected_environment'] =
-  if /dev|qa|stg|prd/ =~ node['chef_environment']
-    /dev|qa|stg|prd/.match(node['chef_environment']).to_s.downcase
+  if /dev|qa|stg|prd/ =~ node.environment
+    /dev|qa|stg|prd/.match(node.environment).to_s.downcase
   else
     # Consider _default as 'Dev'
     'dev'
   end
+
+# Server Role
+default['bonusbits_mediawiki_nginx']['role'] = 'web'
 
 # Data Bags
 default['bonusbits_mediawiki_nginx']['data_bag'] = 'bonusbits_mediawiki_nginx'
@@ -18,6 +21,7 @@ default['bonusbits_mediawiki_nginx']['deployment_type'] = 'ec2'
 message_list = [
   '',
   '** Default **',
+  "INFO: Role                  (#{node['bonusbits_mediawiki_nginx']['role']})",
   "INFO: Data Bag              (#{node['bonusbits_mediawiki_nginx']['data_bag']})",
   "INFO: Data Bag Item         (#{node['bonusbits_mediawiki_nginx']['data_bag_item']})",
   "INFO: Deployment Type       (#{node['bonusbits_mediawiki_nginx']['deployment_type']})"

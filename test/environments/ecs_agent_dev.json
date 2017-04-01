@@ -1,0 +1,20 @@
+{
+    "name": "ecs_agent_dev",
+    "description": "Environment",
+    "cookbook_versions": {},
+    "json_class": "Chef::Environment",
+    "chef_type": "environment",
+    "default_attributes": {
+    },
+    "override_attributes": {
+        "bonusbits_mediawiki_nginx": {
+            "role": "ecs_agent",
+            "deployment_type": "ec2",
+            "aws": {
+                "inside": true,
+                "logs_group_name": "mediawiki-nginx-kitchen",
+                "ecs_cluster_name": "mediawiki-nginx-kitchen"
+            }
+        }
+    }
+}

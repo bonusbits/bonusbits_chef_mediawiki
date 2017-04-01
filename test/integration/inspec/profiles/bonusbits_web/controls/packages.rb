@@ -1,4 +1,4 @@
-default['bonusbits_mediawik_nginx']['packages']['web'] = %w(
+web_package_list = %w(
   apr
   apr-util
   enchant
@@ -31,8 +31,7 @@ default['bonusbits_mediawik_nginx']['packages']['web'] = %w(
   texlive
 )
 
-# TODO: Check list on EC2 and make sure all needed in list for Docker
-default['bonusbits_mediawik_nginx']['packages']['base_packages'] = %w(
+base_package_list = %w(
   aws-cli
   ca-certificates
   curl
@@ -52,3 +51,20 @@ default['bonusbits_mediawik_nginx']['packages']['base_packages'] = %w(
   vim-enhanced
   which
 )
+role = attribute('role', default: 'web', description: 'Server Role')
+
+describe 'Packages Install' do
+  it 'base package list' do
+    base_package_list.each do |package|
+      expect(package(package)).to be_installed
+    end
+  end
+
+  if role == 'web'
+    it 'web package list' do
+      web_package_list.each do |package|
+        expect(package(package)).to be_installed
+      end
+    end
+  end
+end

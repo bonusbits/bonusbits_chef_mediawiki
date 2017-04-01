@@ -38,7 +38,7 @@ platforms:
 suites:
   - name: docker
     run_list:
-      - role[bonusbits_mediawiki_nginx]
+      - role[web]
     provisioner:
       client_rb:
-        environment: docker_environment
+        environment: docker_web_dev

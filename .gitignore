@@ -65,7 +65,8 @@ Dockerfile-kitchen*
 *.tar.gz
 
 # bonusbits_mediawiki_nginx
-/test/environments/ec2_environment.json
+/test/environments/ec2_web_dev.json
+/test/environments/docker_web_dev.json
 /tmp/
 /test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json
 /test/data_bags/bonusbits_mediawiki_nginx/bonusbits_prd_decrypted.json
@@ -75,4 +76,4 @@ Dockerfile-kitchen*
 # IntelliJ project files
 out
 gen
-/test/environments/docker_environment.json
+/test/integration/inspec/results/

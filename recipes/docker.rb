@@ -1,4 +1,4 @@
-# Deploy DNS Update Script
+# Deploy DNS Update Script (For awslogs init script)
 template '/etc/sysconfig/network' do
   source 'docker/sysconfig.network.erb'
   owner 'root'

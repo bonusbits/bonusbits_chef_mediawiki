@@ -1,29 +1,11 @@
 ---
 
-driver:
-  name: ec2
-  associate_public_ip: <%= ENV['AWS_PUBLIC_IP'] %>
-  aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
-  security_group_ids:
-  <% (1..5).collect { |n| ENV["AWS_SECURITY_GROUP_#{n}"] }.compact.each do |secgroup| %>
-    - <%= secgroup %>
-  <% end %>
-  subnet_id: <%= ENV['AWS_SUBNET'] %>
-  vpc_id: <%= ENV['AWS_VPC_ID'] %>
-  iam_profile_name: <%= ENV['AWS_IAM_INSTANCE_PROFILE_1'] %>
-  region: <%= ENV['AWS_REGION'] %>
-  instance_type: t2.micro
-
-provisioner:
-  name: chef_zero
-  require_chef_omnibus: 12.18.31
-  data_bags_path: test/data_bags
-  encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
-  roles_path: test/roles
-  environments_path: test/environments
-
 verifier:
   name: inspec
+#  format: doc
+#  format: junit
+#  output: test/inspec/results/%{platform}_%{suite}_inspec.xml
+#  output: $CIRCLE_TEST_REPORTS/inspec/results/%{platform}_%{suite}_inspec.xml
 
 platforms:
   - name: amazonlinux-ec2
@@ -31,19 +13,145 @@ platforms:
       image_search:
         owner-id: 137112412989
         name: amzn-ami-hvm-2016.*x86_64-gp2
-      tags:
-        Name: kitchen-bonusbits-mediawiki-nginx-<%= ENV['USER'] %>
-        Created-By: Test Kitchen
-        Owner: <%= ENV['USER'] %>
-
-transport:
-  username: ec2-user
-  ssh_key: <%= ENV['AWS_SSH_KEY_PATH'] %>
+  - name: amazonlinux-docker
+    driver_config:
+      image: amazonlinux:latest
+      platform: rhel
+  - name: amazonlinux-dokken
+    driver_config:
+      image: amazonlinux:latest
+      intermediate_instructions:
+        - RUN yum -y install upstart procps util-linux
+      pid_one_command: /sbin/init
 
 suites:
-  - name: ec2
+  - name: ec2_web
     run_list:
-      - role[bonusbits_mediawiki_nginx]
+      - role[web]
+    verifier:
+      inspec_tests:
+        - path: test/integration/inspec/profiles/bonusbits_web/
+      attributes:
+        role: web
+        deployment_type: ec2
+        inside_aws: true
     provisioner:
+      name: chef_zero
+      require_chef_omnibus: 12.18.31
+      data_bags_path: test/data_bags
+      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
+      roles_path: test/roles
+      environments_path: test/environments
       client_rb:
-        environment: ec2_environment
+        environment: ec2_web_dev
+    driver:
+      name: ec2
+      associate_public_ip: <%= ENV['AWS_PUBLIC_IP'] %>
+      aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
+      security_group_ids:
+      <% (1..5).collect { |n| ENV["AWS_SECURITY_GROUP_#{n}"] }.compact.each do |secgroup| %>
+        - <%= secgroup %>
+      <% end %>
+      subnet_id: <%= ENV['AWS_SUBNET'] %>
+      vpc_id: <%= ENV['AWS_VPC_ID'] %>
+      iam_profile_name: <%= ENV['AWS_IAM_INSTANCE_PROFILE_1'] %>
+      region: <%= ENV['AWS_REGION'] %>
+      instance_type: t2.small
+      tags:
+        Name: kitchen-bonusbits-web-<%= ENV['USER'] %>
+        Created-By: Test Kitchen
+        Owner: <%= ENV['USER'] %>
+    transport:
+      username: ec2-user
+      ssh_key: <%= ENV['AWS_SSH_KEY_PATH'] %>
+    includes: [ 'amazonlinux-ec2' ]
+  - name: ecs_agent
+    run_list:
+      - role[ecs_agent]
+    verifier:
+      inspec_tests:
+        - path: test/integration/inspec/profiles/bonusbits_web/
+      attributes:
+        role: ecs_agent
+        deployment_type: ec2
+        inside_aws: true
+    provisioner:
+      name: chef_zero
+      require_chef_omnibus: 12.18.31
+      data_bags_path: test/data_bags
+      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
+      roles_path: test/roles
+      environments_path: test/environments
+      client_rb:
+        environment: ec2_agent_dev
+    driver:
+      name: ec2
+      associate_public_ip: <%= ENV['AWS_PUBLIC_IP'] %>
+      aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
+      security_group_ids:
+      <% (1..5).collect { |n| ENV["AWS_SECURITY_GROUP_#{n}"] }.compact.each do |secgroup| %>
+        - <%= secgroup %>
+      <% end %>
+      subnet_id: <%= ENV['AWS_SUBNET'] %>
+      vpc_id: <%= ENV['AWS_VPC_ID'] %>
+      iam_profile_name: <%= ENV['AWS_IAM_INSTANCE_PROFILE_1'] %>
+      region: <%= ENV['AWS_REGION'] %>
+      instance_type: t2.small
+      tags:
+        Name: kitchen-bonusbits-ecs-agent-<%= ENV['USER'] %>
+        Created-By: Test Kitchen
+        Owner: <%= ENV['USER'] %>
+    transport:
+      username: ec2-user
+      ssh_key: <%= ENV['AWS_SSH_KEY_PATH'] %>
+    includes: [ 'amazonlinux-ec2' ]
+  - name: docker_web
+    run_list:
+      - role[web]
+    verifier:
+      inspec_tests:
+        - path: test/integration/inspec/profiles/bonusbits_web/
+      attributes:
+        role: web
+        deployment_type: docker
+        inside_aws: false
+    provisioner:
+      name: chef_zero
+      require_chef_omnibus: 12.18.31
+      data_bags_path: test/data_bags
+      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
+      roles_path: test/roles
+      environments_path: test/environments
+      client_rb:
+        environment: docker_web_dev
+    driver:
+      name: docker
+      use_sudo: false # For Native Docker on Mac. Remove/Comment if using Toolbox (docker-machine)
+      driver_config:
+        ssl_verify_mode: ":verify_none"
+        forward: 80
+    includes: [ 'amazonlinux-docker' ]
+#  - name: dokken_web
+#    run_list:
+#      - role[web]
+#    provisioner:
+#      name: dokken
+#      data_bags_path: test/data_bags
+#      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
+#      roles_path: test/roles
+#      environments_path: test/environments
+#      chef_log_level: info
+#      client_rb:
+#        environment: docker_web_dev
+#    driver:
+#      name: dokken
+#      chef_version: 12.18.31
+#      use_sudo: true
+#      privileged: false
+#      volumes: '/var/lib/docker'
+#      driver_config:
+#        ssl_verify_mode: ":verify_none"
+#        forward: 80
+#    transport:
+#      name: dokken
+#    includes: [ 'amazonlinux-dokken' ]

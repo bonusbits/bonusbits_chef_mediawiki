@@ -126,6 +126,7 @@ template "#{mediawiki_path}/LocalSettings.php" do
   owner mediawiki_user
   group mediawiki_group
   mode '0644'
+  sensitive true
   notifies :restart, 'service[nginx]', :delayed
   only_if { node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure'] }
 end

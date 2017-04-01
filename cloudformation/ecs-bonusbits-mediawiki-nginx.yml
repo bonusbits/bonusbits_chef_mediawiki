@@ -42,7 +42,7 @@ Parameters:
     - m4.large
     - c3.medium
     - c4.medium
-    Default: t2.small
+    Default: t2.medium
 
   # Autoscaling
   MinAutoScaleCount:
