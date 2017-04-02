@@ -18,9 +18,7 @@ ARG data_bag_secret
 
 # Environment Args
 ARG data_bag_item=web_dev
-ARG aws_inside=false
 ARG stack_name=mediawiki-nginx-kitchen
-ARG vpc_id=vpc-00000000
 ARG logs_group_name=mediawiki-nginx-kitchen
 ARG efs_filesystem_id=fs-00000000
 ARG version_major=1
@@ -33,7 +31,6 @@ ARG rewrite_wiki_alias=false
 ARG dns_configure=false
 ARG hosted_zone_id=00000000000000
 ARG record_name=www.example.com
-ARG efs_configure=false
 
 # Run Chef when Container Created
 CMD ["/opt/chef/bin/chef-client", "-z", "--config /opt/chef-repo/client.rb", "-o recipe[bonusbits_mediawiki_nginx]", "--environment ${chef_environment}", "--log_level info", "--force-formatter", "--chef-zero-port 8889"]
@@ -81,13 +78,11 @@ RUN printf $"{\n\
     },\n\
     \"override_attributes\": {\n\
         \"${cookbook_name}\": {\n\
-            \"role\": \"web\",\n\
             \"deployment_type\": \"docker\",\n\
             \"data_bag_item\": \"${data_bag_item}\",\n\
             \"aws\": {\n\
-                \"inside\": ${aws_inside},\n\
+                \"inside\": true,\n\
                 \"stack_name\": \"${stack_name}\",\n\
-                \"vpc_id\": \"${vpc_id}\",\n\
                 \"logs_group_name\": \"${logs_group_name}\",\n\
                 \"efs_filesystem_id\": \"${efs_filesystem_id}\"\n\
             },\n\
@@ -107,9 +102,6 @@ RUN printf $"{\n\
                 \"hosted_zone_id\": \"${hosted_zone_id}\",\n\
                 \"record_name\": \"${record_name}\"\n\
             },\n\
-            \"efs\": {\n\
-                \"configure\": ${efs_configure}\n\
-            }\n\
         }\n\
     }\n\
 }\n"\
@@ -125,13 +117,11 @@ RUN printf $"{\n\
     },\n\
     \"override_attributes\": {\n\
         \"${cookbook_name}\": {\n\
-            \"role\": \"web\",\n\
             \"deployment_type\": \"docker\",\n\
             \"data_bag_item\": \"${data_bag_item}\",\n\
             \"aws\": {\n\
                 \"inside\": false,\n\
                 \"stack_name\": \"${stack_name}\",\n\
-                \"vpc_id\": \"${vpc_id}\",\n\
                 \"logs_group_name\": \"${logs_group_name}\",\n\
                 \"efs_filesystem_id\": \"${efs_filesystem_id}\"\n\
             },\n\
@@ -151,9 +141,6 @@ RUN printf $"{\n\
                 \"hosted_zone_id\": \"${hosted_zone_id}\",\n\
                 \"record_name\": \"${record_name}\"\n\
             },\n\
-            \"efs\": {\n\
-                \"configure\": ${efs_configure}\n\
-            }\n\
         }\n\
     }\n\
 }\n"\
