@@ -11,7 +11,7 @@ ARG sudo_user=docker
 ARG chef_client_version=12.18.31
 ARG cookbook_name=bonusbits_mediawiki_nginx
 ARG chef_role=web
-ARG chef_environment=docker_web_dev
+ARG chef_environment=inside_aws
 
 # Data Bag
 ARG data_bag_secret
