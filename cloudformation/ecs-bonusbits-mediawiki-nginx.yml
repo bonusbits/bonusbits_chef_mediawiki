@@ -24,9 +24,6 @@ Parameters:
     Type: AWS::EC2::SecurityGroup::Id
   EfsSecurityGroup:
     Type: AWS::EC2::SecurityGroup::Id
-  EfsFileSystemId:
-    Type: String
-    Default: fs-00000000
 
   # Instance
   KeyPairName:
@@ -50,7 +47,7 @@ Parameters:
     Default: 1
   MaxAutoScaleCount:
     Type: Number
-    Default: 1
+    Default: 2
   AlarmSnsTopicArn:
     Type: String
     Default: arn:aws:sns:us-west-2:000000000000:alerts
@@ -75,53 +72,6 @@ Parameters:
     MinLength: 684
     Default: "CYEh1mnfH+TrzeVa8cyDAHWicV8hKni7P40xVPUn2Cm8638QvFS24iK7DRtP5VlDpogSaxDm050riKcAZ++rwUsJdUcQyx6KdXIMKEVml+ZjYW9BC3c4fMWPYbBkdWHBTpUP6OpMl9eNdPoa36vKRuxBrYGAKzLLDlTTqvoRlKEpAKpdSdgp3zZnGeymEeYYyG2Lv9p6ZbmlcDqRdB2hPu+grNkDWNrwDfV/UxF3QOtLQQB7c5edDHa1rmegNbP1Gb/h2Gu+HFf2sQnCFnjG20rxwJaL5lSdUs2AOdR+B+fDL+y7o6LxIN3n3EQWfdzzDsJXFjKhF0b+mAAmgJy9q2R1Sqr0f0X078icvu9zlUMjgJxSAShsXW00y9swcItQXFpJTFXnaswbd7YtJBsrNvfcOuSF9GhO6y1vCTbeOUMet+G6KbDIO0YxKF+fi07VPSTkAoXznC0t9o8s7Kqdd1pgx3xxVr80r9v3uKZcM+wMBk7TrpswKr6A4sIT0kBaJTgr37uDH8uIoiqEpxHfHEge6vVWfJyRaXjdyG7aJ3VwuJvSrIkuVJCam3ie2Dr09KBUWNYHXOmPb3eM0ByudcXNS0IXNAWqQJ5leNTINcqq4OZmAJHHOUo7qJhtqLVtr+Zwcady+WQ0ta1kmhQuWJ8RAhCCBUCUTISKEtXuF8E="
 
-  # MediaWiki
-  MediawikiMajorRelease:
-    Type: String
-    Default: 1
-  MediawikiMinorRelease:
-    Type: String
-    Default: 28
-  SiteFolderName:
-    Type: String
-    Default: mediawiki
-  UploadFolderName:
-    Type: String
-    Default: uploads
-
-  # Nginx
-  RootSitePath:
-    Type: String
-    Default: "/var/www/html"
-  NginxXforwardedTraffic:
-    Type: String
-    Default: false
-    AllowedValues:
-      - true
-      - false
-  NginxRewriteWikiAlias:
-    Type: String
-    Default: false
-    AllowedValues:
-      - true
-      - false
-
-  # DNS
-  UpdateDNS:
-    Type: String
-    Default: true
-    AllowedValues:
-      - true
-      - false
-  HostedZoneId:
-    Type: String
-    Description: Route53 Hosted Zone ID (Z1234567890).
-    Default: Z1234567890
-  RecordName:
-    Type: String
-    Description: DNS Alias Record Name (web01.example.com)
-    Default: web01.example.com
-
 Metadata:
   TemplateAuthor: Levon Becker
   AWS::CloudFormation::Interface:
@@ -143,7 +93,6 @@ Metadata:
           - RemoteSecurityGroup
           - RdsSecurityGroup
           - EfsSecurityGroup
-          - EfsFileSystemId
 
       # Instance
       - Label:
@@ -170,31 +119,6 @@ Metadata:
           - DataBagItem
           - DataBagSecret
 
-      # Mediawiki
-      - Label:
-          default: Mediawiki
-        Parameters:
-          - MediawikiMajorRelease
-          - MediawikiMinorRelease
-          - SiteFolderName
-          - UploadFolderName
-
-      # Nginx
-      - Label:
-          default: Nginx
-        Parameters:
-          - RootSitePath
-          - NginxXforwardedTraffic
-          - NginxRewriteWikiAlias
-
-      # DNS
-      - Label:
-          default: DNS
-        Parameters:
-          - UpdateDNS
-          - HostedZoneId
-          - RecordName
-
     ParameterLabels:
       # Ownership
       Owner:
@@ -215,8 +139,6 @@ Metadata:
         default: RDS Security Group
       EfsSecurityGroup:
         default: EFS Security Group
-      EfsFileSystemId:
-        default: EFS File System ID
 
       # Instance
       KeyPairName:
@@ -244,32 +166,6 @@ Metadata:
       DataBagSecret:
         default: Data Bag Secret
 
-      # MediaWiki
-      MediawikiMajorRelease:
-        default: Mediawiki Major Release
-      MediawikiMinorRelease:
-        default: Mediawiki Minor Release
-      SiteFolderName:
-        default: Site Folder Name
-      UploadFolderName:
-        default: UploadFolderName
-
-      # Nginx
-      RootSitePath:
-        default: Root Site Path
-      NginxXforwardedTraffic:
-        default: X-Forwarded Trafic
-      NginxRewriteWikiAlias:
-        default: Rewrite wiki Alias
-
-      # DNS
-      UpdateDNS:
-        default: Update DNS
-      RecordName:
-        default: Record Name
-      HostedZoneId:
-        default: Hosted Zone ID
-
 Outputs:
   # Ownership
   Owner:
@@ -292,8 +188,6 @@ Outputs:
     Value: !Ref RdsSecurityGroup
   EfsSecurityGroup:
     Value: !Ref EfsSecurityGroup
-  EfsFileSystemId:
-    Value: !Ref EfsFileSystemId
 
   # Instance
   KeyPairName:
@@ -321,39 +215,7 @@ Outputs:
   DataBagItem:
     Value: !Ref DataBagItem
 
-  # MediaWiki
-  MediawikiMajorRelease:
-    Value: !Ref MediawikiMajorRelease
-  MediawikiMinorRelease:
-    Value: !Ref MediawikiMinorRelease
-  SiteFolderName:
-    Value: !Ref SiteFolderName
-  UploadFolderName:
-    Value: !Ref UploadFolderName
-
-  # Nginx
-  RootSitePath:
-    Value: !Ref RootSitePath
-  NginxXforwardedTraffic:
-    Value: !Ref NginxXforwardedTraffic
-  NginxRewriteWikiAlias:
-    Value: !Ref NginxRewriteWikiAlias
-
-  # DNS
-  UpdateDNS:
-    Value: !Ref UpdateDNS
-  HostedZoneId:
-    Description: Hosted Zone ID.
-    Value: !Ref HostedZoneId
-  RecordName:
-    Description: Record Name.
-    Value: !Ref RecordName
-
-  # Template Generated
-#  InstanceURL:
-#    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
-#  DnsURL:
-#    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
+  # Generated
   SecurityGroup:
     Value: !Ref SecurityGroup
   AMI:
@@ -417,7 +279,6 @@ Mappings:
 
 Conditions:
   HasKeyPair: !Not [!Equals [ !Ref KeyPairName, '' ]]
-  RunDnsScript: !Equals [ !Ref UpdateDNS, 'true' ]
 
 Resources:
   # CloudWatch
@@ -439,7 +300,7 @@ Resources:
       RoleName: !Ref AWS::StackName
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/ReadOnlyAccess
-        - arn:aws:iam::aws:policy/AmazonEC2ContainerServiceforEC2Role
+        - arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role
       AssumeRolePolicyDocument:
         Statement:
           - Effect: Allow
@@ -735,83 +596,107 @@ Resources:
   ScaleUpPolicy:
     Type: AWS::AutoScaling::ScalingPolicy
     DependsOn:
-      - WorkerAutoScalingGroup
+      - AutoScalingGroup
     Properties:
       AdjustmentType: ChangeInCapacity
-      AutoScalingGroupName: !Ref WorkerAutoScalingGroup
+      AutoScalingGroupName: !Ref AutoScalingGroup
       Cooldown: 300
       ScalingAdjustment: 1
 
   ScaleDownPolicy:
     Type: AWS::AutoScaling::ScalingPolicy
     DependsOn:
-      - WorkerAutoScalingGroup
+      - AutoScalingGroup
     Properties:
       AdjustmentType: ChangeInCapacity
-      AutoScalingGroupName: !Ref WorkerAutoScalingGroup
+      AutoScalingGroupName: !Ref AutoScalingGroup
       Cooldown: 300
       ScalingAdjustment: -1
 
   MemoryAlarmHigh:
     Type: AWS::CloudWatch::Alarm
     DependsOn:
-      - WorkerScaleUpPolicy
-      - WorkerCluster
+      - ScaleUpPolicy
+      - EcsCluster
     Properties:
-      AlarmDescription: Scale-up if Memory > 80% for 5 minutes
+      AlarmName: !Join [ '', [ !Ref "AWS::StackName", '-mem-high' ]]
+      AlarmDescription: Scale-up if Memory > 80% for 10 minutes
       MetricName: MemoryReservation
       Namespace: AWS/ECS
       Statistic: Average
       Period: 300
-      EvaluationPeriods: 1
+      EvaluationPeriods: 2
       Threshold: 80
       AlarmActions:
-        - !Ref WorkerScaleUpPolicy
+        - !Ref ScaleUpPolicy
+      OKActions:
+        - !Ref AlarmSnsTopicArn
       Dimensions:
         - Name: ClusterName
-          Value: !Ref WorkerCluster
+          Value: !Ref EcsCluster
       ComparisonOperator: GreaterThanThreshold
 
   MemoryAlarmLow:
     Type: AWS::CloudWatch::Alarm
     DependsOn:
-      - WorkerScaleDownPolicy
-      - WorkerCluster
+      - ScaleDownPolicy
+      - EcsCluster
     Properties:
-      AlarmDescription: Scale-down if Memory < 30% for 5 minutes
+      AlarmName: !Join [ '', [ !Ref "AWS::StackName", '-mem-low' ]]
+      AlarmDescription: Scale-down if Memory < 30% for 15 minutes
       MetricName: MemoryReservation
       Namespace: AWS/ECS
       Statistic: Average
       Period: 300
-      EvaluationPeriods: 1
+      EvaluationPeriods: 3
       Threshold: 30
       AlarmActions:
-        - !Ref WorkerScaleDownPolicy
+        - !Ref ScaleDownPolicy
       Dimensions:
         - Name: ClusterName
-          Value: !Ref WorkerCluster
+          Value: !Ref EcsCluster
       ComparisonOperator: LessThanThreshold
 
   CPUAlarmHigh:
     Type: AWS::CloudWatch::Alarm
     DependsOn:
-      - AutoScalingGroup
+      - ScaleUpPolicy
+      - EcsCluster
     Properties:
-      AlarmName: !Join [ '', [ !Ref "AWS::StackName", '-cpu' ]]
-      AlarmDescription: Alert if CPU > 50% for 10 minutes
+      AlarmName: !Join [ '', [ !Ref "AWS::StackName", '-cpu-high' ]]
+      AlarmDescription: Alert if CPU > 80% for 10 minutes
       MetricName: CPUUtilization
       Namespace: AWS/EC2
       Statistic: Average
-      Period: '300'
-      EvaluationPeriods: '2'
-      Threshold: '50'
+      Period: 300
+      EvaluationPeriods: 2
+      Threshold: 80
       AlarmActions:
-        - !Ref AlarmSnsTopicArn
+        - !Ref ScaleUpPolicy
       OKActions:
         - !Ref AlarmSnsTopicArn
-      InsufficientDataActions:
-        - !Ref AlarmSnsTopicArn
       Dimensions:
-        - Name: AutoScalingGroupName
-          Value: !Ref AutoScalingGroup
+        - Name: ClusterName
+          Value: !Ref EcsCluster
       ComparisonOperator: GreaterThanThreshold
+
+  CPUAlarmLow:
+    Type: AWS::CloudWatch::Alarm
+    DependsOn:
+      - ScaleDownPolicy
+      - EcsCluster
+    Properties:
+      AlarmName: !Join [ '', [ !Ref "AWS::StackName", '-cpu-low' ]]
+      AlarmDescription: Alert if CPU < 30% for 15 minutes
+      MetricName: CPUUtilization
+      Namespace: AWS/EC2
+      Statistic: Average
+      Period: 300
+      EvaluationPeriods: 3
+      Threshold: 30
+      AlarmActions:
+        - !Ref ScaleDownPolicy
+      Dimensions:
+        - Name: ClusterName
+          Value: !Ref EcsCluster
+      ComparisonOperator: LessThanThreshold
