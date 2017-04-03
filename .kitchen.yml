@@ -31,7 +31,12 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/inspec/profiles/bonusbits_web/
+#        - name: os-hardening
+#          git: https://github.com/dev-sec/linux-baseline.git
+        - name: bootstrap
+          git: https://github.com/bonusbits/inspec_bootstrap.git
       attributes:
+        chef_version: 12.18.31
         role: web
         deployment_type: ec2
         inside_aws: true
@@ -39,7 +44,7 @@ suites:
       name: chef_zero
       require_chef_omnibus: 12.18.31
       data_bags_path: test/data_bags
-      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
+      encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/encrypted_data_bag_secret
       roles_path: test/roles
       environments_path: test/environments
       client_rb:

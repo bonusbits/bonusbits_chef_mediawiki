@@ -32,9 +32,6 @@ ARG dns_configure=false
 ARG hosted_zone_id=00000000000000
 ARG record_name=www.example.com
 
-# Run Chef when Container Created
-CMD ["/opt/chef/bin/chef-client", "-z", "--config /opt/chef-repo/client.rb", "-o recipe[bonusbits_mediawiki_nginx]", "--environment ${chef_environment}", "--log_level info", "--force-formatter", "--chef-zero-port 8889"]
-
 # Install Basics
 RUN yum clean all
 RUN yum update -y
@@ -101,7 +98,7 @@ RUN printf $"{\n\
                 \"configure\": ${dns_configure},\n\
                 \"hosted_zone_id\": \"${hosted_zone_id}\",\n\
                 \"record_name\": \"${record_name}\"\n\
-            },\n\
+            }\n\
         }\n\
     }\n\
 }\n"\
@@ -133,14 +130,14 @@ RUN printf $"{\n\
             },\n\
             \"nginx\": {\n\
                 \"root_site_path\": \"${root_site_path}\",\n\
-                \"x_forwarded_traffic\": ${x_forwarded_traffic},\n\
+                \"x_forwarded_traffic\": false,\n\
                 \"rewrite_wiki_alias\": ${rewrite_wiki_alias}\n\
             },\n\
             \"dns\": {\n\
                 \"configure\": ${dns_configure},\n\
                 \"hosted_zone_id\": \"${hosted_zone_id}\",\n\
                 \"record_name\": \"${record_name}\"\n\
-            },\n\
+            }\n\
         }\n\
     }\n\
 }\n"\
@@ -148,5 +145,12 @@ RUN printf $"{\n\
 
 # Run Chef
 RUN /opt/chef/bin/chef-client -z --config /opt/chef-repo/client.rb -o recipe[bonusbits_mediawiki_nginx] --environment image_build --log_level info --force-formatter --chef-zero-port 8889
+
+# Run InSpec Integration Tests
+#RUN /opt/chef/bin/inspec exec --color --profiles-path=/opt/chef-repo/cookbooks/${cookbook_name}/test/integration/inspec/profiles/bonusbits_web/ --attrs=role=web deployment_type=docker inside_aws=false
+
+# Run Chef and InSpec when Container Created in AWS
+CMD ["/opt/chef/bin/chef-client", "-z", "--config /opt/chef-repo/client.rb", "-o recipe[bonusbits_mediawiki_nginx]", "--environment ${chef_environment}", "--log_level info", "--force-formatter", "--chef-zero-port 8889"]
+#CMD /opt/chef/bin/inspec exec --color --profiles-path=/opt/chef-repo/cookbooks/${cookbook_name}/test/integration/inspec/profiles/bonusbits_web/ --attrs=role=web deployment_type=docker inside_aws=true
 
 EXPOSE 80 443
