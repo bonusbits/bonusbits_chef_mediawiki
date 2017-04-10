@@ -1,5 +1,5 @@
 {
-    "name": "example",
+    "name": "kitchen",
     "description": "Environment",
     "cookbook_versions": {},
     "json_class": "Chef::Environment",
@@ -7,14 +7,15 @@
     "default_attributes": {
     },
     "override_attributes": {
-        "bonusbits_mediawiki_nginx": {
-            "data_bag_item": "example_databag_item",
-            "aws": {
-                "stack_name": "kitchen-bonusbits-mediawiki-nginx",
-                "efs_filesystem_id": "fs-00000000"
-            },
+        "bonusbits_base": {
             "cloudwatch_logs": {
                 "logs_group_name": "kitchen-bonusbits-mediawiki-nginx"
+            }
+        },
+        "bonusbits_mediawiki_nginx": {
+            "data_bag_item": "example_databag_item",
+            "efs": {
+                "filesystem_id": "fs-00000000"
             },
             "mediawiki": {
                 "version_major": "1",

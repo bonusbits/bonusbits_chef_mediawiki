@@ -4,7 +4,7 @@ default['bonusbits_mediawiki_nginx']['adsense']['configure'] = true
 message_list = [
   '',
   '** AdSense **',
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['adsense']['configure']})"
+  "Configure                   (#{node['bonusbits_mediawiki_nginx']['adsense']['configure']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

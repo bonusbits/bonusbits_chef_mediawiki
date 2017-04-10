@@ -5,8 +5,8 @@ default['bonusbits_mediawiki_nginx']['dns']['ttl'] = '60'
 message_list = [
   '',
   '** DNS **',
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['dns']['configure']})",
-  "INFO: TTL                   (#{node['bonusbits_mediawiki_nginx']['dns']['ttl']})"
+  "Configure                   (#{node['bonusbits_mediawiki_nginx']['dns']['configure']})",
+  "TTL                         (#{node['bonusbits_mediawiki_nginx']['dns']['ttl']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

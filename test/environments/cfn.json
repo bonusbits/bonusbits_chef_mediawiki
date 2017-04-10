@@ -1,5 +1,5 @@
 {
-    "name": "ec2_environment",
+    "name": "cfn",
     "description": "Environment",
     "cookbook_versions": {},
     "json_class": "Chef::Environment",
@@ -7,12 +7,15 @@
     "default_attributes": {
     },
     "override_attributes": {
+        "bonusbits_base": {
+            "cloudwatch_logs": {
+                "logs_group_name": "${CloudWatchLogsGroup}"
+            }
+        },
         "${CookbookName}": {
             "data_bag_item": "${DataBagItem}",
-            "aws": {
-                "stack_name": "${AWS::StackName}",
-                "logs_group_name": "${CloudWatchLogsGroup}",
-                "efs_filesystem_id": "${EfsFileSystemId}"
+            "efs": {
+                "filesystem_id": "${EfsFileSystemId}"
             },
             "mediawiki": {
                 "version_major": "${MediawikiMajorRelease}",

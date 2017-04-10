@@ -1,7 +1,7 @@
 # Ensure NFS Utils Installed
 package 'nfs-utils'
 
-if node['bonusbits_mediawiki_nginx']['aws']['inside']
+if node['bonusbits_base']['aws']['inside']
   # Create Mount Directory
   efs_mount_point = node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']
   directory efs_mount_point do
@@ -12,7 +12,7 @@ if node['bonusbits_mediawiki_nginx']['aws']['inside']
   end
 
   # Mount Upload Share
-  efs_filesystem_id = node['bonusbits_mediawiki_nginx']['aws']['efs_filesystem_id']
+  efs_filesystem_id = node['bonusbits_mediawiki_nginx']['efs']['filesystem_id']
   region = node['ec2']['placement_availability_zone'].slice(0..-2)
 
   mount efs_mount_point do

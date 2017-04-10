@@ -1,5 +1,4 @@
 # Bonusbits Base
-default['bonusbits_base']['cloudwatch_logs']['configure'] = true
 default['bonusbits_base']['cloudwatch_logs']['deploy_logs_conf'] = false
 default['bonusbits_base']['cloudwatch_logs']['logs_group_name'] = 'kitchen-bonusbits-mediawiki-nginx'
 

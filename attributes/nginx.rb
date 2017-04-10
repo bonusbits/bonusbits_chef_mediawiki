@@ -10,11 +10,11 @@ end
 message_list = [
   '',
   '** Nginx **',
-  "INFO: User                  (#{node['bonusbits_mediawiki_nginx']['nginx']['user']})",
-  "INFO: Group                 (#{node['bonusbits_mediawiki_nginx']['nginx']['group']})",
-  "INFO: Root Path             (#{node['bonusbits_mediawiki_nginx']['nginx']['root_site_path']})",
-  "INFO: X Forward Traffic     (#{node['bonusbits_mediawiki_nginx']['nginx']['x_forwarded_traffic']})",
-  "INFO: Rewrite Wiki Alias    (#{node['bonusbits_mediawiki_nginx']['nginx']['rewrite_wiki_alias']})"
+  "User                        (#{node['bonusbits_mediawiki_nginx']['nginx']['user']})",
+  "Group                       (#{node['bonusbits_mediawiki_nginx']['nginx']['group']})",
+  "Root Path                   (#{node['bonusbits_mediawiki_nginx']['nginx']['root_site_path']})",
+  "X Forward Traffic           (#{node['bonusbits_mediawiki_nginx']['nginx']['x_forwarded_traffic']})",
+  "Rewrite Wiki Alias          (#{node['bonusbits_mediawiki_nginx']['nginx']['rewrite_wiki_alias']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

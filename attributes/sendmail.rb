@@ -4,7 +4,7 @@ default['bonusbits_mediawiki_nginx']['sendmail']['configure'] = true
 message_list = [
   '',
   '** Sendmail **',
-  "INFO: Configure             (#{node['bonusbits_mediawiki_nginx']['sendmail']['configure']})"
+  "Configure                   (#{node['bonusbits_mediawiki_nginx']['sendmail']['configure']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

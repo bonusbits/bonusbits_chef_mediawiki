@@ -12,7 +12,7 @@ template '/etc/nginx/conf.d/mediawiki.conf' do
   notifies :restart, 'service[nginx]', :delayed
 end
 
-unless node['bonusbits_mediawiki_nginx']['deployment_type'] == 'docker'
+unless node['bonusbits_base']['deployment_type'] == 'docker'
   # Set somaxconn
   ruby_block 'Set somaxconn' do
     block do
