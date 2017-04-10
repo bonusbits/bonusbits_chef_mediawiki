@@ -1,5 +1,5 @@
 {
-    "name": "example_ec2_web_dev",
+    "name": "example",
     "description": "Environment",
     "cookbook_versions": {},
     "json_class": "Chef::Environment",
@@ -10,9 +10,11 @@
         "bonusbits_mediawiki_nginx": {
             "data_bag_item": "example_databag_item",
             "aws": {
-                "stack_name": "mediawiki-nginx-kitchen-01",
-                "logs_group_name": "mediawiki-nginx-kitchen",
+                "stack_name": "kitchen-bonusbits-mediawiki-nginx",
                 "efs_filesystem_id": "fs-00000000"
+            },
+            "cloudwatch_logs": {
+                "logs_group_name": "kitchen-bonusbits-mediawiki-nginx"
             },
             "mediawiki": {
                 "version_major": "1",

@@ -1,12 +1,9 @@
 {
-    "name": "web",
+    "name": "bonusbits_mediawiki_nginx",
     "description": "Role",
     "json_class": "Chef::Role",
     "default_attributes": {},
     "override_attributes": {
-        "bonusbits_mediawiki_nginx": {
-            "role": "web"
-        }
     },
     "chef_type": "role",
     "run_list": [

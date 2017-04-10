@@ -1,7 +1,6 @@
 inside_aws = attribute('inside_aws', default: false, description: 'Inside AWS')
-role = attribute('role', default: 'web', description: 'Server Role')
 
-if role == 'web' && inside_aws
+if inside_aws
   describe 'EFS Mount' do
     it 'nfs-utils installed' do
       expect(package('nfs-utils')).to be_installed

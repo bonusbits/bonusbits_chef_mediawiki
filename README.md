@@ -27,7 +27,7 @@ Click this button to open AWS CloudFormation web console with the Template URL a
 [![](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?#/stacks/new?&templateURL=https://s3.amazonaws.com/bonusbits-public/cloudformation-templates/cookbooks/bonusbits-mediawiki-nginx.yml)
 
 
-# CloudFormation Template Details
+# CloudFormation Template
 Public S3 Link:<br> 
 [https://s3.amazonaws.com/bonusbits-public/cloudformation-templates/cookbooks/bonusbits-mediawiki-nginx.yml](https://s3.amazonaws.com/bonusbits-public/cloudformation-templates/cookbooks/bonusbits-mediawiki-nginx.yml)
 

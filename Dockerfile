@@ -34,7 +34,7 @@ ARG record_name=www.example.com
 
 # Install Basics
 RUN yum clean all
-RUN yum update -y
+RUN yum update -y --exclude=kernel*
 RUN yum install -y sudo upstart procps util-linux openssh-server openssh-clients which curl vim-enhanced openssl ca-certificates mlocate passwd net-tools htop git gzip aws-cfn-bootstrap aws-cli cloud-init
 
 ## Create Sudo User

@@ -31,40 +31,10 @@ web_package_list = %w(
   texlive
 )
 
-base_package_list = %w(
-  aws-cli
-  ca-certificates
-  curl
-  git
-  gzip
-  htop
-  mlocate
-  net-tools
-  openssh-clients
-  openssh-server
-  openssl
-  passwd
-  procps
-  sudo
-  upstart
-  util-linux
-  vim-enhanced
-  which
-)
-role = attribute('role', default: 'web', description: 'Server Role')
-
 describe 'Packages Install' do
-  it 'base package list' do
-    base_package_list.each do |package|
+  it 'web package list' do
+    web_package_list.each do |package|
       expect(package(package)).to be_installed
-    end
-  end
-
-  if role == 'web'
-    it 'web package list' do
-      web_package_list.each do |package|
-        expect(package(package)).to be_installed
-      end
     end
   end
 end

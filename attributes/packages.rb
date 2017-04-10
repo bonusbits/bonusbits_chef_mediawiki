@@ -1,4 +1,4 @@
-default['bonusbits_mediawik_nginx']['packages']['web'] = %w(
+default['bonusbits_mediawik_nginx']['packages'] = %w(
   apr
   apr-util
   enchant
@@ -29,26 +29,4 @@ default['bonusbits_mediawik_nginx']['packages']['web'] = %w(
   php70-process
   php70-xml
   texlive
-)
-
-# TODO: Check list on EC2 and make sure all needed in list for Docker
-default['bonusbits_mediawik_nginx']['packages']['base_packages'] = %w(
-  aws-cli
-  ca-certificates
-  curl
-  git
-  gzip
-  htop
-  mlocate
-  net-tools
-  openssh-clients
-  openssh-server
-  openssl
-  passwd
-  procps
-  sudo
-  upstart
-  util-linux
-  vim-enhanced
-  which
 )

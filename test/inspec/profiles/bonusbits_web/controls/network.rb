@@ -1,9 +1,8 @@
-title 'Nginx OS Network Settings'
+require_relative '../helpers/os_queries'
 
 deployment_type = attribute('deployment_type', default: 'ec2', description: 'Deployment Type')
-role = attribute('role', default: 'web', description: 'Server Role')
 
-if role == 'web' && deployment_type == 'ec2'
+if deployment_type == 'ec2'
   describe 'Network Settings' do
     it 'somaxconn 1024' do
       expect(file('/proc/sys/net/core/somaxconn').content).to match(/^1024/)
