@@ -39,3 +39,7 @@ end
 def docker?
   File.exist?('/.dockerenv')
 end
+
+def ec2?
+  File.directory?('/home/ec2-user')
+end

@@ -1,4 +1,5 @@
-inside_aws = attribute('inside_aws', default: false, description: 'Inside AWS')
+require_relative '../helpers/os_queries'
+inside_aws = ec2?
 
 if inside_aws
   describe 'EFS Mount' do

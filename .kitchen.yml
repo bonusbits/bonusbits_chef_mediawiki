@@ -68,9 +68,7 @@ suites:
           git: https://github.com/bonusbits/inspec_bonusbits_base.git
         - path: test/inspec/profiles/bonusbits_web/
       attributes:
-        chef_version: 12.19.36
-        deployment_type: ec2
-        inside_aws: true
+        chef_version: '12.19.36'
     includes: [ 'amazon-ec2' ]
 
   - name: docker
@@ -95,10 +93,10 @@ suites:
         <% end %>
     driver:
       name: docker
-      use_sudo: false # For Native Docker on Mac. Remove/Comment if using Toolbox (docker-machine)
+      use_sudo: false
       driver_config:
         ssl_verify_mode: ":verify_none"
-        forward: 80
+        forward: 80 443
     verifier:
       inspec_tests:
         - name: bootstrap
@@ -107,6 +105,11 @@ suites:
           git: https://github.com/bonusbits/inspec_bonusbits_base.git
         - path: test/inspec/profiles/bonusbits_web/
       attributes:
-        deployment_type: docker
-        inside_aws: false
+        chef_version: '12.19.36'
+        configure_sudoers: 'true'
+    attributes:
+      <% if ENV['CIRCLECI'] %>
+      bonusbits_base:
+        deployment_location: 'circleci'
+      <% end %>
     includes: [ 'amazon-docker' ]

@@ -1,6 +1,11 @@
 FROM amazonlinux:latest
 MAINTAINER Levon Becker "levon.docker@bonusbits.com"
 ENTRYPOINT ["/bin/bash"]
+LABEL version="1.2.0" \
+      description="Amazon Linux Image built from bonusbits_mediawiki_nginx cookbook." \
+      github="https://github.com/bonusbits/bonusbits_mediawiki_nginx" \
+      website="https://www.bonusbits.com"
+
 # SSH Args
 ARG ssh_key
 
