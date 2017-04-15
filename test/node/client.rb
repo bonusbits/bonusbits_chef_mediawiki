@@ -1,4 +1,4 @@
-node_name 'ec2_node'
+node_name 'docker_node'
 checksum_path '/opt/chef-repo/checksums'
 file_cache_path '/opt/chef-repo/cache'
 file_backup_path '/opt/chef-repo/backup'
@@ -8,3 +8,6 @@ environment_path '/opt/chef-repo/environments'
 role_path '/opt/chef-repo/roles'
 chef_server_url 'http://127.0.0.1:8889'
 encrypted_data_bag_secret '/opt/chef-repo/encrypted_data_bag_secret'
+log_level :info
+log_location '/var/log/chef-client.log'
+verify_api_cert false

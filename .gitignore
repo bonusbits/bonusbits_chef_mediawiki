@@ -76,3 +76,4 @@ out
 gen
 /test/integration/inspec/results/
 /test/environments/bonusbits_dev.json
+/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json

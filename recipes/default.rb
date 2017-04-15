@@ -1,9 +1,6 @@
 # Base Setup
 include_recipe 'bonusbits_base'
 
-# Setup CloudWatch Logs
-include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs'
-
 # Fetch Data Bag
 data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
 data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']

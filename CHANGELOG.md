@@ -1,7 +1,7 @@
 ##CHANGE LOG
 ---
 
-## 1.2.0 - 03/25/2017 - Levon Becker - [Issue 24](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/24)
+## 1.2.0 - 04/15/2017 - Levon Becker - [Issue 24](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/24)
 * Moved nodeinfo to /usr/local/bin/
 * Added kitchen docker configure that works with amazonlinux image
 * Added ECS CloudFormation Template
@@ -19,7 +19,10 @@
 * Added 'packages' key to packages lists
 * Fixed yum-cron-hourly template resource to use correct template file
 * Renamed templates/default/base to templates/default/node_info and moved yum-cron and awslogs.conf templates under web
-* 
+* Added CloudWatch Logs /var/log/chef-client.log stream
+* CFN: Added Client.rb chef client logging to client.rb **/var/log/chef-client.log**
+* CFN: Removed role since just calling the recipe for run list and change chef run to call the recipe instead.
+* Switched to new bonusbits_base cloudwatch_logs way to only need to pass additional log stream content.
 
 ## 1.0.7 - 03/19/2017 - Levon Becker
 * Added Inspec Tests for All recipes

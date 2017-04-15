@@ -5,7 +5,7 @@ namespace :style do
   FoodCritic::Rake::LintTask.new(:chef) do |task|
     task.options = {
       fail_tags: ['correctness'],
-      chef_version: '12.18.31',
+      chef_version: '12.19.36',
       tags: %w(~FC001 ~FC019 ~FC016 ~FC039)
     }
   end
@@ -67,7 +67,7 @@ desc 'Foodcritic & Rubocop'
 task default: %w(style:chef style:ruby)
 
 desc 'Foodcritic & Rubocop'
-task style_checks: %w(style:chef style:ruby)
+task style_tasks: %w(style:chef style:ruby)
 
 desc 'Circle CI Tasks'
 task circleci: %w(style:chef style:ruby integration:docker)
