@@ -609,7 +609,7 @@ Resources:
         configSets:
           ec2_setup:
             - config_cfn
-            - install_chef_client
+            - install_chefdk
             - setup_chef_client
             - run_chef_client
             - update_dns
@@ -639,9 +639,9 @@ Resources:
                 files:
                   - /etc/cfn/cfn-hup.conf
                   - /etc/cfn/hooks.d/cfn-auto-reloader.conf
-        install_chef_client:
+        install_chefdk:
           commands:
-            01_install_chef_client:
+            01_install_chefdk:
               command: !Sub "curl -L https://omnitruck.chef.io/install.sh | bash -s -- -P chefdk -v ${ChefDkVersion}"
         setup_chef_client:
           commands:
@@ -677,10 +677,10 @@ Resources:
                 log_level :info
                 log_location '/var/log/chef-client.log'
                 verify_api_cert false
-            "/opt/chef-repo/environments/aws.json":
+            "/opt/chef-repo/environments/cfn.json":
               content: !Sub |
                {
-                   "name": "aws",
+                   "name": "cfn",
                    "description": "Environment",
                    "cookbook_versions": {},
                    "json_class": "Chef::Environment",
@@ -688,13 +688,15 @@ Resources:
                    "default_attributes": {
                    },
                    "override_attributes": {
+                       "bonusbits_base": {
+                           "cloudwatch_logs": {
+                               "logs_group_name": "${CloudWatchLogsGroup}"
+                           }
+                       },
                        "${CookbookName}": {
                            "data_bag_item": "${DataBagItem}",
-                           "aws": {
-                               "stack_name": "${AWS::StackName}",
-                               "vpc_id": "${VPC}",
-                               "logs_group_name": "${CloudWatchLogsGroup}",
-                               "efs_filesystem_id": "${EfsFileSystemId}"
+                           "efs": {
+                               "filesystem_id": "${EfsFileSystemId}"
                            },
                            "mediawiki": {
                                "version_major": "${MediawikiMajorRelease}",
@@ -704,11 +706,11 @@ Resources:
                            },
                            "nginx": {
                                "root_site_path": "${RootSitePath}",
-                               "x_forwarded_traffic": ${NginxXforwardedTraffic},
-                               "rewrite_wiki_alias": ${NginxRewriteWikiAlias}
+                               "x_forwarded_traffic": "${NginxXforwardedTraffic}",
+                               "rewrite_wiki_alias": "${NginxRewriteWikiAlias}"
                            },
                            "dns": {
-                               "configure": ${UpdateDNS},
+                               "configure": "${UpdateDNS}",
                                "hosted_zone_id": "${HostedZoneId}",
                                "record_name": "${RecordName}"
                            }
@@ -718,7 +720,7 @@ Resources:
         run_chef_client:
           commands:
             01_run_chef:
-              command: !Sub "/opt/chefdk/bin/chef-client -z -o 'recipe[${CookbookName}]' --environment 'aws' --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
+              command: !Sub "/opt/chefdk/bin/chef-client -z -o 'recipe[${CookbookName}]' --environment 'cfn' --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
         update_dns:
           Condition: RunDnsScript
           commands:

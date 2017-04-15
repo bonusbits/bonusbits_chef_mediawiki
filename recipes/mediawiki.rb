@@ -16,6 +16,26 @@ git mediawiki_path do
   repository 'https://gerrit.wikimedia.org/r/p/mediawiki/core.git'
   revision release
   action :checkout
+  ignore_failure true
+  not_if { ::File.exist?(mediawiki_path) }
+end
+
+# Workaround for their ghetto git that drops the connection periodically
+# (returns 128 - The remote end hung up unexpectedly)
+ruby_block 'sleep when I say to' do
+  block do
+    Chef::Log.warn('Sleeping Because Core Git Clone Failed')
+    sleep 30
+  end
+  action :run
+  not_if { ::File.exist?(mediawiki_path) }
+end
+
+# Directory won't be there if failed above
+git mediawiki_path do
+  repository 'https://gerrit.wikimedia.org/r/p/mediawiki/core.git'
+  revision release
+  action :checkout
   not_if { ::File.exist?(mediawiki_path) }
 end
 

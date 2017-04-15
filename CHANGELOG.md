@@ -23,6 +23,9 @@
 * CFN: Added Client.rb chef client logging to client.rb **/var/log/chef-client.log**
 * CFN: Removed role since just calling the recipe for run list and change chef run to call the recipe instead.
 * Switched to new bonusbits_base cloudwatch_logs way to only need to pass additional log stream content.
+* Added some conditions to kitchen for environment and data bag so if local or CI/other etc.
+* CFN: Renamed "install_chef_client" to "install_chefdk"
+* Added condition on additional logs attribute so doesn't try to set if not in AWS because EC2 Ohai plugin will blow up with null values
 
 ## 1.0.7 - 03/19/2017 - Levon Becker
 * Added Inspec Tests for All recipes
