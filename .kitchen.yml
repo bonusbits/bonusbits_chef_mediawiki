@@ -106,7 +106,6 @@ suites:
         - path: test/inspec/profiles/bonusbits_web/
       attributes:
         chef_version: '12.19.36'
-        configure_sudoers: 'true'
     attributes:
       <% if ENV['CIRCLECI'] %>
       bonusbits_base:
