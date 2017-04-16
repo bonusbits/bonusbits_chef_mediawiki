@@ -1,6 +1,9 @@
 ##CHANGE LOG
 ---
 
+## 1.2.1 - 04/15/2017 - Levon Becker
+* Added Berksfile.lock to lock in the tested dependant cookbooks versions.
+
 ## 1.2.0 - 04/15/2017 - Levon Becker - [Issue 24](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/24)
 * Moved nodeinfo to /usr/local/bin/
 * Added kitchen docker configure that works with amazonlinux image

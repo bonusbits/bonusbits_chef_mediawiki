@@ -1,0 +1,32 @@
+DEPENDENCIES
+  bonusbits_base
+    git: https://github.com/bonusbits/bonusbits_base.git
+    revision: 600cbc653bfa52c812907fff2d8a671cb530ebcd
+  bonusbits_library
+    git: https://github.com/bonusbits/bonusbits_library.git
+    revision: 587cd0b18aed3a32ddce0c10cfddefab3defa1e6
+  bonusbits_mediawiki_nginx
+    path: .
+    metadata: true
+
+GRAPH
+  apt (6.1.0)
+  audit (3.0.0)
+    compat_resource (>= 0.0.0)
+  bonusbits_base (2.1.9)
+    apt (>= 0.0.0)
+    audit (>= 0.0.0)
+    bonusbits_library (>= 0.0.0)
+    selinux (>= 0.0.0)
+    windows (>= 0.0.0)
+    yum-epel (>= 0.0.0)
+  bonusbits_library (1.0.9)
+  bonusbits_mediawiki_nginx (1.2.0)
+    bonusbits_base (>= 0.0.0)
+  compat_resource (12.16.3)
+  ohai (5.0.3)
+  selinux (1.0.3)
+  windows (3.0.5)
+    ohai (>= 4.0.0)
+  yum-epel (2.1.1)
+    compat_resource (>= 12.16.3)
