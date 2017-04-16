@@ -13,17 +13,10 @@ Parameters:
   # Network
   VPC:
     Type: AWS::EC2::VPC::Id
-  SubnetIdList:
-    Description: Private Subnet ID List.
+  Subnets:
     Type: List<AWS::EC2::Subnet::Id>
-  InternalAccessSecurityGroup:
-    Type: AWS::EC2::SecurityGroup::Id
-  RemoteSecurityGroup:
-    Type: AWS::EC2::SecurityGroup::Id
-  RdsSecurityGroup:
-    Type: AWS::EC2::SecurityGroup::Id
-  EfsSecurityGroup:
-    Type: AWS::EC2::SecurityGroup::Id
+  SecurityGroups:
+    Type: List<AWS::EC2::SecurityGroup::Id>
   EfsFileSystemId:
     Type: String
     Default: fs-00000000
@@ -64,9 +57,9 @@ Parameters:
   CookbookVersion:
     Type: String
     Default: latest
-  ChefClientVersion:
+  ChefDkVersion:
     Type: String
-    Default: 12.18.31
+    Default: 1.3.40
   DataBagItem:
     Type: String
   DataBagSecret:
@@ -138,11 +131,8 @@ Metadata:
           default: Network
         Parameters:
           - VPC
-          - SubnetIdList
-          - InternalAccessSecurityGroup
-          - RemoteSecurityGroup
-          - RdsSecurityGroup
-          - EfsSecurityGroup
+          - Subnets
+          - SecurityGroups
           - EfsFileSystemId
 
       # Instance
@@ -166,7 +156,7 @@ Metadata:
         Parameters:
           - CookbookName
           - CookbookVersion
-          - ChefClientVersion
+          - ChefDkVersion
           - DataBagItem
           - DataBagSecret
 
@@ -205,16 +195,10 @@ Metadata:
       # Network
       VPC:
         default: VPC ID
-      SubnetIdList:
-        default: Subnet ID List
-      InternalAccessSecurityGroup:
-        default: Internal Access Security Group
-      RemoteSecurityGroup:
-        default: Remote Security Group
-      RdsSecurityGroup:
-        default: RDS Security Group
-      EfsSecurityGroup:
-        default: EFS Security Group
+      Subnets:
+        default: Subnets
+      SecurityGroups:
+        default: Security Groups
       EfsFileSystemId:
         default: EFS File System ID
 
@@ -237,8 +221,8 @@ Metadata:
         default: Cookbook Name
       CookbookVersion:
         default: Cookbook Version
-      ChefClientVersion:
-        default: Chef Client Version
+      ChefDkVersion:
+        default: ChefDk Version
       DataBagItem:
         default: Data Bag Item
       DataBagSecret:
@@ -270,34 +254,144 @@ Metadata:
       HostedZoneId:
         default: Hosted Zone ID
 
+Outputs:
+  # Ownership
+  Owner:
+    Description: Team or Individual that Owns this Formation.
+    Value: !Ref Owner
+  DeleteAfter:
+    Description: It is ok to delete the Formation after this date.
+    Value: !Ref DeleteAfter
+
+  # Network
+  VPC:
+    Value: !Ref VPC
+  Subnets:
+    Value: !Join [',', !Ref Subnets]
+  SecurityGroups:
+    Value: !Join [',', !Ref SecurityGroups]
+  EfsFileSystemId:
+    Value: !Ref EfsFileSystemId
+
+  # Instance
+  KeyPairName:
+    Description: Key Pair Name Used.
+    Value: !Ref KeyPairName
+  InstanceType:
+    Description: Instance Type Used.
+    Value: !Ref InstanceType
+
+  # Autoscaling
+  MinAutoScaleCount:
+    Value: !Ref MinAutoScaleCount
+  MaxAutoScaleCount:
+    Value: !Ref MaxAutoScaleCount
+  AlarmSnsTopicArn:
+    Value: !Ref AlarmSnsTopicArn
+
+  # Deployment
+  CookbookName:
+    Value: !Ref CookbookName
+  CookbookVersion:
+    Value: !Ref CookbookVersion
+  ChefDkVersion:
+    Value: !Ref ChefDkVersion
+  DataBagItem:
+    Value: !Ref DataBagItem
+
+  # MediaWiki
+  MediawikiMajorRelease:
+    Value: !Ref MediawikiMajorRelease
+  MediawikiMinorRelease:
+    Value: !Ref MediawikiMinorRelease
+  SiteFolderName:
+    Value: !Ref SiteFolderName
+  UploadFolderName:
+    Value: !Ref UploadFolderName
+
+  # Nginx
+  RootSitePath:
+    Value: !Ref RootSitePath
+  NginxXforwardedTraffic:
+    Value: !Ref NginxXforwardedTraffic
+  NginxRewriteWikiAlias:
+    Value: !Ref NginxRewriteWikiAlias
+
+  # DNS
+  UpdateDNS:
+    Value: !Ref UpdateDNS
+  HostedZoneId:
+    Description: Hosted Zone ID.
+    Value: !Ref HostedZoneId
+  RecordName:
+    Description: Record Name.
+    Value: !Ref RecordName
+
+  # Template Generated
+#  InstanceURL:
+#    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
+#  DnsURL:
+#    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
+  SecurityGroup:
+    Value: !Ref SecurityGroup
+  AMI:
+    Description: AMI Used.
+    Value: !FindInMap [ RegionMap, !Ref "AWS::Region", amazon ]
+  IAMRole:
+    Description: IAM Instance Profile Role Created.
+    Value: !Ref IamRole
+
 Mappings:
   RegionMap:
-    # Amazon Linux AMI 2016.09.0 was released on 2016-09-27
-    us-east-1:
-      EBS: ami-b73b63a0
-    us-west-2:
-      EBS: ami-5ec1673e
-#      EBS: ami-7a139f1a # Baked AMI
-    us-west-1:
-      EBS: ami-23e8a343
-    eu-west-1:
-      EBS: ami-9398d3e0
-    eu-central-1:
-      EBS: ami-f9619996
-    ap-southeast-1:
-      EBS: ami-b953f2da
-    ap-northeast-1:
-      EBS: ami-0c11b26d
-    ap-northeast-2:
-      EBS: ami-983ce8f6
-    ap-southeast-2:
-      EBS: ami-db704cb8
-    sa-east-1:
-      EBS: ami-97831ffb
-    us-gov-west-1:
-      EBS: ami-7cb1091d
-    cn-north-1:
-      EBS: ami-7c15c111
+      # Amazon Linux AMI 2016.09.0 was released on 2017-01-23
+      # N. Virginia
+      us-east-1:
+        amazon: ami-0b33d91d
+      # Ohio
+      us-east-2:
+        amazon: ami-0b33d91d
+      # Oregon
+      us-west-2:
+        amazon: ami-f173cc91
+      # N. California
+      us-west-1:
+        amazon: ami-165a0876
+      # Canada
+      ca-central-1:
+        amazon: ami-ebed508f
+      # Ireland
+      eu-west-1:
+        amazon: ami-70edb016
+      # London
+      eu-west-2:
+        amazon: ami-f1949e95
+      # Frankfurt
+      eu-central-1:
+        amazon: ami-af0fc0c0
+      # Singapore
+      ap-southeast-1:
+        amazon: ami-dc9339bf
+      # Seoul
+      ap-northeast-1:
+        amazon: ami-dac312b4
+      # Tokyo
+      ap-northeast-2:
+        amazon: ami-56d4ad31
+      # Sydney
+      ap-southeast-2:
+        amazon: ami-1c47407f
+      # Mumbai
+      ap-south-1:
+        amazon: ami-f9daac96
+      # Sao Paulo
+      sa-east-1:
+        amazon: ami-80086dec
+      # Beijing
+      cn-north-1:
+        amazon: ami-e6c7108b
+      # GovCloud
+      us-gov-west-1:
+        amazon: ami-b21fa4d3
 
 Conditions:
   HasKeyPair: !Not [!Equals [ !Ref KeyPairName, '' ]]
@@ -411,7 +505,7 @@ Resources:
     DependsOn:
       - LaunchConfiguration
     Properties:
-      VPCZoneIdentifier: !Ref SubnetIdList
+      VPCZoneIdentifier: !Ref Subnets
       LaunchConfigurationName: !Ref LaunchConfiguration
       MinSize: !Ref MinAutoScaleCount
       MaxSize: !Ref MaxAutoScaleCount
@@ -484,13 +578,14 @@ Resources:
       - IamInstanceProfile
     Properties:
       AssociatePublicIpAddress: false
-      ImageId: !FindInMap [ RegionMap, !Ref "AWS::Region", EBS ]
-      SecurityGroups:
-        - !Ref SecurityGroup
-        - !Ref InternalAccessSecurityGroup
-        - !Ref RemoteSecurityGroup
-        - !Ref RdsSecurityGroup
-        - !Ref EfsSecurityGroup
+      ImageId: !FindInMap [ RegionMap, !Ref "AWS::Region", amazon ]
+      SecurityGroups: [
+        !Ref SecurityGroup,
+        !Select [ 0, !Ref "SecurityGroups" ],
+        !Select [ 1, !Ref "SecurityGroups" ],
+        !Select [ 2, !Ref "SecurityGroups" ],
+        !Select [ 3, !Ref "SecurityGroups" ]
+      ]
       InstanceType: !Ref InstanceType
       IamInstanceProfile: !Ref IamInstanceProfile
       KeyName: !If [ HasKeyPair, !Ref KeyPairName, !Ref "AWS::NoValue"]
@@ -514,7 +609,7 @@ Resources:
         configSets:
           ec2_setup:
             - config_cfn
-            - install_chef_client
+            - install_chefdk
             - setup_chef_client
             - run_chef_client
             - update_dns
@@ -544,21 +639,24 @@ Resources:
                 files:
                   - /etc/cfn/cfn-hup.conf
                   - /etc/cfn/hooks.d/cfn-auto-reloader.conf
-        install_chef_client:
+        install_chefdk:
           commands:
-            01_install_chef_client:
-              command: !Sub "curl -L https://omnitruck.chef.io/install.sh | bash -s -- -v ${ChefClientVersion}"
+            01_install_chefdk:
+              command: !Sub "curl -L https://omnitruck.chef.io/install.sh | bash -s -- -P chefdk -v ${ChefDkVersion}"
         setup_chef_client:
           commands:
             01_mkdir_chef_repo:
               command: "mkdir -p /opt/chef-repo"
             02_mkdir_chef_repo_subdirs:
               cwd: /opt/chef-repo
-              command: "mkdir -p cookbooks checksums environments cache backup data_bags roles downloads"
+              command: "mkdir -p cookbooks checksums environments cache backup data_bags roles"
             03_download_cookbook:
               cwd: /opt/chef-repo/cookbooks
               command: !Sub "git clone --branch ${CookbookVersion} https://github.com/bonusbits/${CookbookName}.git"
-            04_deploy_databags:
+            04_vendor_dependent_cookbook:
+              cwd: !Sub "/opt/chef-repo/cookbooks/${CookbookName}"
+              command: !Sub "export HOME=/root && /opt/chefdk/embedded/bin/berks vendor /opt/chef-repo/cookbooks/"
+            05_deploy_databags:
               cwd: /opt/chef-repo
               command: !Sub "cp -R cookbooks/${CookbookName}/test/data_bags/${CookbookName} data_bags/"
           files:
@@ -576,10 +674,13 @@ Resources:
                 role_path '/opt/chef-repo/roles'
                 chef_server_url 'http://127.0.0.1:8889'
                 encrypted_data_bag_secret '/opt/chef-repo/encrypted_data_bag_secret'
-            "/opt/chef-repo/environments/ec2_environment.json":
+                log_level :info
+                log_location '/var/log/chef-client.log'
+                verify_api_cert false
+            "/opt/chef-repo/environments/cfn.json":
               content: !Sub |
                {
-                   "name": "ec2_environment",
+                   "name": "cfn",
                    "description": "Environment",
                    "cookbook_versions": {},
                    "json_class": "Chef::Environment",
@@ -587,13 +688,15 @@ Resources:
                    "default_attributes": {
                    },
                    "override_attributes": {
+                       "bonusbits_base": {
+                           "cloudwatch_logs": {
+                               "logs_group_name": "${CloudWatchLogsGroup}"
+                           }
+                       },
                        "${CookbookName}": {
                            "data_bag_item": "${DataBagItem}",
-                           "aws": {
-                               "stack_name": "${AWS::StackName}",
-                               "vpc_id": "${VPC}",
-                               "logs_group_name": "${CloudWatchLogsGroup}",
-                               "efs_filesystem_id": "${EfsFileSystemId}"
+                           "efs": {
+                               "filesystem_id": "${EfsFileSystemId}"
                            },
                            "mediawiki": {
                                "version_major": "${MediawikiMajorRelease}",
@@ -603,37 +706,21 @@ Resources:
                            },
                            "nginx": {
                                "root_site_path": "${RootSitePath}",
-                               "x_forwarded_traffic": ${NginxXforwardedTraffic},
-                               "rewrite_wiki_alias": ${NginxRewriteWikiAlias}
+                               "x_forwarded_traffic": "${NginxXforwardedTraffic}",
+                               "rewrite_wiki_alias": "${NginxRewriteWikiAlias}"
                            },
                            "dns": {
-                               "configure": ${UpdateDNS},
+                               "configure": "${UpdateDNS}",
                                "hosted_zone_id": "${HostedZoneId}",
                                "record_name": "${RecordName}"
                            }
                        }
                    }
                }
-            "/opt/chef-repo/roles/ec2_role.json":
-              content: !Sub |
-                {
-                  "name": "ec2_role",
-                  "description": "Role",
-                  "json_class": "Chef::Role",
-                  "default_attributes": {},
-                  "override_attributes": {
-                  },
-                  "chef_type": "role",
-                  "run_list": [
-                    "recipe[${CookbookName}]"
-                  ],
-                  "env_run_lists": {
-                  }
-                }
         run_chef_client:
           commands:
             01_run_chef:
-              command: "/opt/chef/bin/chef-client -z -o role[ec2_role] --environment ec2_environment --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
+              command: !Sub "/opt/chefdk/bin/chef-client -z -o 'recipe[${CookbookName}]' --environment 'cfn' --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
         update_dns:
           Condition: RunDnsScript
           commands:
@@ -643,96 +730,3 @@ Resources:
           commands:
             01_warm_ebs:
               command: "echo 'ACTION: Performing EBS Warming' && dd if=/dev/xvda of=/dev/xvda conv=notrunc bs=1M status=progress"
-
-Outputs:
-  # Ownership
-  Owner:
-    Description: Team or Individual that Owns this Formation.
-    Value: !Ref Owner
-  DeleteAfter:
-    Description: It is ok to delete the Formation after this date.
-    Value: !Ref DeleteAfter
-
-  # Network
-  VPC:
-    Value: !Ref VPC
-  SubnetIdList:
-    Value: !Join [',', !Ref SubnetIdList]
-  InternalAccessSecurityGroup:
-    Value: !Ref InternalAccessSecurityGroup
-  RemoteSecurityGroup:
-    Value: !Ref RemoteSecurityGroup
-  RdsSecurityGroup:
-    Value: !Ref RdsSecurityGroup
-  EfsSecurityGroup:
-    Value: !Ref EfsSecurityGroup
-  EfsFileSystemId:
-    Value: !Ref EfsFileSystemId
-
-  # Instance
-  KeyPairName:
-    Description: Key Pair Name Used.
-    Value: !Ref KeyPairName
-  InstanceType:
-    Description: Instance Type Used.
-    Value: !Ref InstanceType
-
-  # Autoscaling
-  MinAutoScaleCount:
-    Value: !Ref MinAutoScaleCount
-  MaxAutoScaleCount:
-    Value: !Ref MaxAutoScaleCount
-  AlarmSnsTopicArn:
-    Value: !Ref AlarmSnsTopicArn
-
-  # Deployment
-  CookbookName:
-    Value: !Ref CookbookName
-  CookbookVersion:
-    Value: !Ref CookbookVersion
-  ChefClientVersion:
-    Value: !Ref ChefClientVersion
-  DataBagItem:
-    Value: !Ref DataBagItem
-
-  # MediaWiki
-  MediawikiMajorRelease:
-    Value: !Ref MediawikiMajorRelease
-  MediawikiMinorRelease:
-    Value: !Ref MediawikiMinorRelease
-  SiteFolderName:
-    Value: !Ref SiteFolderName
-  UploadFolderName:
-    Value: !Ref UploadFolderName
-
-  # Nginx
-  RootSitePath:
-    Value: !Ref RootSitePath
-  NginxXforwardedTraffic:
-    Value: !Ref NginxXforwardedTraffic
-  NginxRewriteWikiAlias:
-    Value: !Ref NginxRewriteWikiAlias
-
-  # DNS
-  UpdateDNS:
-    Value: !Ref UpdateDNS
-  HostedZoneId:
-    Description: Hosted Zone ID.
-    Value: !Ref HostedZoneId
-  RecordName:
-    Description: Record Name.
-    Value: !Ref RecordName
-
-  # Template Generated
-#  InstanceURL:
-#    Value: !Join [ "", [ "http://", !GetAtt LaunchConfiguration.PrivateDnsName ] ]
-#  DnsURL:
-#    Value: !Join [ "", [ "http://", !Ref RecordName ] ]
-  SecurityGroup:
-    Value: !Ref SecurityGroup
-  AMI:
-    Description: AMI Used.
-    Value: !FindInMap [ RegionMap, !Ref "AWS::Region", EBS ]
-  IAMRole:
-    Description: IAM Instance Profile Role Created.
-    Value: !Ref IamRole

@@ -11,11 +11,30 @@ directory '/var/log/mediawiki' do
 end
 
 # Download Mediawiki
-version_major = node['bonusbits_mediawiki_nginx']['mediawiki']['version_major']
-version_minor = node['bonusbits_mediawiki_nginx']['mediawiki']['version_minor']
+release = node['bonusbits_mediawiki_nginx']['mediawiki']['release']
 git mediawiki_path do
   repository 'https://gerrit.wikimedia.org/r/p/mediawiki/core.git'
-  revision "REL#{version_major}_#{version_minor}"
+  revision release
+  action :checkout
+  ignore_failure true
+  not_if { ::File.exist?(mediawiki_path) }
+end
+
+# Workaround for their ghetto git that drops the connection periodically
+# (returns 128 - The remote end hung up unexpectedly)
+ruby_block 'sleep when I say to' do
+  block do
+    Chef::Log.warn('Sleeping Because Core Git Clone Failed')
+    sleep 30
+  end
+  action :run
+  not_if { ::File.exist?(mediawiki_path) }
+end
+
+# Directory won't be there if failed above
+git mediawiki_path do
+  repository 'https://gerrit.wikimedia.org/r/p/mediawiki/core.git'
+  revision release
   action :checkout
   not_if { ::File.exist?(mediawiki_path) }
 end
@@ -23,7 +42,7 @@ end
 # Download Vector Skin
 git "#{mediawiki_path}/skins/Vector" do
   repository 'https://gerrit.wikimedia.org/r/p/mediawiki/skins/Vector.git'
-  revision "REL#{version_major}_#{version_minor}"
+  revision release
   action :checkout
   not_if { ::File.exist?("#{mediawiki_path}/skins/Vector") }
 end
@@ -31,7 +50,7 @@ end
 # Download Vendor Packages
 git "#{mediawiki_path}/vendor" do
   repository 'https://gerrit.wikimedia.org/r/p/mediawiki/vendor.git'
-  revision "REL#{version_major}_#{version_minor}"
+  revision release
   action :checkout
   not_if { ::File.exist?("#{mediawiki_path}/vendor") }
 end
@@ -65,7 +84,7 @@ bonusbits_extensions_list = %w(HideNamespace AutoSitemap)
 bonusbits_extensions_list.each do |extension|
   git "#{mediawiki_path}/extensions/#{extension}" do
     repository "https://github.com/bonusbits/#{extension}.git"
-    revision "REL#{version_major}_#{version_minor}"
+    revision release
     action :checkout
     not_if { ::File.exist?("#{mediawiki_path}/extensions/#{extension}") }
   end
@@ -77,7 +96,7 @@ if node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']
   extensions_list.each do |extension|
     git "#{mediawiki_path}/extensions/#{extension}" do
       repository "https://gerrit.wikimedia.org/r/p/mediawiki/extensions/#{extension}.git"
-      revision "REL#{version_major}_#{version_minor}"
+      revision release
       action :checkout
       not_if { ::File.exist?("#{mediawiki_path}/extensions/#{extension}") }
     end
@@ -106,8 +125,9 @@ end
 
 # Deploy Corrected NewsRenderer (Replace Underscores with Whitespace)
 vector_template = "#{mediawiki_path}/extensions/News/NewsRenderer.php"
+version = node['bonusbits_mediawiki_nginx']['mediawiki']['version']
 template vector_template do
-  source "mediawiki/NewsRenderer-#{version_major}.#{version_minor}.php.erb"
+  source "mediawiki/NewsRenderer-#{version}.php.erb"
   owner mediawiki_user
   group mediawiki_group
   mode '0644'
@@ -126,6 +146,7 @@ template "#{mediawiki_path}/LocalSettings.php" do
   owner mediawiki_user
   group mediawiki_group
   mode '0644'
+  sensitive true
   notifies :restart, 'service[nginx]', :delayed
   only_if { node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure'] }
 end

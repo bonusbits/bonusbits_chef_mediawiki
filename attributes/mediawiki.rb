@@ -2,6 +2,10 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
   # Basics
   mediawiki['version_major'] = '1'
   mediawiki['version_minor'] = '28'
+  version_major = node['bonusbits_mediawiki_nginx']['mediawiki']['version_major']
+  version_minor = node['bonusbits_mediawiki_nginx']['mediawiki']['version_minor']
+  mediawiki['version'] = "#{version_major}.#{version_minor}"
+  mediawiki['release'] = "REL#{version_major}_#{version_minor}"
   mediawiki['site_folder_name'] = 'mediawiki'
   mediawiki_path = "#{node['bonusbits_mediawiki_nginx']['nginx']['root_site_path']}/#{node['bonusbits_mediawiki_nginx']['mediawiki']['site_folder_name']}"
   mediawiki['mediawiki_path'] = mediawiki_path
@@ -105,4 +109,19 @@ default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
 
   # News Extension
   mediawiki['extensions']['news']['replace_underscores_php_insert'] = '$params[\'title\'] = str_replace ( "_", " ", $params[\'title\'] );'
+end
+
+# Debug
+message_list = [
+  '',
+  '** Mediawiki **',
+  "Version                     (#{node['bonusbits_mediawiki_nginx']['mediawiki']['version']})",
+  "Release                     (#{node['bonusbits_mediawiki_nginx']['mediawiki']['release']})",
+  "Site Path                   (#{node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']})",
+  "Uploads Path                (#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']})",
+  "Configure Localsettings     (#{node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure']})",
+  "Configure Extensions        (#{node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']})"
+]
+message_list.each do |message|
+  Chef::Log.warn(message)
 end

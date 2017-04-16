@@ -30,9 +30,3 @@ default['bonusbits_mediawik_nginx']['packages'] = %w(
   php70-xml
   texlive
 )
-
-default['bonusbits_mediawik_nginx']['optional_packages'] = %w(
-  htop
-  mlocate
-  vim-enhanced
-)

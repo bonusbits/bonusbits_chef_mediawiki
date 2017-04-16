@@ -41,3 +41,6 @@ Encoding:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: false

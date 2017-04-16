@@ -1,3 +1,6 @@
+require_relative '../helpers/os_queries'
+inside_aws = ec2?
+
 describe 'Mediawiki Setup' do
   mediawiki_path = '/var/www/html/mediawiki'
 
@@ -77,8 +80,10 @@ describe 'Mediawiki Setup' do
     expect(file("#{mediawiki_path}/sitemap.xml")).to be_symlink
   end
 
-  it 'has logos' do
-    expect(file("#{mediawiki_path}/uploads/desktop_logo.png")).to exist
-    expect(file("#{mediawiki_path}/uploads/mobile_logo.png")).to exist
+  if inside_aws # Requires EFS Mount
+    it 'has logos' do
+      expect(file("#{mediawiki_path}/uploads/desktop_logo.png")).to exist
+      expect(file("#{mediawiki_path}/uploads/mobile_logo.png")).to exist
+    end
   end
 end

@@ -1,16 +1,13 @@
-# Setup CloudWatch Logs
-include_recipe 'bonusbits_mediawiki_nginx::cloudwatch_logs' if node['bonusbits_mediawiki_nginx']['cloudwatch_logs']['configure']
+# Base Setup
+include_recipe 'bonusbits_base'
 
 # Fetch Data Bag
 data_bag = node['bonusbits_mediawiki_nginx']['data_bag']
 data_bag_item = node['bonusbits_mediawiki_nginx']['data_bag_item']
 node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
 
-# Configure Sudoers
-include_recipe 'bonusbits_mediawiki_nginx::sudoers' if node['bonusbits_mediawiki_nginx']['sudoers']['configure']
-
 # Install Software Packages
-include_recipe 'bonusbits_mediawiki_nginx::packages'
+package node['bonusbits_mediawik_nginx']['packages']
 
 # Install and Configure Nginx
 include_recipe 'bonusbits_mediawiki_nginx::nginx'
@@ -23,9 +20,6 @@ include_recipe 'bonusbits_mediawiki_nginx::mediawiki'
 
 # Setup Sendmail
 include_recipe 'bonusbits_mediawiki_nginx::sendmail' if node['bonusbits_mediawiki_nginx']['sendmail']['configure']
-
-# Deploy Node Info Script
-include_recipe 'bonusbits_mediawiki_nginx::node_info' if node['bonusbits_mediawiki_nginx']['node_info']['deploy']
 
 # Deploy DNS Update Script
 include_recipe 'bonusbits_mediawiki_nginx::dns' if node['bonusbits_mediawiki_nginx']['dns']['configure']

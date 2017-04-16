@@ -1,0 +1,10 @@
+name: bonusbits_web
+title: Bonus Bits Web Profile
+maintainer: levon.becker.github@bonusbits.com
+copyright: Bonus Bits
+copyright_email: levon.becker.github@bonusbits.com
+license: MIT license
+summary: Check Web Server Configuration
+version: 1.0.0
+supports:
+  - os-family: unix

@@ -65,7 +65,15 @@ Dockerfile-kitchen*
 *.tar.gz
 
 # bonusbits_mediawiki_nginx
-/test/environments/ec2_environment.json
 /tmp/
-/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json
+/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev_decrypted.json
 /test/data_bags/bonusbits_mediawiki_nginx/bonusbits_prd_decrypted.json
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+out
+gen
+/test/integration/inspec/results/
+/test/environments/bonusbits_dev.json
+/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json

@@ -1,13 +1,12 @@
-package_list = %w(
+web_package_list = %w(
   apr
   apr-util
   enchant
   git
-  htop
   ImageMagick
   json-c
-  mlocate
   mysql56
+  nginx
   openssl
   openssl-devel
   pcre
@@ -19,6 +18,7 @@ package_list = %w(
   php70-cli
   php70-common
   php70-enchant
+  php70-fpm
   php70-intl
   php70-mbstring
   php70-mcrypt
@@ -29,12 +29,11 @@ package_list = %w(
   php70-process
   php70-xml
   texlive
-  vim-enhanced
 )
 
 describe 'Packages Install' do
-  it 'package list' do
-    package_list.each do |package|
+  it 'web package list' do
+    web_package_list.each do |package|
       expect(package(package)).to be_installed
     end
   end

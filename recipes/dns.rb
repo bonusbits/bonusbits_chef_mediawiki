@@ -23,4 +23,5 @@ ruby_block 'Run DNS Update Script' do
     end
   end
   action :run
+  only_if { node['bonusbits_base']['aws']['inside'] }
 end

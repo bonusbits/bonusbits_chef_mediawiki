@@ -1,6 +1,3 @@
-# For CircleCI
-require 'bundler/setup'
-
 # Style tests. Rubocop and Foodcritic
 namespace :style do
   require 'foodcritic'
@@ -8,7 +5,7 @@ namespace :style do
   FoodCritic::Rake::LintTask.new(:chef) do |task|
     task.options = {
       fail_tags: ['correctness'],
-      chef_version: '12.18.31',
+      chef_version: '12.19.36',
       tags: %w(~FC001 ~FC019 ~FC016 ~FC039)
     }
   end
@@ -45,27 +42,33 @@ namespace :integration do
     Kitchen::Config.new(loader: kitchen_loader, log_level: :info)
   end
 
-  # Run Each Test Instance in All Test Suites from YAML
+  # Docker Test Suites
+  desc 'kitchen - docker - tests'
+  task :docker do
+    load_kitchen_config('.kitchen.yml').instances.each do |instance|
+      # puts "Instance Suite Name: (#{instance.suite.name})"
+      next unless instance.suite.name =~ /^docker.*/
+      # puts 'It made it Next...'
+      instance.test(:always)
+    end
+  end
+
+  # EC2 Test Suites
   desc 'kitchen - ec2 - test'
   task :ec2 do
     load_kitchen_config('.kitchen.yml').instances.each do |instance|
+      next unless instance.suite.name =~ /^ec2.*/
       instance.test(:always)
     end
   end
 end
 
-desc 'Foodcritic, Rubocop & ChefSpec'
-task default: %w(style:chef style:ruby unit:rspec)
+desc 'Foodcritic & Rubocop'
+task default: %w(style:chef style:ruby)
 
 desc 'Foodcritic & Rubocop'
-task style_only: %w(style:chef style:ruby)
-
-desc 'Travis CI Tasks'
-task travisci: %w(style:chef style:ruby unit:rspec)
+task style_tasks: %w(style:chef style:ruby)
 
 desc 'Circle CI Tasks'
-# task circleci: %w(style:chef style:ruby unit:circleci_rspec)
-task circleci: %w(style:chef style:ruby)
-
-desc 'Foodcritic, Rubocop, ChefSpec and EC2 Integration Tests'
-task ec2_ci: %w(style:chef style:ruby unit:rspec integration:ec2)
+task circleci: %w(style:chef style:ruby integration:docker)
+# task circleci: %w(style:chef style:ruby)
