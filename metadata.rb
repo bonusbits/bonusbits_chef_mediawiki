@@ -11,8 +11,4 @@ source_url 'https://github.com/bonusbits/bonusbits_mediawiki_nginx'
 
 depends 'bonusbits_base'
 
-%w(
-  amazon
-).each do |os|
-  supports os
-end
+supports 'amazon'
