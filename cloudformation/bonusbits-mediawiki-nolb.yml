@@ -31,11 +31,11 @@ Parameters:
     - t2.micro
     - t2.small
     - t2.medium
-    - m3.medium
-    - m4.large
-    - c3.medium
-    - c4.medium
-    Default: t2.small
+    - t3.nano
+    - t3.micro
+    - t3.small
+    - t3.medium
+    Default: t3.small
 
   # Autoscaling
   MinAutoScaleCount:
@@ -59,7 +59,7 @@ Parameters:
     Default: latest
   ChefDkVersion:
     Type: String
-    Default: 1.3.40
+    Default: 4.5.0
   DataBagItem:
     Type: String
   DataBagSecret:
@@ -646,41 +646,44 @@ Resources:
         setup_chef_client:
           commands:
             01_mkdir_chef_repo:
-              command: "mkdir -p /opt/chef-repo"
+              command: "mkdir -p /etc/chef"
             02_mkdir_chef_repo_subdirs:
-              cwd: /opt/chef-repo
+              cwd: /etc/chef
               command: "mkdir -p cookbooks checksums environments cache backup data_bags roles"
             03_download_cookbook:
-              cwd: /opt/chef-repo/cookbooks
+              cwd: /etc/chef/cookbooks
               command: !Sub "git clone --branch ${CookbookVersion} https://github.com/bonusbits/${CookbookName}.git"
-            04_vendor_dependent_cookbook:
-              cwd: !Sub "/opt/chef-repo/cookbooks/${CookbookName}"
-              command: !Sub "export HOME=/root && /opt/chefdk/embedded/bin/berks vendor /opt/chef-repo/cookbooks/"
-            05_deploy_databags:
-              cwd: /opt/chef-repo
+            04_deploy_databags:
+              cwd: /etc/chef
               command: !Sub "cp -R cookbooks/${CookbookName}/test/data_bags/${CookbookName} data_bags/"
+            05_download_dependent_cookbook:
+              cwd: !Sub "/etc/chef/cookbooks/${CookbookName}"
+              command: !Sub "/opt/chefdk/embedded/bin/berks install"
+            06_vendor_dependent_cookbook:
+              cwd: !Sub "/etc/chef/cookbooks/${CookbookName}"
+              command: !Sub "export HOME=/root && /opt/chefdk/embedded/bin/berks vendor /etc/chef/cookbooks/"
           files:
-            "/opt/chef-repo/encrypted_data_bag_secret":
+            "/etc/chef/encrypted_data_bag_secret":
               content: !Sub ${DataBagSecret}
-            "/opt/chef-repo/client.rb":
+            "/etc/chef/client.rb":
               content: !Sub |
                 node_name 'ec2_node'
-                checksum_path '/opt/chef-repo/checksums'
-                file_cache_path '/opt/chef-repo/cache'
-                file_backup_path '/opt/chef-repo/backup'
-                cookbook_path '/opt/chef-repo/cookbooks'
-                data_bag_path '/opt/chef-repo/data_bags'
-                environment_path '/opt/chef-repo/environments'
-                role_path '/opt/chef-repo/roles'
+                checksum_path '/etc/chef/checksums'
+                file_cache_path '/etc/chef/cache'
+                file_backup_path '/etc/chef/backup'
+                cookbook_path '/etc/chef/cookbooks'
+                data_bag_path '/etc/chef/data_bags'
+                environment_path '/etc/chef/environments'
+                role_path '/etc/chef/roles'
                 chef_server_url 'http://127.0.0.1:8889'
-                encrypted_data_bag_secret '/opt/chef-repo/encrypted_data_bag_secret'
+                encrypted_data_bag_secret '/etc/chef/encrypted_data_bag_secret'
                 log_level :info
                 log_location '/var/log/chef-client.log'
                 verify_api_cert false
-            "/opt/chef-repo/environments/cfn.json":
+            "/etc/chef/environments/aws.json":
               content: !Sub |
                {
-                   "name": "cfn",
+                   "name": "aws",
                    "description": "Environment",
                    "cookbook_versions": {},
                    "json_class": "Chef::Environment",
@@ -720,7 +723,7 @@ Resources:
         run_chef_client:
           commands:
             01_run_chef:
-              command: !Sub "/opt/chefdk/bin/chef-client -z -o 'recipe[${CookbookName}]' --environment 'cfn' --config /opt/chef-repo/client.rb --log_level info --force-formatter --chef-zero-port 8889"
+              command: !Sub "/opt/chefdk/bin/chef-client -z --chef-license accept -o 'recipe[${CookbookName}]' --environment 'aws' --config /etc/chef/client.rb --log_level info --force-formatter --chef-zero-port 8889"
         update_dns:
           Condition: RunDnsScript
           commands:

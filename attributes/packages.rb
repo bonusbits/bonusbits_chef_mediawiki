@@ -10,7 +10,8 @@ default['bonusbits_mediawik_nginx']['packages'] = %w(
   openssl
   openssl-devel
   pcre
-  perl-core perl-CPAN
+  perl-core
+  perl-CPAN
   perl-Crypt-SSLeay
   perl-DateTime
   perl-libwww-perl

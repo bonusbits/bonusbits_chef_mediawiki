@@ -1,6 +1,27 @@
 ##CHANGE LOG
 ---
 
+## x.x.x - ToDo List
+* Upgrade Mediawiki version
+* Updated inspec to the latest syntax
+
+## 2.0.0 - 01/07/2020 - Levon Becker
+* Switched Chef Repo to /etc/chef/ in CFN
+* Updated to ChefDK 4.5.0 - Chef Client 15.4.45 - Ruby 2.6.5
+    * metadata.rb
+    * Readme
+    * Gemfile + lock
+    * Dockerfile
+    * circle.yml
+    * kitchen.yml
+* Updated gitignore
+* Remove bonusbits_library references
+* Added ads text file for Google ads
+* Switched to initial rake task splitup tasks
+* Removed Gemfiles since not using bundle in CI anymore
+* Upgraded CircleCi v1.0 to 2.1 and converted to workflow
+* 
+
 ## 1.2.1 - 04/15/2017 - Levon Becker
 * Added Berksfile.lock to lock in the tested dependant cookbooks versions.
 

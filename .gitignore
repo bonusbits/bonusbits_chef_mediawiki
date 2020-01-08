@@ -1,36 +1,38 @@
-*~
+# Basics
 *#
-.#*
-\#*#
-.*.sw[a-z]
 *.un~
+*~
+.#*
+.*.sw[a-z]
+/.bundle/
+/.yardoc
+/_yardoc/
+/coverage/
+/doc/
+/pkg/
+/spec/reports/
+\#*#
 pkg/
+tmp/**
+
+# Chef
+Policyfile.lock*
+
+# Docker
+Dockerfile-kitchen*
 
 # Berkshelf
-.vagrant
 /cookbooks
-#Berksfile.lock
+Berksfile.lock
 
 # Bundler
-Gemfile.lock
 bin/*
 .bundle/*
 
-.kitchen
-.kitchen.local.yml
+# JetBrains
+.idea/**
 
-# JetBrains template
-## Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion
-*.iml
-.idea
-/out/
-.idea_modules/
-atlassian-ide-plugin.xml
-com_crashlytics_export_strings.xml
-crashlytics.properties
-crashlytics-build.properties
-
-# Linux template
+# Linux
 .directory
 .Trash-*
 
@@ -38,42 +40,25 @@ crashlytics-build.properties
 .DS_Store
 .localized
 
-# Windows template
-# Windows image file caches
+# Ruby
+Gemfile.lock
+
+# Test Kitchen
+.kitchen/
+.kitchen.local.yml
+
+# Windows
 Thumbs.db
 ehthumbs.db
-
-# Folder config file
 Desktop.ini
-
-# Recycle Bin used on file shares
 $RECYCLE.BIN/
-
-# Windows Installer files
 *.cab
 *.msi
 *.msm
 *.msp
-
-# Windows shortcuts
 *.lnk
 
-Dockerfile-kitchen*
-#/test/data_bags/users/levon.json
-/templates/default/confd/*.erb
-*.tgz
-*.tar.gz
-
-# bonusbits_mediawiki_nginx
-/tmp/
-/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev_decrypted.json
-/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_prd_decrypted.json
-### Example user template template
-### Example user template
-
-# IntelliJ project files
-out
-gen
-/test/integration/inspec/results/
-/test/environments/bonusbits_dev.json
-/test/data_bags/bonusbits_mediawiki_nginx/bonusbits_dev.json
+# Vagrant
+.vagrant
+VagrantConfig.rb
+vagrant-rsync-auto.log

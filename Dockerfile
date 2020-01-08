@@ -13,11 +13,11 @@ ARG ssh_key
 ARG sudo_user=docker
 
 # Cookbook Args
-ARG chefdk_version=1.3.40
+ARG chefdk_version=4.5.0
 ARG cookbook_name=bonusbits_mediawiki_nginx
 ARG chef_role=web
 ARG chef_environment=inside_aws
-ARG chef_config_path=/opt/chef-repo
+ARG chef_config_path=/etc/chef
 
 # Data Bag
 ARG data_bag_secret=nil
@@ -107,18 +107,18 @@ RUN printf $"{\n\
         }\n\
     }\n\
 }\n"\
->> /opt/chef-repo/environments/${chef_environment}.json
+>> /etc/chef/environments/${chef_environment}.json
 
 # Run Chef
 RUN /opt/chefdk/bin/chef-client -z --config ${chef_config_path}/client.rb -o "role[${chef_role}]" --environment "${chef_environment}" --log_level info --force-formatter --chef-zero-port 8889
 
 # Run InSpec Integration Tests (Using audit cookbook in bonusbits_base for docker InSpec tests)
-#RUN /opt/chef/bin/inspec exec --color --profiles-path=/opt/chef-repo/cookbooks/${cookbook_name}/test/integration/inspec/profiles/bonusbits_web/ --attrs=role=web deployment_type=docker inside_aws=false
+#RUN /opt/chef/bin/inspec exec --color --profiles-path=/etc/chef/cookbooks/${cookbook_name}/test/integration/inspec/profiles/bonusbits_web/ --attrs=role=web deployment_type=docker inside_aws=false
 
 # Run Chef when Container Created
 WORKDIR ${chef_config_path}
 #ENTRYPOINT ["/bin/bash --login"]
-#CMD ["/bin/sh", "-c", "/opt/chefdk/bin/chef-client", "-z", "--config /opt/chef-repo/client.rb", "-o 'role[base]'", "--environment 'bonusbits_base'", "--log_level info", "--force-formatter", "--chef-zero-port 8889"]
-#CMD /opt/chefdk/bin/chef-client -z --config /opt/chef-repo/client.rb -o "role[base]" --environment "bonusbits_base" --log_level info --force-formatter --chef-zero-port 8889
+#CMD ["/bin/sh", "-c", "/opt/chefdk/bin/chef-client", "-z", "--config /etc/chef/client.rb", "-o 'role[base]'", "--environment 'bonusbits_base'", "--log_level info", "--force-formatter", "--chef-zero-port 8889"]
+#CMD /opt/chefdk/bin/chef-client -z --config /etc/chef/client.rb -o "role[base]" --environment "bonusbits_base" --log_level info --force-formatter --chef-zero-port 8889
 
 EXPOSE 80 443
