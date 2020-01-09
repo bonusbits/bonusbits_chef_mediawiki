@@ -31,6 +31,9 @@ platforms:
   # Docker Platforms
   - name: amazon-linux1-docker
     driver:
+      forward:
+        - 8080:80
+        - 4433:443
       # Amazon Linux AMI 2018.03 (v1 - el6)
       # https://hub.docker.com/_/amazonlinux
       # image: amazonlinux:1-with-sources
@@ -41,6 +44,9 @@ platforms:
 
   - name: amazon-linux2-docker
     driver:
+      forward:
+        - 8081:80
+        - 4434:443
       # SystemD Privilege workaround
       privileged: true
       run_command: /usr/sbin/init
@@ -83,10 +89,7 @@ suites:
       name: docker
       use_sudo: false
       ssl_verify_mode: ":verify_none"
-      forward:
-        - 8080:80
-        - 4433:443
-    includes: [ "amazon-linux1-docker", "amazon-linux2-docker" ]
+    includes: [ "amazon-linux1-docker" ]
 
   - name: ec2
     run_list:
@@ -109,7 +112,7 @@ suites:
         Name: kitchen-bonusbits-web-<%= ENV['USER'] %>
         Created-By: Test Kitchen
         Owner: <%= ENV['USER'] %>
-    includes: [ "amazon-linux1-ami", "amazon-linux2-ami" ]
+    includes: [ "amazon-linux1-ami" ]
     transport:
       username: ec2-user
       ssh_key: <%= ENV.fetch('AWS_SSH_KEY_PATH', ENV['HOME'] + "/.ssh/bonusbits_dev_key.pem") %>

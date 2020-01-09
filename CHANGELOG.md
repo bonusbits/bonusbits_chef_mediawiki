@@ -2,9 +2,13 @@
 ---
 
 ## x.x.x - ToDo List
+* Add Kubernetes configs
+* Test dockerfile build
+* Write/Finish Docker build Rake Task
+* Write/Finish CloudFormation upload Rake Task
+* Write/Finish Deploy (ECR/Docker Hub) Rake Task
 * Upgrade Mediawiki version
-* Updated inspec to the latest syntax
-* Set/Lock version of Nginx
+* Add Amazon Linux 2 Support (A lot of package issues)
 
 ## 2.0.0 - 01/07/2020 - Levon Becker
 * Switched Chef Repo to /etc/chef/ in CFN
@@ -21,7 +25,9 @@
 * Switched to initial rake task splitup tasks
 * Removed Gemfiles since not using bundle in CI anymore
 * Upgraded CircleCi v1.0 to 2.1 and converted to workflow
-* 
+* Refactored inspec profile as controls
+* Added node attributes usage in inspec tests
+* Set/Lock version of Nginx
 
 ## 1.2.1 - 04/15/2017 - Levon Becker
 * Added Berksfile.lock to lock in the tested dependant cookbooks versions.

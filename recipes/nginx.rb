@@ -1,3 +1,7 @@
+package 'nginx' do
+  version node['bonusbits_mediawiki']['nginx']['version']
+end
+
 # Create Web Directory
 directory node['bonusbits_mediawiki']['nginx']['root_site_path'] do
   recursive true

@@ -6,7 +6,6 @@ default['bonusbits_mediawiki']['packages'] = %w[
   ImageMagick
   json-c
   mysql56
-  nginx
   openssl
   openssl-devel
   pcre
