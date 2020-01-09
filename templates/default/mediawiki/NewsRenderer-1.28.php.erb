@@ -489,7 +489,7 @@ class NewsRenderer {
 
 			$params['namespace'] = $row->rc_namespace;
 			$params['title'] = $row->rc_title;
-			<%= node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['news']['replace_underscores_php_insert'] %>
+			<%= node['bonusbits_mediawiki']['mediawiki']['extensions']['news']['replace_underscores_php_insert'] %>
 
 			$title = $change->getTitle();
 			$params['pagename'] = $title->getPrefixedText();

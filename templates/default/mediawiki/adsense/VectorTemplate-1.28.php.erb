@@ -97,7 +97,7 @@ class VectorTemplate extends BaseTemplate {
 		<div id="mw-page-base" class="noprint"></div>
 		<div id="mw-head-base" class="noprint"></div>
 		<div id="content" class="mw-body" role="main">
-		    <%= node['bonusbits_mediawiki_nginx']['adsense']['header'] %>
+		    <%= node['bonusbits_mediawiki']['adsense']['header'] %>
 			<a id="top"></a>
 
 			<?php
@@ -174,7 +174,7 @@ class VectorTemplate extends BaseTemplate {
 				<div class="visualClear"></div>
 				<?php $this->html( 'debughtml' ); ?>
 			</div>
-			<%= node['bonusbits_mediawiki_nginx']['adsense']['footer'] %>
+			<%= node['bonusbits_mediawiki']['adsense']['footer'] %>
 		</div>
 		<div id="mw-navigation">
 			<h2><?php $this->msg( 'navigation-heading' ) ?></h2>
@@ -195,7 +195,7 @@ class VectorTemplate extends BaseTemplate {
 					echo Xml::expandAttributes( Linker::tooltipAndAccesskeyAttribs( 'p-logo' ) )
 					?>></a></div>
 				<?php $this->renderPortals( $this->data['sidebar'] ); ?>
-				<%= node['bonusbits_mediawiki_nginx']['adsense']['sidebar'] %>
+				<%= node['bonusbits_mediawiki']['adsense']['sidebar'] %>
 			</div>
 		</div>
 		<div id="footer" role="contentinfo"<?php $this->html( 'userlangattributes' ) ?>>

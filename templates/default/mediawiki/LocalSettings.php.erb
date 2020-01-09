@@ -18,26 +18,26 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 
 ##  Web Settings
 ##########################################
-# $wgDisableOutputCompression = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDisableOutputCompression'] %>;
+# $wgDisableOutputCompression = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgDisableOutputCompression'] %>;
 $wgSitename = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgSitename'] %>";
 $wgMetaNamespace = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgMetaNamespace'] %>";
-$wgScriptPath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgScriptPath'] %>";
-$wgArticlePath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgArticlePath'] %>";
-$wgUsePathInfo = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUsePathInfo'] %>;
-$wgScriptExtension = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgScriptExtension'] %>";
-$wgFavicon = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgFavicon'] %>";
+$wgScriptPath = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgScriptPath'] %>";
+$wgArticlePath = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgArticlePath'] %>";
+$wgUsePathInfo = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgUsePathInfo'] %>;
+$wgScriptExtension = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgScriptExtension'] %>";
+$wgFavicon = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgFavicon'] %>";
 $wgServer = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgServer'] %>";
-$wgStylePath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgStylePath'] %>";
-$wgLogo = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgLogo'] %>";
-$wgEnableEmail = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnableEmail'] %>;
-$wgEnableUserEmail = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnableUserEmail'] %>;
-$wgEmailAuthentication = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEmailAuthentication'] %>;
+$wgStylePath = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgStylePath'] %>";
+$wgLogo = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgLogo'] %>";
+$wgEnableEmail = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgEnableEmail'] %>;
+$wgEnableUserEmail = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgEnableUserEmail'] %>;
+$wgEmailAuthentication = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgEmailAuthentication'] %>;
 $wgEmergencyContact = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgEmergencyContact'] %>";
 $wgPasswordSender = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgPasswordSender'] %>";
-$wgEnotifUserTalk = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnotifUserTalk'] %>;
-$wgEnotifWatchlist = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnotifWatchlist'] %>;
-$wgExternalLinkTarget = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgExternalLinkTarget'] %>";
-$wgUniversalEditButton = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUniversalEditButton'] %>;
+$wgEnotifUserTalk = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgEnotifUserTalk'] %>;
+$wgEnotifWatchlist = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgEnotifWatchlist'] %>;
+$wgExternalLinkTarget = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgExternalLinkTarget'] %>";
+$wgUniversalEditButton = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgUniversalEditButton'] %>;
 
 
 ##  Database Settings
@@ -47,46 +47,46 @@ $wgDBserver = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgD
 $wgDBname = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBname'] %>";
 $wgDBuser = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBuser'] %>";
 $wgDBpassword = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgDBpassword'] %>";
-$wgDBprefix = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBprefix'] %>";
-$wgDBTableOptions = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBTableOptions'] %>";
-$wgDBmysql5 = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDBmysql5'] %>;
+$wgDBprefix = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgDBprefix'] %>";
+$wgDBTableOptions = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgDBTableOptions'] %>";
+$wgDBmysql5 = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgDBmysql5'] %>;
 
 
 ##  Cache and Uploads
 ##########################################
-$wgMainCacheType = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMainCacheType'] %>;
-$wgMemCachedServers = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMemCachedServers'] %>";
-$wgCacheDirectory = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgCacheDirectory'] %>";
-$wgEnableUploads = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgEnableUploads'] %>;
-$wgUseImageMagick = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUseImageMagick'] %>;
-$wgImageMagickConvertCommand = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgImageMagickConvertCommand'] %>";
-$wgUseInstantCommons = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUseInstantCommons'] %>;
-$wgShellLocale = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgShellLocale'] %>";
-$wgHashedUploadDirectory = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgHashedUploadDirectory'] %>;
-$wgUploadPath = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUploadPath'] %>";
-$wgUploadDirectory = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgUploadDirectory'] %>";
+$wgMainCacheType = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgMainCacheType'] %>;
+$wgMemCachedServers = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgMemCachedServers'] %>";
+$wgCacheDirectory = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgCacheDirectory'] %>";
+$wgEnableUploads = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgEnableUploads'] %>;
+$wgUseImageMagick = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgUseImageMagick'] %>;
+$wgImageMagickConvertCommand = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgImageMagickConvertCommand'] %>";
+$wgUseInstantCommons = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgUseInstantCommons'] %>;
+$wgShellLocale = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgShellLocale'] %>";
+$wgHashedUploadDirectory = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgHashedUploadDirectory'] %>;
+$wgUploadPath = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgUploadPath'] %>";
+$wgUploadDirectory = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgUploadDirectory'] %>";
 
 
 ##  Site Settings
 ##########################################
-$wgLanguageCode = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgLanguageCode'] %>";
+$wgLanguageCode = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgLanguageCode'] %>";
 $wgSecretKey = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgSecretKey'] %>";
 $wgUpgradeKey = "<%= node.run_state['data_bag']['mediawiki']['localsettings']['wgUpgradeKey'] %>";
-$wgRightsPage = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsPage'] %>"; # Set to the title of a wiki page that describes your license/copyright
-$wgRightsUrl = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsUrl'] %>";
-$wgRightsText = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsText'] %>";
-$wgRightsIcon = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgRightsIcon'] %>";
-$wgDiff3 = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgDiff3'] %>";
+$wgRightsPage = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgRightsPage'] %>"; # Set to the title of a wiki page that describes your license/copyright
+$wgRightsUrl = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgRightsUrl'] %>";
+$wgRightsText = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgRightsText'] %>";
+$wgRightsIcon = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgRightsIcon'] %>";
+$wgDiff3 = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgDiff3'] %>";
 
 
 ##  Permissions
 ##########################################
-$wgGroupPermissions['*']['createaccount'] = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGroupPermissions']['createaccount'] %>;
-$wgGroupPermissions['*']['read'] = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGroupPermissions']['read'] %>;
-$wgGroupPermissions['*']['edit'] = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGroupPermissions']['edit'] %>;
-$wgGroupPermissions['*']['createpage'] = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGroupPermissions']['createpage'] %>;
-$wgGroupPermissions['*']['createtalk'] = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGroupPermissions']['createtalk'] %>;
-$wgGroupPermissions['*']['writeapi'] = <%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgGroupPermissions']['writeapi'] %>;
+$wgGroupPermissions['*']['createaccount'] = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgGroupPermissions']['createaccount'] %>;
+$wgGroupPermissions['*']['read'] = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgGroupPermissions']['read'] %>;
+$wgGroupPermissions['*']['edit'] = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgGroupPermissions']['edit'] %>;
+$wgGroupPermissions['*']['createpage'] = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgGroupPermissions']['createpage'] %>;
+$wgGroupPermissions['*']['createtalk'] = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgGroupPermissions']['createtalk'] %>;
+$wgGroupPermissions['*']['writeapi'] = <%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgGroupPermissions']['writeapi'] %>;
 
 
 ##  Skin
@@ -97,7 +97,7 @@ $wgDefaultSkin = "vector";
 
 ##  Load Extensions
 ##########################################
-<% node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['list'].each do |extension| %>
+<% node['bonusbits_mediawiki']['mediawiki']['extensions']['list'].each do |extension| %>
 require_once "{$IP}/extensions/<%= extension %>/<%= extension %>.php";
 <% end %>
 
@@ -137,7 +137,7 @@ $wgMaxShellFileSize = 102400*64;
 ##  MobileFrontend
 ##########################################
 $wgMFAutodetectMobileView = true;
-$wgMobileFrontendLogo = "<%= node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMobileFrontendLogo'] %>";
+$wgMobileFrontendLogo = "<%= node['bonusbits_mediawiki']['mediawiki']['localsettings']['wgMobileFrontendLogo'] %>";
 
 
 ##  WikiEditor

@@ -1,7 +1,7 @@
 # Bonusbits Mediawiki on Nginx in AWS Chef Cookbook and CloudFormation Template
 [![Project Release](https://img.shields.io/badge/release-v2.0.0-blue.svg)](https://github.com/bonusbits/bonusbits_base)
-[![CircleCI](https://circleci.com/gh/bonusbits/bonusbits_mediawiki_nginx.svg?style=shield)](https://circleci.com/gh/bonusbits/bonusbits_mediawiki_nginx)
-[![Join the chat at https://gitter.im/bonusbits/bonusbits_mediawiki_nginx](https://badges.gitter.im/bonusbits/bonusbits_mediawiki_nginx.svg)](https://gitter.im/bonusbits/bonusbits_mediawiki_nginx?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![CircleCI](https://circleci.com/gh/bonusbits/bonusbits_mediawiki.svg?style=shield)](https://circleci.com/gh/bonusbits/bonusbits_mediawiki)
+[![Join the chat at https://gitter.im/bonusbits/bonusbits_mediawiki](https://badges.gitter.im/bonusbits/bonusbits_mediawiki.svg)](https://gitter.im/bonusbits/bonusbits_mediawiki?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 # Purpose
 Deploy an autoscaling group with EC2 Instances on Amazon Linux Running Mediawiki on Nginx. Using RDS backend and EFS for content sharing (uploads). 
@@ -32,7 +32,7 @@ Click this button to open AWS CloudFormation web console with the Template URL a
 Public S3 Link:<br> 
 [https://s3.amazonaws.com/bonusbits-public/cloudformation-templates/cookbooks/bonusbits-mediawiki-nginx.yml](https://s3.amazonaws.com/bonusbits-public/cloudformation-templates/cookbooks/bonusbits-mediawiki-nginx.yml)
 
-The [CloudFormation Template](https://github.com/bonusbits/bonusbits_mediawiki_nginx/blob/master/cloudformation/bonusbits-mediawiki-nginx.yml)  the following:
+The [CloudFormation Template](https://github.com/bonusbits/bonusbits_mediawiki/blob/master/cloudformation/bonusbits-mediawiki-nginx.yml)  the following:
 
 1. Create Autoscale Group for Frontend Web Server in private network for HA not Scaling (Currently)
 2. Adds the EC2 Instance to the appropriate security groups
@@ -50,7 +50,7 @@ The [CloudFormation Template](https://github.com/bonusbits/bonusbits_mediawiki_n
     2. Setup and Execute Chef Zero
         1. Install Chef Client from internet
         2. Create Chef Configuration Files
-        3. Download bonusbits_mediawiki_nginx cookbook from Github
+        3. Download bonusbits_mediawiki cookbook from Github
         4. Triggers Chef Zero run
     3. Run DNS Update Script (Optional)
     4. Warm EBS Volume  

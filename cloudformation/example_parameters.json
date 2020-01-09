@@ -29,7 +29,7 @@
     },
     {
         "ParameterKey": "InstanceType",
-        "ParameterValue": "t2.small"
+        "ParameterValue": "t3.small"
     },
     {
         "ParameterKey": "MinAutoScaleCount",
@@ -45,15 +45,15 @@
     },
     {
         "ParameterKey": "CookbookName",
-        "ParameterValue": "bonusbits_mediawiki_nginx"
+        "ParameterValue": "bonusbits_mediawiki"
     },
     {
         "ParameterKey": "CookbookVersion",
-        "ParameterValue": "latest"
+        "ParameterValue": "2.0.0"
     },
     {
-        "ParameterKey": "ChefClientVersion",
-        "ParameterValue": "12.19.36"
+        "ParameterKey": "ChefDkVersion",
+        "ParameterValue": "4.5.0"
     },
     {
         "ParameterKey": "DataBagItem",

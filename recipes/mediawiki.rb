@@ -1,7 +1,7 @@
-mediawiki_path = node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']
-uploads_path = node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']
-mediawiki_user = node['bonusbits_mediawiki_nginx']['nginx']['user']
-mediawiki_group = node['bonusbits_mediawiki_nginx']['nginx']['group']
+mediawiki_path = node['bonusbits_mediawiki']['mediawiki']['mediawiki_path']
+uploads_path = node['bonusbits_mediawiki']['mediawiki']['uploads_path']
+mediawiki_user = node['bonusbits_mediawiki']['nginx']['user']
+mediawiki_group = node['bonusbits_mediawiki']['nginx']['group']
 
 # Create Logs Directory
 directory '/var/log/mediawiki' do
@@ -11,7 +11,7 @@ directory '/var/log/mediawiki' do
 end
 
 # Download Mediawiki
-release = node['bonusbits_mediawiki_nginx']['mediawiki']['release']
+release = node['bonusbits_mediawiki']['mediawiki']['release']
 git mediawiki_path do
   repository 'https://gerrit.wikimedia.org/r/p/mediawiki/core.git'
   revision release
@@ -91,8 +91,8 @@ bonusbits_extensions_list.each do |extension|
 end
 
 # Download Extensions
-if node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']
-  extensions_list = node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['list']
+if node['bonusbits_mediawiki']['mediawiki']['extensions']['configure']
+  extensions_list = node['bonusbits_mediawiki']['mediawiki']['extensions']['list']
   extensions_list.each do |extension|
     git "#{mediawiki_path}/extensions/#{extension}" do
       repository "https://gerrit.wikimedia.org/r/p/mediawiki/extensions/#{extension}.git"
@@ -125,7 +125,7 @@ end
 
 # Deploy Corrected NewsRenderer (Replace Underscores with Whitespace)
 vector_template = "#{mediawiki_path}/extensions/News/NewsRenderer.php"
-version = node['bonusbits_mediawiki_nginx']['mediawiki']['version']
+version = node['bonusbits_mediawiki']['mediawiki']['version']
 template vector_template do
   source "mediawiki/NewsRenderer-#{version}.php.erb"
   owner mediawiki_user
@@ -136,10 +136,10 @@ end
 
 # Deploy LocalSettings.php
 ## In case We want to completely override the Logo Paths in the Environment File and Skip the Data Bag Value
-desktop_logo = "{$wgScriptPath}/#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name']}/#{node.run_state['data_bag']['mediawiki']['desktop_logo_filename']}"
-node.default['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgLogo'] = desktop_logo
-mobile_logo = "{$wgScriptPath}/#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name']}/#{node.run_state['data_bag']['mediawiki']['mobile_logo_filename']}"
-node.default['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['wgMobileFrontendLogo'] = mobile_logo
+desktop_logo = "{$wgScriptPath}/#{node['bonusbits_mediawiki']['mediawiki']['uploads_folder_name']}/#{node.run_state['data_bag']['mediawiki']['desktop_logo_filename']}"
+node.default['bonusbits_mediawiki']['mediawiki']['localsettings']['wgLogo'] = desktop_logo
+mobile_logo = "{$wgScriptPath}/#{node['bonusbits_mediawiki']['mediawiki']['uploads_folder_name']}/#{node.run_state['data_bag']['mediawiki']['mobile_logo_filename']}"
+node.default['bonusbits_mediawiki']['mediawiki']['localsettings']['wgMobileFrontendLogo'] = mobile_logo
 
 template "#{mediawiki_path}/LocalSettings.php" do
   source 'mediawiki/LocalSettings.php.erb'
@@ -148,7 +148,7 @@ template "#{mediawiki_path}/LocalSettings.php" do
   mode '0644'
   sensitive true
   notifies :restart, 'service[nginx]', :delayed
-  only_if { node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure'] }
+  only_if { node['bonusbits_mediawiki']['mediawiki']['localsettings']['configure'] }
 end
 
 # Set Ownership on Mediawiki Home
@@ -172,10 +172,10 @@ ruby_block 'Set Ownership on Mediawiki Home' do
 end
 
 # Mount and Configure EFS Uploads Share
-include_recipe 'bonusbits_mediawiki_nginx::efs' if node['bonusbits_mediawiki_nginx']['efs']['configure']
+include_recipe 'bonusbits_mediawiki::efs' if node['bonusbits_mediawiki']['efs']['configure']
 
 # Add AdSense PHP Snippets
-include_recipe 'bonusbits_mediawiki_nginx::adsense' if node['bonusbits_mediawiki_nginx']['adsense']['configure']
+include_recipe 'bonusbits_mediawiki::adsense' if node['bonusbits_mediawiki']['adsense']['configure']
 
 # Setup Log Rotate for Mediawiki Logs
-include_recipe 'bonusbits_mediawiki_nginx::logrotate' if node['bonusbits_mediawiki_nginx']['logrotate']['configure']
+include_recipe 'bonusbits_mediawiki::logrotate' if node['bonusbits_mediawiki']['logrotate']['configure']

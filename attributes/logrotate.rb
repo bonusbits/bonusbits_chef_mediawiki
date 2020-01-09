@@ -1,10 +1,10 @@
-default['bonusbits_mediawiki_nginx']['logrotate']['configure'] = true
+default['bonusbits_mediawiki']['logrotate']['configure'] = true
 
 # Debug
 message_list = [
   '',
   '** Log Rotate **',
-  "Configure                   (#{node['bonusbits_mediawiki_nginx']['logrotate']['configure']})"
+  "Configure                   (#{node['bonusbits_mediawiki']['logrotate']['configure']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

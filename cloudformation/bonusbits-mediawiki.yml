@@ -53,7 +53,7 @@ Parameters:
   # Deployment
   CookbookName:
     Type: String
-    Default: bonusbits_mediawiki_nginx
+    Default: bonusbits_mediawiki
   CookbookVersion:
     Type: String
     Default: latest

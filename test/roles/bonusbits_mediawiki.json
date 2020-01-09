@@ -1,5 +1,5 @@
 {
-    "name": "bonusbits_mediawiki_nginx",
+    "name": "bonusbits_mediawiki",
     "description": "Role",
     "json_class": "Chef::Role",
     "default_attributes": {},
@@ -7,7 +7,7 @@
     },
     "chef_type": "role",
     "run_list": [
-        "recipe[bonusbits_mediawiki_nginx]"
+        "recipe[bonusbits_mediawiki]"
     ],
     "env_run_lists": {
     }

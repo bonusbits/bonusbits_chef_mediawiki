@@ -9,10 +9,10 @@
     "override_attributes": {
         "bonusbits_base": {
             "cloudwatch_logs": {
-                "logs_group_name": "kitchen-bonusbits-mediawiki-nginx"
+                "logs_group_name": "kitchen-bonusbits-mediawiki"
             }
         },
-        "bonusbits_mediawiki_nginx": {
+        "bonusbits_mediawiki": {
             "data_bag_item": "example_databag_item",
             "efs": {
                 "filesystem_id": "fs-00000000"

@@ -62,3 +62,8 @@ $RECYCLE.BIN/
 .vagrant
 VagrantConfig.rb
 vagrant-rsync-auto.log
+
+# bonusbits_mediawiki
+/test/data_bags/bonusbits_mediawiki/bonusbits_dev_decrypted.json
+/test/data_bags/bonusbits_mediawiki/bonusbits_prd_decrypted.json
+/test/environments/bonusbits_dev.json

@@ -3,16 +3,16 @@ package 'nfs-utils'
 
 if node['bonusbits_base']['aws']['inside']
   # Create Mount Directory
-  efs_mount_point = node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']
+  efs_mount_point = node['bonusbits_mediawiki']['mediawiki']['uploads_path']
   directory efs_mount_point do
-    owner node['bonusbits_mediawiki_nginx']['nginx']['user']
-    group node['bonusbits_mediawiki_nginx']['nginx']['group']
+    owner node['bonusbits_mediawiki']['nginx']['user']
+    group node['bonusbits_mediawiki']['nginx']['group']
     mode '0755'
     recursive true
   end
 
   # Mount Upload Share
-  efs_filesystem_id = node['bonusbits_mediawiki_nginx']['efs']['filesystem_id']
+  efs_filesystem_id = node['bonusbits_mediawiki']['efs']['filesystem_id']
   region = node['ec2']['placement_availability_zone'].slice(0..-2)
 
   mount efs_mount_point do

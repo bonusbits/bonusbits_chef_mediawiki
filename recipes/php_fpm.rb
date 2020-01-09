@@ -1,5 +1,5 @@
-mediawiki_user = node['bonusbits_mediawiki_nginx']['nginx']['user']
-mediawiki_group = node['bonusbits_mediawiki_nginx']['nginx']['group']
+mediawiki_user = node['bonusbits_mediawiki']['nginx']['user']
+mediawiki_group = node['bonusbits_mediawiki']['nginx']['group']
 
 # Switch User and Group
 ruby_block 'Switch Php Fpm Ownership' do

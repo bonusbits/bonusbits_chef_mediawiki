@@ -25,7 +25,7 @@
 ## 1.2.1 - 04/15/2017 - Levon Becker
 * Added Berksfile.lock to lock in the tested dependant cookbooks versions.
 
-## 1.2.0 - 04/15/2017 - Levon Becker - [Issue 24](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/24)
+## 1.2.0 - 04/15/2017 - Levon Becker - [Issue 24](https://github.com/bonusbits/bonusbits_mediawiki/issues/24)
 * Moved nodeinfo to /usr/local/bin/
 * Added kitchen docker configure that works with amazonlinux image
 * Added ECS CloudFormation Template
@@ -65,14 +65,14 @@
 ## 1.0.5 - 03/16/2017 - Levon Becker
 * Added cfn-init.log and cfn-init-cmd.log to Cloudwatch Logs Stream
 
-## 1.0.4 - 03/16/2017 - Levon Becker - [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/2)
+## 1.0.4 - 03/16/2017 - Levon Becker - [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki/issues/2)
 * Cleaned up default recipe, data bag and environment files that still had backup settings
 * Removed backup parameters from cloudformation template.
 
-## 1.0.3 - 03/16/2017 - Levon Becker - [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/2)
+## 1.0.3 - 03/16/2017 - Levon Becker - [Issue 2](https://github.com/bonusbits/bonusbits_mediawiki/issues/2)
 * Dropped backup script drafts. Going to Data Pipeline backup solution.
 
-## 1.0.2 - 03/12/2017 - Levon Becker - [Issue 5](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/5) & [Issue 11](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/11) & [Issue 17](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/17)
+## 1.0.2 - 03/12/2017 - Levon Becker - [Issue 5](https://github.com/bonusbits/bonusbits_mediawiki/issues/5) & [Issue 11](https://github.com/bonusbits/bonusbits_mediawiki/issues/11) & [Issue 17](https://github.com/bonusbits/bonusbits_mediawiki/issues/17)
 * Dropped Sidebar Ads from 5 to 3 matching ad units plus small, medium then large progression. updated data bag sidebar php
 * Fixed dns attribute overrides needed in environment file for test kitchen
 * Changed update-dns script to generate the upsert json in /tmp directory instead of /opt/chef-repo
@@ -83,7 +83,7 @@
 * Added Notifications to Autoscaling Group
 * Added Metrics Collection to Autoscaling Group
 
-## 1.0.1 - 03/11/2017 - Levon Becker - [Issue 14](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/14) & [Issue 16](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/16)
+## 1.0.1 - 03/11/2017 - Levon Becker - [Issue 14](https://github.com/bonusbits/bonusbits_mediawiki/issues/14) & [Issue 16](https://github.com/bonusbits/bonusbits_mediawiki/issues/16)
 * Added Symlink for sitemap.xml to EFS (uploads). So that it's shared among the frontend servers.
 * Fixed Issue 16 updating search engines of changes
     ```
@@ -100,17 +100,17 @@
 ## 1.0.0 - 03/07/2017 - Levon Becker
 * Initial Stable Release
 
-## 0.8.0 - 03/06/2017 - Levon Becker - [Issue 4](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/4)
+## 0.8.0 - 03/06/2017 - Levon Becker - [Issue 4](https://github.com/bonusbits/bonusbits_mediawiki/issues/4)
 * First Draft done of CloudFormation
 * Moved a lot of values out of environment file to data bag. That way less parameters for CloudFormation.
 * Split up Attributes a little more.
 * Updated example environment and data bag jsons to match new logic.
 
-## 0.7.0 - 03/04/2017 - Levon Becker - [Issue 8](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/8)
+## 0.7.0 - 03/04/2017 - Levon Becker - [Issue 8](https://github.com/bonusbits/bonusbits_mediawiki/issues/8)
 * Added Fixed for News Extension to display Hyperlinks with whitespaces instead of underscores.
 * Organized the templates directory. It was getting out of control and harder to find what I was looking for.
 
-## 0.6.0 - 02/26/2017 - Levon Becker - [Issue 1](https://github.com/bonusbits/bonusbits_mediawiki_nginx/issues/1)
+## 0.6.0 - 02/26/2017 - Levon Becker - [Issue 1](https://github.com/bonusbits/bonusbits_mediawiki/issues/1)
 * Added VectorTemplate cookbook template
 * Added minerva.mustache cookbook template. Turned out to be a better and easier location to simply drop the Google AdSense HTML under the header section for Mobile Frontend.
 * AdSense Code converted to a single line with ruby command ```ruby -e 'p ARGF.read' mobile_responsive.html``` and then added to a data bag item JSON. 

@@ -1,16 +1,16 @@
-default['bonusbits_mediawiki_nginx']['mediawiki'].tap do |mediawiki|
+default['bonusbits_mediawiki']['mediawiki'].tap do |mediawiki|
   # Basics
   mediawiki['version_major'] = '1'
   mediawiki['version_minor'] = '28'
-  version_major = node['bonusbits_mediawiki_nginx']['mediawiki']['version_major']
-  version_minor = node['bonusbits_mediawiki_nginx']['mediawiki']['version_minor']
+  version_major = node['bonusbits_mediawiki']['mediawiki']['version_major']
+  version_minor = node['bonusbits_mediawiki']['mediawiki']['version_minor']
   mediawiki['version'] = "#{version_major}.#{version_minor}"
   mediawiki['release'] = "REL#{version_major}_#{version_minor}"
   mediawiki['site_folder_name'] = 'mediawiki'
-  mediawiki_path = "#{node['bonusbits_mediawiki_nginx']['nginx']['root_site_path']}/#{node['bonusbits_mediawiki_nginx']['mediawiki']['site_folder_name']}"
+  mediawiki_path = "#{node['bonusbits_mediawiki']['nginx']['root_site_path']}/#{node['bonusbits_mediawiki']['mediawiki']['site_folder_name']}"
   mediawiki['mediawiki_path'] = mediawiki_path
   mediawiki['uploads_folder_name'] = 'images'
-  uploads_folder_name = node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name']
+  uploads_folder_name = node['bonusbits_mediawiki']['mediawiki']['uploads_folder_name']
   mediawiki['uploads_path'] = "#{mediawiki_path}/#{uploads_folder_name}"
 
   # LocalSettings
@@ -115,12 +115,12 @@ end
 message_list = [
   '',
   '** Mediawiki **',
-  "Version                     (#{node['bonusbits_mediawiki_nginx']['mediawiki']['version']})",
-  "Release                     (#{node['bonusbits_mediawiki_nginx']['mediawiki']['release']})",
-  "Site Path                   (#{node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path']})",
-  "Uploads Path                (#{node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_path']})",
-  "Configure Localsettings     (#{node['bonusbits_mediawiki_nginx']['mediawiki']['localsettings']['configure']})",
-  "Configure Extensions        (#{node['bonusbits_mediawiki_nginx']['mediawiki']['extensions']['configure']})"
+  "Version                     (#{node['bonusbits_mediawiki']['mediawiki']['version']})",
+  "Release                     (#{node['bonusbits_mediawiki']['mediawiki']['release']})",
+  "Site Path                   (#{node['bonusbits_mediawiki']['mediawiki']['mediawiki_path']})",
+  "Uploads Path                (#{node['bonusbits_mediawiki']['mediawiki']['uploads_path']})",
+  "Configure Localsettings     (#{node['bonusbits_mediawiki']['mediawiki']['localsettings']['configure']})",
+  "Configure Extensions        (#{node['bonusbits_mediawiki']['mediawiki']['extensions']['configure']})"
 ]
 message_list.each do |message|
   Chef::Log.warn(message)

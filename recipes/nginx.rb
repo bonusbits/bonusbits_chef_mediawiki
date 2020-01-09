@@ -1,13 +1,13 @@
 # Create Web Directory
-directory node['bonusbits_mediawiki_nginx']['nginx']['root_site_path'] do
+directory node['bonusbits_mediawiki']['nginx']['root_site_path'] do
   recursive true
 end
 
 # Deploy Web Config
 template '/etc/nginx/conf.d/mediawiki.conf' do
   source 'nginx/mediawiki.conf.erb'
-  owner node['bonusbits_mediawiki_nginx']['nginx']['user']
-  group node['bonusbits_mediawiki_nginx']['nginx']['group']
+  owner node['bonusbits_mediawiki']['nginx']['user']
+  group node['bonusbits_mediawiki']['nginx']['group']
   mode '0644'
   notifies :restart, 'service[nginx]', :delayed
 end

@@ -2,8 +2,8 @@ FROM amazonlinux:latest
 MAINTAINER Levon Becker "levon.docker@bonusbits.com"
 ENTRYPOINT ["/bin/bash"]
 LABEL version="1.2.1" \
-      description="Amazon Linux Image built from bonusbits_mediawiki_nginx cookbook." \
-      github="https://github.com/bonusbits/bonusbits_mediawiki_nginx" \
+      description="Amazon Linux Image built from bonusbits_mediawiki cookbook." \
+      github="https://github.com/bonusbits/bonusbits_mediawiki" \
       website="https://www.bonusbits.com"
 
 # SSH Args
@@ -14,7 +14,7 @@ ARG sudo_user=docker
 
 # Cookbook Args
 ARG chefdk_version=4.5.0
-ARG cookbook_name=bonusbits_mediawiki_nginx
+ARG cookbook_name=bonusbits_mediawiki
 ARG chef_role=web
 ARG chef_environment=inside_aws
 ARG chef_config_path=/etc/chef

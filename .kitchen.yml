@@ -9,61 +9,28 @@ platforms:
   # AWS AMI/EC2 Platforms
   - name: amazon-linux1-ami
     driver:
-      associate_public_ip: <%= ENV.fetch('AWS_PUBLIC_IP', 'false') %>
-      aws_ssh_key_id: <%= ENV.fetch('AWS_SSH_KEY_ID', 'bonusbits_dev_key') %>
-      iam_profile_name: <%= ENV.fetch('AWS_IAM_INSTANCE_PROFILE_LNX', 'Linux-Instance_Role') %>
       image_search:
         owner-id: 137112412989
         name: amzn-ami-hvm-2018.03.0.20190826-x86_64-gp2
-      instance_initiated_shutdown_behavior: terminate
-      instance_type: t3.micro
-      name: ec2
-      region: <%= ENV.fetch('AWS_REGION', 'us-west-2') %>
-      security_group_ids:
-        - <%= ENV.fetch('AWS_SECURITY_GROUP_lnx_1', 'sg-00000000') %>
-        - <%= ENV.fetch('AWS_SECURITY_GROUP_lnx_2', 'sg-00000000') %>
-      subnet_id: <%= ENV.fetch('AWS_SUBNET_ID', 'subnet-00000000') %>
       tags:
         Created-By: Test Kitchen
         OS: Amazon v1
         Owner: *aws_tag_owner
-      # user_data: *bootstrap_lnx
-      vpc_id: <%= ENV.fetch('AWS_VPC_ID', 'vpc-00000000') %>
-    transport:
-      username: ec2-user
-      ssh_key: <%= ENV.fetch('AWS_SSH_KEY_PATH', ENV['HOME'] + "/.ssh/bonusbits_dev_key.pem") %>
 
   - name: amazon-linux2-ami
     driver:
-      associate_public_ip: <%= ENV.fetch('AWS_PUBLIC_IP', 'false') %>
-      aws_ssh_key_id: <%= ENV.fetch('AWS_SSH_KEY_ID', 'bonusbits_dev_key') %>
-      iam_profile_name: <%= ENV.fetch('AWS_IAM_INSTANCE_PROFILE_LNX', 'Linux-Instance_Role') %>
       image_search:
         owner-id: 137112412989
         name: amzn2-ami-hvm-2.0.20190823.1-x86_64-gp2
-      instance_initiated_shutdown_behavior: terminate
-      instance_type: t3.micro
-      name: ec2
-      region: <%= ENV.fetch('AWS_REGION', 'us-west-2') %>
-      security_group_ids:
-        - <%= ENV.fetch('AWS_SECURITY_GROUP_lnx_1', 'sg-00000000') %>
-        - <%= ENV.fetch('AWS_SECURITY_GROUP_lnx_2', 'sg-00000000') %>
-      subnet_id: <%= ENV.fetch('AWS_SUBNET_ID', 'subnet-00000000') %>
       tags:
         Created-By: Test Kitchen
         OS: Amazon v2
         Owner: *aws_tag_owner
       # user_data: *bootstrap_lnx
-      vpc_id: <%= ENV.fetch('AWS_VPC_ID', 'vpc-00000000') %>
-    transport:
-      username: ec2-user
-      ssh_key: <%= ENV.fetch('AWS_SSH_KEY_PATH', ENV['HOME'] + "/.ssh/bonusbits_dev_key.pem") %>
 
   # Docker Platforms
   - name: amazon-linux1-docker
     driver:
-      name: docker
-      use_sudo: false
       # Amazon Linux AMI 2018.03 (v1 - el6)
       # https://hub.docker.com/_/amazonlinux
       # image: amazonlinux:1-with-sources
@@ -71,15 +38,9 @@ platforms:
       platform: rhel
       provision_command:
         - yum -y install upstart procps util-linux
-      ssl_verify_mode: ":verify_none"
-      driver_config:
-        ssl_verify_mode: ":verify_none"
-        forward: 80 443
 
   - name: amazon-linux2-docker
     driver:
-      name: docker
-      use_sudo: false
       # SystemD Privilege workaround
       privileged: true
       run_command: /usr/sbin/init
@@ -89,14 +50,9 @@ platforms:
       platform: rhel # Still needed Test Kitchen v2.3.3 for Amazon Linux
       provision_command:
         - yum -y install procps util-linux
-      ssl_verify_mode: ":verify_none"
-      driver_config:
-        ssl_verify_mode: ":verify_none"
-        forward: 80 443
 
 provisioner:
   data_bags_path: "test/data_bags"
-  # download_url: https://packages.chef.io/files/current/chefdk/4.5.0/el/7/chefdk-4.5.0-1.el7.x86_64.rpm
   environments_path: "test/environments"
   name: chef_zero
   product_name: chefdk
@@ -121,32 +77,42 @@ suites:
       bonusbits_base:
         deployment_location: 'circleci'
       <% end %>
-    driver:
-      use_sudo: false
-      platform: rhel # Still needed Test Kitchen v2.3.3 for Amazon Linux
-      provision_command:
-        - yum -y install procps util-linux
-      ssl_verify_mode: ":verify_none"
-      driver_config:
-        ssl_verify_mode: ":verify_none"
-        forward: 80 443
-    includes: ["amazon-linux1-docker", "amazon-linux2-docker"]
-    provisioner:
-      client_rb:
-        environment: bonusbits_base
     run_list:
-      - role[base]
+      - role[bonusbits_mediawiki]
+    driver:
+      name: docker
+      use_sudo: false
+      ssl_verify_mode: ":verify_none"
+      forward:
+        - 8080:80
+        - 4433:443
+    includes: [ "amazon-linux1-docker", "amazon-linux2-docker" ]
 
   - name: ec2
-    provisioner:
-      client_rb:
-        environment: bonusbits_base
-    driver:
-      tags:
-        Name: kitchen-bonusbits-base-<%= ENV['USER'] %>
     run_list:
-      - role[base]
-    includes: ["amazon-linux1-ami", "amazon-linux2-ami"]
+      - role[bonusbits_mediawiki]
+    driver:
+      name: ec2
+      associate_public_ip: <%= ENV.fetch('AWS_PUBLIC_IP', 'false') %>
+      aws_ssh_key_id: <%= ENV.fetch('AWS_SSH_KEY_ID', 'bonusbits_dev_key') %>
+      iam_profile_name: <%= ENV.fetch('AWS_IAM_INSTANCE_PROFILE_1', 'Linux-Instance_Role') %>
+      instance_initiated_shutdown_behavior: terminate
+      security_group_ids:
+      <% (1..5).collect { |n| ENV["AWS_SECURITY_GROUP_#{n}"] }.compact.each do |secgroup| %>
+      - <%= secgroup %>
+      <% end %>
+      subnet_id: <%= ENV.fetch('AWS_SUBNET_ID', 'subnet-00000000') %>
+      vpc_id: <%= ENV.fetch('AWS_VPC_ID', 'vpc-00000000') %>
+      region: <%= ENV.fetch('AWS_REGION', 'us-west-2') %>
+      instance_type: t3.small
+      tags:
+        Name: kitchen-bonusbits-web-<%= ENV['USER'] %>
+        Created-By: Test Kitchen
+        Owner: <%= ENV['USER'] %>
+    includes: [ "amazon-linux1-ami", "amazon-linux2-ami" ]
+    transport:
+      username: ec2-user
+      ssh_key: <%= ENV.fetch('AWS_SSH_KEY_PATH', ENV['HOME'] + "/.ssh/bonusbits_dev_key.pem") %>
 
 verifier:
   inputs:
@@ -165,98 +131,3 @@ verifier:
   <% if ENV['CI'] %>
   - junit:reports/integration/%{platform}_%{suite}_inspec.xml
   <% end %>
-
-
-suites:
-  - name: ec2
-    run_list:
-      - role[bonusbits_mediawiki_nginx]
-    provisioner:
-      name: chef_zero
-      require_chef_omnibus: 12.19.36
-      data_bags_path: test/data_bags
-      <% if ENV['USER'] == 'levon' %>
-      encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/encrypted_data_bag_secret
-      <% else %>
-      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
-      <% end %>
-      roles_path: test/roles
-      environments_path: test/environments
-      client_rb:
-        <% if ENV['USER'] == 'levon' %>
-        environment: bonusbits_dev
-        <% else %>
-        environment: kitchen
-        <% end %>
-    driver:
-      name: ec2
-      associate_public_ip: <%= ENV['AWS_PUBLIC_IP'] %>
-      aws_ssh_key_id: <%= ENV['AWS_SSH_KEY_ID'] %>
-      security_group_ids:
-      <% (1..5).collect { |n| ENV["AWS_SECURITY_GROUP_#{n}"] }.compact.each do |secgroup| %>
-        - <%= secgroup %>
-      <% end %>
-      subnet_id: <%= ENV['AWS_SUBNET'] %>
-      vpc_id: <%= ENV['AWS_VPC_ID'] %>
-      iam_profile_name: <%= ENV['AWS_IAM_INSTANCE_PROFILE_1'] %>
-      region: <%= ENV['AWS_REGION'] %>
-      instance_type: t2.small
-      tags:
-        Name: kitchen-bonusbits-web-<%= ENV['USER'] %>
-        Created-By: Test Kitchen
-        Owner: <%= ENV['USER'] %>
-    transport:
-      username: ec2-user
-      ssh_key: <%= ENV['AWS_SSH_KEY_PATH'] %>
-    verifier:
-      inspec_tests:
-        - name: bootstrap
-          git: https://github.com/bonusbits/inspec_bootstrap.git
-        - name: bonusbits_base
-          git: https://github.com/bonusbits/inspec_bonusbits_base.git
-        - path: test/inspec/profiles/bonusbits_web/
-      inputs:
-        chef_version: '12.19.36'
-    includes: [ 'amazon-ec2' ]
-
-  - name: docker
-    run_list:
-      - role[bonusbits_mediawiki_nginx]
-    provisioner:
-      name: chef_zero
-      require_chef_omnibus: 12.19.36
-      data_bags_path: test/data_bags
-      <% if ENV['USER'] == 'levon' %>
-      encrypted_data_bag_secret_key_path: <%= ENV['HOME'] %>/.chef/encrypted_data_bag_secret
-      <% else %>
-      encrypted_data_bag_secret_key_path: test/data_bags/encrypted_data_bag_secret
-      <% end %>
-      roles_path: test/roles
-      environments_path: test/environments
-      client_rb:
-        <% if ENV['USER'] == 'levon' %>
-        environment: bonusbits_dev
-        <% else %>
-        environment: kitchen
-        <% end %>
-    driver:
-      name: docker
-      use_sudo: false
-      driver_config:
-        ssl_verify_mode: ":verify_none"
-        forward: 80 443
-    verifier:
-      inspec_tests:
-        - name: bootstrap
-          git: https://github.com/bonusbits/inspec_bootstrap.git
-        - name: bonusbits_base
-          git: https://github.com/bonusbits/inspec_bonusbits_base.git
-        - path: test/inspec/profiles/bonusbits_web/
-      attributes:
-        chef_version: '12.19.36'
-    attributes:
-      <% if ENV['CIRCLECI'] %>
-      bonusbits_base:
-        deployment_location: 'circleci'
-      <% end %>
-    includes: [ 'amazon-docker' ]

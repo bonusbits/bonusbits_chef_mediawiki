@@ -4,7 +4,7 @@ server {
     <% else %>
     listen 80 backlog=1024;
     <% end %>
-    <% if node['bonusbits_mediawiki_nginx']['nginx']['x_forwarded_traffic'] %>
+    <% if node['bonusbits_mediawiki']['nginx']['x_forwarded_traffic'] %>
     set_real_ip_from <%= node.run_state['data_bag']['nginx']['proxy_lan_ip'] %>;
     real_ip_header X-Forwarded-For;
     <% end %>
@@ -12,25 +12,25 @@ server {
     real_ip_recursive on;
     <% end %>
     server_name <%= node.run_state['data_bag']['nginx']['server_names'] %>;
-    root <%= node['bonusbits_mediawiki_nginx']['mediawiki']['mediawiki_path'] %>;
+    root <%= node['bonusbits_mediawiki']['mediawiki']['mediawiki_path'] %>;
     index index.php;
     client_max_body_size 24000M;
     #access_log /var/log/nginx/mediawiki_access.log;
     #error_log /var/log/nginx/debug.log debug;
 
     location / {
-        <% if node['bonusbits_mediawiki_nginx']['nginx']['x_forwarded_traffic'] %>
+        <% if node['bonusbits_mediawiki']['nginx']['x_forwarded_traffic'] %>
         #   Recognize if HTTPS Terminate Prior to Nginx Getting Hands on it
         if ($http_x_forwarded_proto != 'https') {
             rewrite ^ https://$host$request_uri? permanent;
         }
         <% end %>
         try_files $uri $uri/ @handler;
-        <% if node['bonusbits_mediawiki_nginx']['nginx']['rewrite_wiki_alias'] %>
+        <% if node['bonusbits_mediawiki']['nginx']['rewrite_wiki_alias'] %>
         error_page 404 = @mediawiki;
         <% end %>
     }
-    <% if node['bonusbits_mediawiki_nginx']['nginx']['rewrite_wiki_alias'] %>
+    <% if node['bonusbits_mediawiki']['nginx']['rewrite_wiki_alias'] %>
     location @mediawiki {
         rewrite ^/wiki([^?]*)(?:\?(.*))? /index.php?title=$1&$2 last;
     }
@@ -110,5 +110,5 @@ server {
     location ^~ /images/ { try_files $uri /index.php; }
 
     #    Deny direct access to uploads directory
-    location ~* /<%= node['bonusbits_mediawiki_nginx']['mediawiki']['uploads_folder_name'] %>/.*\.php$ { deny all; }
+    location ~* /<%= node['bonusbits_mediawiki']['mediawiki']['uploads_folder_name'] %>/.*\.php$ { deny all; }
 }
