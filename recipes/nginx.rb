@@ -136,5 +136,5 @@ end
 
 # Enable and Start Service
 service 'nginx' do
-  action [:enable, :start]
+  action %i[enable start]
 end

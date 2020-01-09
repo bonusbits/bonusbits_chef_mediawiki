@@ -73,5 +73,5 @@ end
 
 # Enable and Start Service
 service 'php-fpm-7.0' do
-  action [:enable, :start]
+  action %i[enable start]
 end

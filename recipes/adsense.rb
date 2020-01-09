@@ -32,7 +32,7 @@ template mobile_template do
 end
 
 template '/var/www/html/mediawiki/ads.txt' do
-  source "mediawiki/adsense/ads.txt.erb"
+  source 'mediawiki/adsense/ads.txt.erb'
   owner mediawiki_user
   group mediawiki_group
   mode '0644'

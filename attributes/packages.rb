@@ -1,4 +1,4 @@
-default['bonusbits_mediawik_nginx']['packages'] = %w(
+default['bonusbits_mediawiki']['packages'] = %w[
   apr
   apr-util
   enchant
@@ -30,4 +30,4 @@ default['bonusbits_mediawik_nginx']['packages'] = %w(
   php70-process
   php70-xml
   texlive
-)
+]

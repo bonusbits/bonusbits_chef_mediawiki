@@ -24,7 +24,7 @@ describe 'Mediawiki Setup' do
     expect(file("#{mediawiki_path}/RELEASE-NOTES-1.28")).to exist
   end
 
-  extension_list = %w(
+  extension_list = %w[
     AntiBot
     AntiSpoof
     AutoSitemap
@@ -56,7 +56,7 @@ describe 'Mediawiki Setup' do
     Widgets
     WikiEditor
     YouTube
-  )
+  ]
 
   it 'extensions list' do
     extension_list.each do |extension|

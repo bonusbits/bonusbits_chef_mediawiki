@@ -19,6 +19,6 @@ if node['bonusbits_base']['aws']['inside']
     device "#{efs_filesystem_id}.efs.#{region}.amazonaws.com:/"
     fstype 'nfs4'
     options 'nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2'
-    action [:mount, :enable]
+    action %i[mount enable]
   end
 end

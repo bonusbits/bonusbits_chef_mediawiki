@@ -72,7 +72,7 @@ default['bonusbits_mediawiki']['mediawiki'].tap do |mediawiki|
 
   # Extensions
   mediawiki['extensions']['configure'] = true
-  mediawiki['extensions']['list'] = %w(
+  mediawiki['extensions']['list'] = %w[
     AntiBot
     AntiSpoof
     Cite
@@ -102,7 +102,7 @@ default['bonusbits_mediawiki']['mediawiki'].tap do |mediawiki|
     Widgets
     WikiEditor
     YouTube
-  )
+  ]
 
   # Extension Configurations
   # mediawiki['localsettings']['wgMobileFrontendLogo'] = "{$wgScriptPath}/#{uploads_folder_name}/#{mobile_logo_filename}"

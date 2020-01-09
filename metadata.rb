@@ -9,6 +9,6 @@ chef_version '~> 15.4' if respond_to?(:chef_version)
 issues_url 'https://github.com/bonusbits/bonusbits_mediawiki/issues'
 source_url 'https://github.com/bonusbits/bonusbits_mediawiki'
 
-depends 'bonusbits_base', '~> 3.0'
+depends 'bonusbits_base', '~> 3.0.1'
 
 supports 'amazon'

@@ -124,7 +124,7 @@ verifier:
     - name: bonusbits_base
       git: https://github.com/bonusbits/inspec_bonusbits_base.git
       release: 2.1.0
-    - path: test/inspec/profiles/bonusbits_web/
+    - path: test/inspec/profiles/bonusbits_mediawiki
   name: inspec
   reporter:
     - cli

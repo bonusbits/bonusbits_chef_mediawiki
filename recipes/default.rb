@@ -7,7 +7,7 @@ data_bag_item = node['bonusbits_mediawiki']['data_bag_item']
 node.run_state['data_bag'] = data_bag_item(data_bag, data_bag_item)
 
 # Install Software Packages
-package node['bonusbits_mediawik_nginx']['packages']
+package node['bonusbits_mediawiki']['packages']
 
 # Install and Configure Nginx
 include_recipe 'bonusbits_mediawiki::nginx'

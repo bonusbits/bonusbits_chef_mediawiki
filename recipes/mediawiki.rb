@@ -80,7 +80,7 @@ template "#{mediawiki_path}/robots.txt" do
 end
 
 # Download Bonusbits Extensions
-bonusbits_extensions_list = %w(HideNamespace AutoSitemap)
+bonusbits_extensions_list = %w[HideNamespace AutoSitemap]
 bonusbits_extensions_list.each do |extension|
   git "#{mediawiki_path}/extensions/#{extension}" do
     repository "https://github.com/bonusbits/#{extension}.git"
