@@ -6,6 +6,7 @@ control 'dns' do
   impact 1.0
   title ''
 
+  # Update DNS Script
   describe file('/usr/sbin/update-dns') do
     it { should exist }
     it { should be_file }
@@ -14,6 +15,7 @@ control 'dns' do
     its(:mode) { should cmp '00755' }
   end
 
+  # DNS Upsert JSON used by Update Script
   if inside_aws
     describe file('/tmp/route53-upsert.json') do
       it { should exist }

@@ -4,6 +4,7 @@
 ## x.x.x - ToDo List
 * Upgrade Mediawiki version
 * Updated inspec to the latest syntax
+* Set/Lock version of Nginx
 
 ## 2.0.0 - 01/07/2020 - Levon Becker
 * Switched Chef Repo to /etc/chef/ in CFN

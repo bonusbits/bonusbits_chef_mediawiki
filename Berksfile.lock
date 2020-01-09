@@ -1,7 +1,8 @@
 DEPENDENCIES
   bonusbits_base
     git: https://github.com/bonusbits/bonusbits_base.git
-    revision: d7b64338e08ad9d66738a091d85d7a16e1f7aabe
+    revision: 07e99dfa6940b8bf723724b5f470c0fb9c0fec61
+    ref: 3.0.1
   bonusbits_mediawiki
     path: .
     metadata: true
@@ -9,10 +10,10 @@ DEPENDENCIES
 GRAPH
   apt (7.2.0)
   audit (9.0.1)
-  bonusbits_base (3.0.0)
+  bonusbits_base (3.0.1)
     apt (>= 0.0.0)
     audit (>= 0.0.0)
     selinux (>= 0.0.0)
   bonusbits_mediawiki (2.0.0)
-    bonusbits_base (~> 3.0)
+    bonusbits_base (~> 3.0.1)
   selinux (3.0.1)

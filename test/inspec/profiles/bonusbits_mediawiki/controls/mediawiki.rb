@@ -1,89 +1,98 @@
 require_relative '../helpers/os_queries'
-inside_aws = ec2?
 
-describe 'Mediawiki Setup' do
-  mediawiki_path = '/var/www/html/mediawiki'
+inside_aws = aws?
 
-  it 'mediawiki installed' do
-    expect(file(mediawiki_path)).to be_directory
-    expect(file(mediawiki_path)).to be_owned_by('nginx')
-    expect(file(mediawiki_path)).to be_grouped_into('nginx')
+# Fetch Chef Node Attributes
+node = node_attributes
+
+control 'mediawiki' do
+  impact 1.0
+  title ''
+
+  mediawiki_path = node['bonusbits_mediawiki']['mediawiki']['mediawiki_path']
+  mediawiki_version = node['bonusbits_mediawiki']['mediawiki']['version']
+  extensions_list = node['bonusbits_mediawiki']['mediawiki']['extensions']['list']
+
+  # Web Root
+  describe file(mediawiki_path) do
+    it { should be_directory }
+    it { should be_owned_by 'nginx' }
+    it { should be_grouped_into 'nginx' }
   end
 
-  it 'has /var/log/mediawiki' do
-    expect(file('/var/log/mediawiki')).to be_directory
-    expect(file('/var/log/mediawiki')).to be_owned_by('nginx')
-    expect(file('/var/log/mediawiki')).to be_grouped_into('nginx')
+  # Logging
+  describe file('/var/log/mediawiki') do
+    it { should be_directory }
+    it { should be_owned_by 'nginx' }
+    it { should be_grouped_into 'nginx' }
   end
 
-  it 'has LocalSettings.php' do
-    expect(file("#{mediawiki_path}/LocalSettings.php")).to exist
+  # Configuration File
+  describe file("#{mediawiki_path}/LocalSettings.php") do
+    it { should exist }
+    it { should be_owned_by 'nginx' }
+    it { should be_grouped_into 'nginx' }
   end
 
-  it 'mediawiki v1.28' do
-    expect(file("#{mediawiki_path}/RELEASE-NOTES-1.28")).to exist
+  # Mediawiki Version
+  describe file("#{mediawiki_path}/RELEASE-NOTES-#{mediawiki_version}") do
+    it { should exist }
+    it { should be_owned_by 'nginx' }
+    it { should be_grouped_into 'nginx' }
   end
 
-  extension_list = %w[
-    AntiBot
-    AntiSpoof
-    AutoSitemap
-    Cite
-    ConfirmEdit
-    Gadgets
-    googleAnalytics
-    HideNamespace
-    ImageMap
-    InputBox
-    Interwiki
-    LocalisationUpdate
-    Mantle
-    MobileFrontend
-    MultiBoilerplate
-    News
-    Nuke
-    ParserFunctions
-    PdfHandler
-    Poem
-    Renameuser
-    ReplaceText
-    Scribunto
-    SimpleAntiSpam
-    SpamBlacklist
-    SyntaxHighlight_GeSHi
-    TitleBlacklist
-    UploadWizard
-    Widgets
-    WikiEditor
-    YouTube
-  ]
-
-  it 'extensions list' do
-    extension_list.each do |extension|
-      expect(file("#{mediawiki_path}/extensions/#{extension}")).to be_directory
+  # Extensions
+  extensions_list.each do |extension|
+    describe file("#{mediawiki_path}/extensions/#{extension}") do
+      it { should be_directory }
+      it { should be_owned_by 'nginx' }
+      it { should be_grouped_into 'nginx' }
     end
   end
 
-  it 'has vector skin' do
-    expect(file("#{mediawiki_path}/skins/Vector")).to be_directory
+  # Vector Skin
+  describe file("#{mediawiki_path}/skins/Vector") do
+    it { should be_directory }
+    it { should be_owned_by 'nginx' }
+    it { should be_grouped_into 'nginx' }
   end
 
-  it 'has vendor' do
-    expect(file("#{mediawiki_path}/vendor")).to be_directory
+  # Vendor Directory
+  describe file("#{mediawiki_path}/vendor") do
+    it { should be_directory }
+    it { should be_owned_by 'nginx' }
+    it { should be_grouped_into 'nginx' }
   end
 
-  it 'has favicon symlink' do
-    expect(file("#{mediawiki_path}/favicon.ico")).to be_symlink
+  # Symlinks
+  describe file("#{mediawiki_path}/favicon.ico") do
+    it { should be_symlink }
+  end
+  describe file("#{mediawiki_path}/sitemap.xml") do
+    it { should be_symlink }
   end
 
-  it 'has sitemap.xml symlink' do
-    expect(file("#{mediawiki_path}/sitemap.xml")).to be_symlink
-  end
-
-  if inside_aws # Requires EFS Mount
-    it 'has logos' do
-      expect(file("#{mediawiki_path}/uploads/desktop_logo.png")).to exist
-      expect(file("#{mediawiki_path}/uploads/mobile_logo.png")).to exist
+  # Uploads Files (EFS Mount Required)
+  if inside_aws
+    describe file("#{mediawiki_path}/uploads/favicon.ico") do
+      it { should exist }
+      it { should be_owned_by 'nginx' }
+      it { should be_grouped_into 'nginx' }
+    end
+    describe file("#{mediawiki_path}/uploads/sitemap.xml") do
+      it { should exist }
+      it { should be_owned_by 'nginx' }
+      it { should be_grouped_into 'nginx' }
+    end
+    describe file("#{mediawiki_path}/uploads/desktop_logo.png") do
+      it { should exist }
+      it { should be_owned_by 'nginx' }
+      it { should be_grouped_into 'nginx' }
+    end
+    describe file("#{mediawiki_path}/uploads/mobile_logo.png") do
+      it { should exist }
+      it { should be_owned_by 'nginx' }
+      it { should be_grouped_into 'nginx' }
     end
   end
 end

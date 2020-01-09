@@ -5,6 +5,7 @@ control 'network' do
   title ''
   only_if { ec2? }
 
+  # Max Connections Configurations
   describe file('/proc/sys/net/core/somaxconn') do
     it { should exist }
     it { should be_owned_by 'nginx' }

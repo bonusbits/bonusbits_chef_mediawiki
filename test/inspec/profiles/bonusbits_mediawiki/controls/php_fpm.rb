@@ -17,8 +17,8 @@ control 'php_fpm' do
     it { should exist }
     it { should be_owned_by 'root' }
     it { should be_grouped_into 'root' }
-    its('content') { should include /^user = nginx/ }
-    its('content') { should include /^group = nginx/ }
+    its('content') { should include 'user = nginx' }
+    its('content') { should include 'group = nginx' }
   end
 
   describe file('/var/log/php-fpm') do

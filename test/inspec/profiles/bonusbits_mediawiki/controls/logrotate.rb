@@ -4,10 +4,12 @@ control 'logrotate' do
   impact 1.0
   title ''
 
+  # Packages
   describe package('logrotate') do
     it { should be_installed }
   end
 
+  # Configuration File
   describe file('/etc/logrotate.d/mediawiki') do
     it { should exist }
     it { should be_owned_by 'root' }
