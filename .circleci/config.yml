@@ -35,7 +35,6 @@ jobs:
   integration_tests:
     machine:
       image: ubuntu-1604:201903-01
-      #docker_layer_caching: true # Not available on free plan
     working_directory: ~/circulate
     environment:
       GEM_HOME: /opt/chefdk/embedded/lib/ruby/gems/2.6.0/gems
@@ -47,11 +46,6 @@ jobs:
       - run:
           name: Create Reports Directory
           command: mkdir reports
-      #- run:
-      #    name: Install Ruby 2.6.5
-      #    command: |
-      #      rvm install 2.6.5
-      #      echo . $(rvm 2.6.5 do rvm env --path) >> $BASH_ENV
       - run:
           name: Install ChefDK
           command: wget https://packages.chef.io/files/stable/chefdk/4.5.0/ubuntu/16.04/chefdk_4.5.0-1_amd64.deb && sudo dpkg -i chefdk_4.5.0-1_amd64.deb && eval "$(chef shell-init bash)"
@@ -69,7 +63,7 @@ jobs:
           command: |
             echo "DEBUG - Ruby Version ($(ruby -v), $(which ruby), $(docker -v))"
             echo "DEBUG - Docker Version ($(docker -v))"
-            #echo "DEBUG - ChefDK Version ($(chef -v))"
+            echo "DEBUG - ChefDK Version ($(chef -v))"
             echo "DEBUG - /opt ($(ls -alh /opt))"
             chef gem list | grep -i kitchen
             env
